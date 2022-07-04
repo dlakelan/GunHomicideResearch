@@ -1,0 +1,309 @@
+```julia
+using Pkg
+Pkg.activate(".")
+
+using DataFrames, CSV, StatsPlots, Downloads, DataFramesMeta, Dates, Statistics, Turing, Memoization, ReverseDiff
+
+```
+# Firearms and Violent Crime, recent trends
+
+```julia
+if !Base.Filesystem.ispath("data/nics-firearm-background-checks.csv")
+    Downloads.download("https://github.com/BuzzFeedNews/nics-firearm-background-checks/raw/master/data/nics-firearm-background-checks.csv","./data/nics-firearm-background-checks.csv")
+end
+
+if ~Base.Filesystem.ispath("data/fipscodes.csv")
+    Downloads.download("https://www2.census.gov/geo/docs/reference/state.txt","./data/fipscodes.csv")
+end
+fipscodes = @chain CSV.read("data/fipscodes.csv",DataFrame) begin  
+    @subset(:STATE .< 60)
+end
+
+
+# manually downloaded CDC wonder gun homicide data using online form 
+homicides = CSV.read("./data/wonder-gun-homicide-byyear.csv",DataFrame)
+homicides = @chain rename(homicides,Dict("Crude Rate" => "crudedeathrate", "State Code" => "StateCode", "Year Code" => "YearCode")),
+    @subset(.! ismissing.(:Deaths)),
+    @transform(:crudedeathrate = map(x -> isnothing(x) ? missing : x, tryparse.(Float64,String.(:crudedeathrate))),
+        :state = String31.(:State)),
+    @subset(.! ismissing.(:crudedeathrate))
+
+gunchecks = CSV.read("./data/nics-firearm-background-checks.csv",DataFrame)
+startpops = @chain homicides, @subset(:Year .== 1999), @select(:State, :StartingPop = :Population,:StartDeathRate = :crudedeathrate)
+
+
+
+gunsalesest = @chain gunchecks,
+    @orderby(:state,:month),
+    @select(:state,:month,:salesest = 1.1 .* (:handgun .+ :long_gun) .+ 2.0 .* :multiple),
+    groupby(:state),
+    @transform(:cumsales = cumsum(:salesest),:year=year.(:month))
+
+joined = leftjoin(gunsalesest,homicides, on=[:state => :State,:year => :Year]; matchmissing=:notequal,makeunique=true)
+joined = @chain leftjoin(joined,startpops; on=[:state => :State],makeunique=true) begin
+    @subset(.! ismissing.(:Deaths) .&& .! ismissing.(:StartingPop))
+    @subset(month.(:month) .== 6)
+    @subset(:StateCode .< 60)
+    @transform(:cumgunrate = (:cumsales .+ 1.0 .* :StartingPop) ./ :Population )
+end
+
+joined = leftjoin(joined,fipscodes,on = :state => :STATE_NAME)
+
+global n = 1
+
+for states in Iterators.partition(unique(joined.state),6)
+    p = []
+    for state in states
+        sub = @subset(joined,:state .== state)
+        push!(p,plot(sub.cumgunrate, sub.crudedeathrate,legend=false,title="$state deaths vs guns", xlab="Cumulative Gun Rate (guns/capita)",
+            ylab="Homicide Rate (deaths/capita/yr)", xlim=(1.0,2.5),ylim=(0.0,12.0)));
+    end
+    if length(p) == 6
+        savefig(plot(p..., layout=(3,2),size=(1100,600)), "./plots/Number_$(n)_data.pdf")
+    else
+        length(p) == 0 ? nothing : savefig(plot(p...,layout=length(p)), "./plots/Number_$(n)_data.pdf")
+    end
+    global n += 1
+    empty!(p)
+end
+
+plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
+    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Gun Prevalence", alpha=.5)
+
+plot(joined.year,joined.crudedeathrate; group=joined.state, legend=false, xlab="Year",
+    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Time", alpha=.5)
+
+
+```
+
+How has "Constitutional Carry" affected violence in states that pass those laws? Let's take a first look at the data, by plotting the 
+firearms homicide rate through time, with a marker for the onset of Constitutional Carry as found in the Wikipedia article on Constitutional
+Carry.
+
+```julia
+
+concarry = leftjoin(fipscodes,CSV.read("./data/ConstCarryDates.csv",DataFrame),on = :STUSAB => :StateCode)
+concarry.date = map(x -> ismissing(x) ? missing : Date(div(x,10000),div(mod(x,10000),100),1),concarry.LawDate)
+concarry.year = map(x -> ismissing(x) ? missing : year(x),concarry.date)
+concarry = @subset(concarry,:STATE .<= 59) #ignore minor territories
+
+global p = []
+for (st,stusab,statename,statens,lawdate,stdate) in eachrow(concarry)
+    d = stdate
+    sub = @subset(joined,:state .== statename)
+    if(nrow(sub) > 0)
+        pp = plot(sub.month,sub.crudedeathrate,ylim=(0,15),size=(500,500),title="$statename death rate vs time",legend=false)
+        if(!ismissing(d))
+            pp = plot!([(d,0),(d,15)])
+        end
+    push!(p,pp)
+    display(pp)
+    end
+end
+
+
+```
+
+# States by Geographic Group
+
+Looking at the raw data we can see that there are a number of states that have an "accelerating" trend of increased firearms homicide violence
+in the period from about 2015 onward. Some of these have converted to Constitutional Carry near the beginning of that period or during that period, with 
+the trend beginning before the carry provision for several of the states. Also many states have passed their laws in the last few years and have no 
+data post-law.
+
+Let's look at these states grouped into geographic regions, because trends in regions may be more obvious. 
+We will start with the following groupings:
+
+```julia
+
+stategroups = [["WA","OR","CA","NV","AZ"],["ID","MT","WY","UT","CO","NM","TX"],["ND","SD","NE","KS","OK","IA","MO"],
+    ["MN","WI","IL","IN","MI","OH"],["AR","LA","MS","AL","GA","FL","SC"],["TN","NC","KY","WV","VA","MD","DE"],
+    ["PA","NJ","NY","CT","RI","MA","VT","NH","ME"],["AK","HI","DC"]]
+
+stategroupdf = DataFrame(STUSAB = reduce(vcat,stategroups),stgroup = reduce(vcat,[[k for j in 1:length(stategroups[k])] for k in 1:length(stategroups)]))
+
+
+@assert(length(unique(reduce(vcat,stategroups))) == 51) # 50 states plus DC
+
+for statelist in stategroups
+    sub = joined[in.(joined.STUSAB, Ref(statelist)),:]
+    ccdates = @chain @subset(concarry, in.(concarry.STUSAB,Ref(statelist))) begin
+        @subset(.! ismissing.(:year))
+    end
+    
+    ccdatesenact = leftjoin(ccdates,sub, on = [:STUSAB => :STUSAB, :year => :year], makeunique = true)
+    ccdatesenact = @subset(ccdatesenact, .! ismissing.(:crudedeathrate))
+    #display(ccdatesenact)
+    #display(sub)
+    p = plot(sub.month,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,title="Firearm Homicide Rate vs Time")
+    if nrow(ccdatesenact) > 0
+        p = scatter!(Date.(ccdatesenact.year,6,1),ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
+    end
+    display(p)
+end
+
+```
+
+# States by Relative Change
+
+Each state has its own overall level of firearm violence, but often trends in the same direction relative to its region even if its overall level
+is higher or lower. This suggests a model in which we measure each state using a dimensionless number relative to some baseline level. 
+For example the average rate in the years 1999,2000,2001
+
+```julia
+
+baselines = @chain joined begin
+    @subset(in.(:year,Ref((1999,2000,2001))))
+    @by(:STUSAB, :baseline = mean(:crudedeathrate))
+end
+
+bljoined = @chain leftjoin(stategroupdf,leftjoin(baselines,joined,on = :STUSAB),on=:STUSAB) begin
+    @subset(.! ismissing.(:crudedeathrate))
+    @orderby(:stgroup,:STUSAB,:year)
+end
+
+function getccd(gr)
+    ccd = innerjoin(gr,@subset(concarry,.! ismissing.(:year)), on = [:STUSAB => :STUSAB, :year => :year], makeunique = true)
+    ccd = @subset(ccd, .! ismissing.(:crudedeathrate))
+    ccd
+end
+
+function makerelplot(gr)
+    ccd = getccd(gr)
+#    display(ccd)
+    p = plot(gr.year,gr.crudedeathrate ./ gr.baseline,group=gr.STUSAB,legend=:topleft,ylim=(0.0,2.5)) 
+    if nrow(ccd) == 1
+        scatter!(ccd.year,ccd.crudedeathrate ./ ccd.baseline)
+    elseif nrow(ccd) > 1 
+        scatter!(ccd.year,ccd.crudedeathrate ./ ccd.baseline,group = ccd.STUSAB)
+    end
+    p
+end
+
+
+
+plots = [makerelplot(gr)
+    for gr in groupby(bljoined,:stgroup)]
+    
+plot(plots... ; size=(1000,1000),linewidth=2,xlab="Year",ylab="Relative Rate")
+
+
+
+```
+
+# Modeling the process with Bayesian Models
+
+We can try to estimate the effects of these laws by building a model of the overall process. Because we can't resurrect people from the dead, 
+the homicide rate can never be negative. It makes sense then to model the homicide rate on a logarithmic scale. 
+
+
+```julia
+
+function bumpfun(x,c,scale)
+    stdx = (x-c)/scale
+    if stdx < -1.0 || stdx > 1.0
+        0.0
+    else
+        exp(1.0-1.0/(1.0-stdx^2)) # goes to zero at -1 and 1, and 1 at x=0
+    end
+end
+
+function timeser(x,coefs,centers,scale)
+    f = 0.0
+    for (a,c) in Iterators.zip(coefs,centers)
+        f += a*bumpfun(x,c,scale)
+    end
+    return f
+end
+
+function laweffect(yr,rate,start)
+    if yr >= start
+        1.0-exp(-rate*(yr-start))
+    else   
+        0.0
+    end
+end
+
+
+@model function guns(state,nstates,region,nregions,centers,width,year,lograte,startlaw)
+    ## state is an integer corresponding to the state
+    n = length(lograte)
+    nc = length(centers)
+    scale ~ Gamma(5.0,1.0/4.0)
+    statebase ~ MvNormal([2.0 for i in 1:nstates], 3.0)
+    nationcoefs ~ MvNormal(zeros(Float64,nc),2.0)
+    regioncoefs = fill(nationcoefs,nregions)
+    for i in 1:length(regioncoefs)
+        regioncoefs[i] ~ MvNormal(nationcoefs,2.0)
+    end
+    statecoefs = fill(nationcoefs,nstates)
+    for i in 1:nstates
+        statecoefs[i] ~ MvNormal(regioncoefs[region[i]],0.2)
+    end
+    lawrate ~ Gamma(5.0,3.0/4.0) ## about 3/yr
+    statelawcoef ~ MvNormal(fill(0.0,nstates),2.0)
+    predicted = zeros(typeof(statelawcoef[1]),n)
+
+    for i in 1:length(lograte)
+        predicted[i] = statebase[state[i]] + timeser(year[i],statecoefs[state[i]],centers,width) + 
+            statelawcoef[state[i]] * laweffect(year[i],lawrate,startlaw[state[i]])
+    end
+    lograte ~ MvNormal(predicted,scale)
+end
+
+
+modeljoined = @chain leftjoin(joined,stategroupdf; on = :STUSAB) begin
+    @subset(.! ismissing.(:crudedeathrate))
+end
+
+lawdates = @chain leftjoin(DataFrame(STATE=1:55),concarry; on=:STATE) begin
+    @subset(:STATE .< 60)
+    @rtransform(:year = ismissing(:year) ? 3000 : :year)
+    @orderby(:STATE)
+end
+
+centers = [i for i in (minimum(modeljoined.year)-2):2:(maximum(modeljoined.year)+2)]
+width = 3.0
+
+
+modl = guns(modeljoined.StateCode,maximum(modeljoined.StateCode),modeljoined.stgroup,maximum(modeljoined.stgroup),
+        centers, width, modeljoined.year,log.(modeljoined.crudedeathrate),lawdates.year)
+
+setadbackend(:reversediff)
+Turing.setrdcache(true)
+
+
+s = sample(modl,NUTS(500,0.8),MCMCThreads(),500,3)
+
+lawco = group(s,"statelawcoef")
+
+statenames = Dict()
+for (st,stusab) in Iterators.zip(lawdates.STATE,lawdates.STUSAB)
+    statenames[st] = stusab
+    end
+
+pl = []
+for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
+    push!(pl,density(lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-2.0,2.0)))
+end
+display(plot(pl...; size = (1000,1000)))
+
+display(density(s[:,:lawrate,:], title= "Law effect onset rate (1/yr)"))
+
+modeljoined.logdrate = log.(modeljoined.crudedeathrate)
+
+
+pl = []
+for st in unique(modeljoined.STATE)
+    sub = @subset(modeljoined, :STATE .== st)
+    samps = sample(1:,10)
+    plot(sub.year,sub.logdrate)
+    statelawcoef = s[samp,Symbol("statelawcoef[$st]"),1]
+    statecoefs = [s[samp,Symbol("statecoefs[$st][$i]"),1] for i in 1:12]
+    for samp in samps
+        pred = 
+end
+
+
+```
+
