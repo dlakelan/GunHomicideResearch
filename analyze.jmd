@@ -2,7 +2,7 @@
 using Pkg
 Pkg.activate(".")
 
-using DataFrames, CSV, StatsPlots, Downloads, DataFramesMeta, Dates, Statistics, Turing, Memoization, ReverseDiff
+using DataFrames, CSV, StatsPlots, Downloads, DataFramesMeta, Dates, Statistics, Turing, Memoization, ReverseDiff, Serialization
 
 ```
 # Firearms and Violent Crime, recent trends
@@ -49,29 +49,12 @@ end
 
 joined = leftjoin(joined,fipscodes,on = :state => :STATE_NAME)
 
-global n = 1
 
-for states in Iterators.partition(unique(joined.state),6)
-    p = []
-    for state in states
-        sub = @subset(joined,:state .== state)
-        push!(p,plot(sub.cumgunrate, sub.crudedeathrate,legend=false,title="$state deaths vs guns", xlab="Cumulative Gun Rate (guns/capita)",
-            ylab="Homicide Rate (deaths/capita/yr)", xlim=(1.0,2.5),ylim=(0.0,12.0)));
-    end
-    if length(p) == 6
-        savefig(plot(p..., layout=(3,2),size=(1100,600)), "./plots/Number_$(n)_data.pdf")
-    else
-        length(p) == 0 ? nothing : savefig(plot(p...,layout=length(p)), "./plots/Number_$(n)_data.pdf")
-    end
-    global n += 1
-    empty!(p)
-end
+display(plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
+    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Gun Prevalence", alpha=.5))
 
-plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
-    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Gun Prevalence", alpha=.5)
-
-plot(joined.year,joined.crudedeathrate; group=joined.state, legend=false, xlab="Year",
-    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Time", alpha=.5)
+display(plot(joined.year,joined.crudedeathrate; group=joined.state, legend=false, xlab="Year",
+    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Time", alpha=.5))
 
 
 ```
@@ -87,20 +70,21 @@ concarry.date = map(x -> ismissing(x) ? missing : Date(div(x,10000),div(mod(x,10
 concarry.year = map(x -> ismissing(x) ? missing : year(x),concarry.date)
 concarry = @subset(concarry,:STATE .<= 59) #ignore minor territories
 
-global p = []
-for (st,stusab,statename,statens,lawdate,stdate) in eachrow(concarry)
-    d = stdate
-    sub = @subset(joined,:state .== statename)
-    if(nrow(sub) > 0)
-        pp = plot(sub.month,sub.crudedeathrate,ylim=(0,15),size=(500,500),title="$statename death rate vs time",legend=false)
-        if(!ismissing(d))
-            pp = plot!([(d,0),(d,15)])
+let p = []
+    for (st,stusab,statename,statens,lawdate,stdate) in eachrow(concarry)
+        d = stdate
+        sub = @subset(joined,:state .== statename)
+        if(nrow(sub) > 0)
+            pp = plot(sub.month,sub.crudedeathrate,ylim=(0,15),size=(500,500),
+                title="$statename death rate vs time",xlab="Year",ylab="Gun Homicide/100k/yr",legend=false)
+            if(!ismissing(d))
+                pp = plot!([(d,0),(d,15)])
+            end
+        push!(p,pp)
         end
-    push!(p,pp)
-    display(pp)
     end
+    plot(p...; size = (2000,2000))
 end
-
 
 ```
 
@@ -121,7 +105,7 @@ stategroups = [["WA","OR","CA","NV","AZ"],["ID","MT","WY","UT","CO","NM","TX"],[
     ["PA","NJ","NY","CT","RI","MA","VT","NH","ME"],["AK","HI","DC"]]
 
 stategroupdf = DataFrame(STUSAB = reduce(vcat,stategroups),stgroup = reduce(vcat,[[k for j in 1:length(stategroups[k])] for k in 1:length(stategroups)]))
-
+stategroupdf = leftjoin(fipscodes,stategroupdf; on = :STUSAB)
 
 @assert(length(unique(reduce(vcat,stategroups))) == 51) # 50 states plus DC
 
@@ -157,7 +141,7 @@ baselines = @chain joined begin
     @by(:STUSAB, :baseline = mean(:crudedeathrate))
 end
 
-bljoined = @chain leftjoin(stategroupdf,leftjoin(baselines,joined,on = :STUSAB),on=:STUSAB) begin
+bljoined = @chain leftjoin(stategroupdf,leftjoin(baselines,joined,on = :STUSAB, makeunique=true),on=:STUSAB,makeunique=true) begin
     @subset(.! ismissing.(:crudedeathrate))
     @orderby(:stgroup,:STUSAB,:year)
 end
@@ -180,8 +164,14 @@ function makerelplot(gr)
     p
 end
 
+```
+
+# What has been the relative change?
+
+Each state plotted in a group with other geographically similar states. Firearm homicide rate relative to the recorded rate in the year 1999.
 
 
+```julia
 plots = [makerelplot(gr)
     for gr in groupby(bljoined,:stgroup)]
     
@@ -196,8 +186,16 @@ plot(plots... ; size=(1000,1000),linewidth=2,xlab="Year",ylab="Relative Rate")
 We can try to estimate the effects of these laws by building a model of the overall process. Because we can't resurrect people from the dead, 
 the homicide rate can never be negative. It makes sense then to model the homicide rate on a logarithmic scale. 
 
+We estimate the behavior of the states as an overall level, plus a shape that is common to the region. Individual states are then allowed a small perturbation
+to the regional shape.
 
-```julia
+The effect of constitutional carry law would then be estimated as the log firearm homicide rate which **exceeds the state level counterfactual estimate** in the
+years after the passage of the law.
+
+We impose an informal smoothness requirement on the counterfactual estimates by using a compact radial basis function expansion with one center every 4 years, and a maximum
+radius of 7 years so that there is overlap between adjacent centers. 
+
+```julia{results="hidden"}
 
 function bumpfun(x,c,scale)
     stdx = (x-c)/scale
@@ -225,34 +223,11 @@ function laweffect(yr,rate,start)
 end
 
 
-@model function guns(state,nstates,region,nregions,centers,width,year,lograte,startlaw)
-    ## state is an integer corresponding to the state
-    n = length(lograte)
-    nc = length(centers)
-    scale ~ Gamma(5.0,1.0/4.0)
-    statebase ~ MvNormal([2.0 for i in 1:nstates], 3.0)
-    nationcoefs ~ MvNormal(zeros(Float64,nc),2.0)
-    regioncoefs = fill(nationcoefs,nregions)
-    for i in 1:length(regioncoefs)
-        regioncoefs[i] ~ MvNormal(nationcoefs,2.0)
-    end
-    statecoefs = fill(nationcoefs,nstates)
-    for i in 1:nstates
-        statecoefs[i] ~ MvNormal(regioncoefs[region[i]],0.2)
-    end
-    lawrate ~ Gamma(5.0,3.0/4.0) ## about 3/yr
-    statelawcoef ~ MvNormal(fill(0.0,nstates),2.0)
-    predicted = zeros(typeof(statelawcoef[1]),n)
+statecoefpert = log(1.15)/2.0
 
-    for i in 1:length(lograte)
-        predicted[i] = statebase[state[i]] + timeser(year[i],statecoefs[state[i]],centers,width) + 
-            statelawcoef[state[i]] * laweffect(year[i],lawrate,startlaw[state[i]])
-    end
-    lograte ~ MvNormal(predicted,scale)
-end
+include("model.jl") ## load the model, this is a separate file so we can save the output unless it changes
 
-
-modeljoined = @chain leftjoin(joined,stategroupdf; on = :STUSAB) begin
+modeljoined = @chain leftjoin(joined,stategroupdf; on = :STUSAB, makeunique=true) begin
     @subset(.! ismissing.(:crudedeathrate))
 end
 
@@ -262,8 +237,8 @@ lawdates = @chain leftjoin(DataFrame(STATE=1:55),concarry; on=:STATE) begin
     @orderby(:STATE)
 end
 
-centers = [i for i in (minimum(modeljoined.year)-2):2:(maximum(modeljoined.year)+2)]
-width = 3.0
+centers = [i for i in (minimum(modeljoined.year)-4):4:(maximum(modeljoined.year)+4)]
+width = 7.0
 
 
 modl = guns(modeljoined.StateCode,maximum(modeljoined.StateCode),modeljoined.stgroup,maximum(modeljoined.stgroup),
@@ -272,9 +247,24 @@ modl = guns(modeljoined.StateCode,maximum(modeljoined.StateCode),modeljoined.stg
 setadbackend(:reversediff)
 Turing.setrdcache(true)
 
+savedfile = "./saved/samples.dat"
+global s = []
+if stat(savedfile).mtime > stat("./model.jl").mtime
+    global s = deserialize(savedfile)
+else
+    global s = sample(modl,NUTS(500,0.8),MCMCThreads(),500,3)
+    serialize(savedfile,s)
+end
 
-s = sample(modl,NUTS(500,0.8),MCMCThreads(),500,3)
+```
 
+Having sampled the model, we can then compute summary graphs of the results. We will show the posterior density for
+the coefficient of the magnitude of the law effect for each state separately. 
+
+Also we will plot the actual log(homicide rate) together with the state specific counterfactual estimates.
+
+
+```julia
 lawco = group(s,"statelawcoef")
 
 statenames = Dict()
@@ -282,28 +272,76 @@ for (st,stusab) in Iterators.zip(lawdates.STATE,lawdates.STUSAB)
     statenames[st] = stusab
     end
 
-pl = []
-for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
-    push!(pl,density(lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-2.0,2.0)))
+let pl = []
+    for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
+        push!(pl,density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-log(2),log(2))))
+    end
+    println("State law coefficient values")
+    display(plot(pl...; size = (1000,1000)))
+
+    display(density(s[:,:lawrate,:], title= "Law effect onset rate (1/yr)"))
+
+    modeljoined.logdrate = log.(modeljoined.crudedeathrate)
+
+    regions = Dict()
+    for r in eachrow(stategroupdf)
+        regions[r.STATE] = (group=r.stgroup,code=r.STUSAB)
+    end
+    pl = []
+    samps = sample(1:500,10)
+
+    for st in unique(modeljoined.STATE)
+        sub = @subset(modeljoined, :STATE .== st)
+        region = regions[st].group
+        p = plot(sub.year,sub.logdrate,linewidth=3,title="$(st) = $(regions[st].code)",ylim=(-0.5,2.75))
+        push!(pl,p)
+        for samp in samps
+            statelawcoef = s[samp,Symbol("statelawcoef[$st]"),1]
+            statecoefs = [s[samp,Symbol("statecoefs[$st][$i]"),1] for i in 1:length(centers)]
+            statebase = s[samp,Symbol("statebase[$st]"),1]
+            regioncoefs = [s[samp,Symbol("regioncoefs[$region][$i]"),1] for i in 1:length(centers)]        
+            
+            lawrate = s[samp,:lawrate,1]
+            startlaw = lawdates[lawdates.STATE .== st,:].year[1]
+            startlaw = ismissing(startlaw) ? 3000 : startlaw
+            years = 1999:2020
+            pred = [statebase + 
+                timeser(yr,regioncoefs .+ (statecoefpert .* statecoefs),centers,width) for yr in years]
+            plot!(years,pred; color="orange",alpha=0.5)
+            if startlaw < 3000
+                plot!([(startlaw,-10.0),(startlaw,10.0)],color="red")
+            end
+            regpred = [statebase + 
+                timeser(yr,regioncoefs ,centers,width) for yr in years]
+
+        end
+    end
+    println("Each state shown with its locally estimated counterfactual (orange), actual (dark blue), and date of CC law if any (red vertical)")
+    display(plot(pl...; size =(2000,3000), legend=false))
 end
-display(plot(pl...; size = (1000,1000)))
 
-display(density(s[:,:lawrate,:], title= "Law effect onset rate (1/yr)"))
-
-modeljoined.logdrate = log.(modeljoined.crudedeathrate)
-
-
-pl = []
-for st in unique(modeljoined.STATE)
-    sub = @subset(modeljoined, :STATE .== st)
-    samps = sample(1:,10)
-    plot(sub.year,sub.logdrate)
-    statelawcoef = s[samp,Symbol("statelawcoef[$st]"),1]
-    statecoefs = [s[samp,Symbol("statecoefs[$st][$i]"),1] for i in 1:12]
-    for samp in samps
-        pred = 
-end
+density(s[:,:meanlawcoef,:],title="Mean law coefficient")
 
 
 ```
+
+# The Take Home
+
+Many states that have passed constitutional carry laws have done so recently enough that there is no data on homicides available from CDC Wonder yet. 
+
+For those which passed the law long enough ago to have some post-law data, still many of them were in the last few years leaving only a few years of post-law data.
+The last few years is a time period where homicides have increased nearly nationwide and it is challenging to estimate the effect of a law when it is imposed on top of a nonlinearly changing trend.
+Estimates of a law effect created by comparing the actual data to counterfactuals estimated as small perturbations to the regional trend lead to estimates of the average law coefficient
+that has uncertain sign, with a most likely value of about 0.05 or so, meaning that gun homicides may increase by a factor of around 1.05, however the ability to resolve this number is so
+poor that the number could be anything from about -0.1 to +0.25 (multiplying the crime rate by anywhere from 0.9 to 1.28.
+
+Evidence for a consistent average net positive or negative effect of passing constitutional carry laws simply doesn't exist in the data so far. 
+
+In states such as AK, AZ, and AR which passed their laws long enough ago that we might expect to be able to estimate the effect, the average effect appears to be close to 0.0 with uncertainty
+relatively symmetrically distributed to both sides. The strongest estimates we have are near zero.
+
+MS appears to be an outlier, but even in that case the uncertainty interval for the coefficient of the effect is about -0.2 to 0.27 with the most likely value being slightly positive, near about 0.1
+
+The evidence simply does not show a consistent effect increasing or decreasing firearm homicides after liberalization of concealed
+carry laws.
 
