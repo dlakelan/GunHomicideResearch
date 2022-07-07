@@ -156,7 +156,7 @@ end
 function makerelplot(gr)
     ccd = getccd(gr)
 #    display(ccd)
-    p = plot(gr.year,gr.crudedeathrate ./ gr.baseline,group=gr.STUSAB,legend=:topleft,ylim=(0.0,2.5)) 
+    p = plot(gr.year,gr.crudedeathrate ./ gr.baseline,group=gr.STUSAB,legend=:topleft,ylim=(0.0,2.5),xlab="Year",ylab="Relative Rate") 
     if nrow(ccd) == 1
         scatter!(ccd.year,ccd.crudedeathrate ./ ccd.baseline)
     elseif nrow(ccd) > 1 
@@ -173,9 +173,10 @@ Each state plotted in a group with other geographically similar states. Firearm 
 
 
 ```julia
-plots = [makerelplot(gr)Per capita, 2,xlab="Year",ylab="Relative Rate")
-
-
+plots = [makerelplot(gr)
+    for gr in groupby(bljoined,:stgroup)]
+    
+plot(plots... ; size=(1000,1000),linewidth=2,xlab="Year",ylab="Relative Rate")
 
 ```
 
