@@ -119,7 +119,8 @@ for statelist in stategroups
     ccdatesenact = @subset(ccdatesenact, .! ismissing.(:crudedeathrate))
     #display(ccdatesenact)
     #display(sub)
-    p = plot(sub.month,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,title="Firearm Homicide Rate vs Time")
+    p = plot(sub.month,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,
+        title="Firearm Homicide Rate vs Time", ylab="Homicides/100k population/yr")
     if nrow(ccdatesenact) > 0
         p = scatter!(Date.(ccdatesenact.year,6,1),ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
     end
@@ -172,10 +173,7 @@ Each state plotted in a group with other geographically similar states. Firearm 
 
 
 ```julia
-plots = [makerelplot(gr)
-    for gr in groupby(bljoined,:stgroup)]
-    
-plot(plots... ; size=(1000,1000),linewidth=2,xlab="Year",ylab="Relative Rate")
+plots = [makerelplot(gr)Per capita, 2,xlab="Year",ylab="Relative Rate")
 
 
 
@@ -274,7 +272,9 @@ for (st,stusab) in Iterators.zip(lawdates.STATE,lawdates.STUSAB)
 
 let pl = []
     for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
-        push!(pl,density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-log(2),log(2))))
+        den = density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-log(2),log(2)))
+        plot!([(0.0,0.0),(0.0,5.0)], color="red",ylim=(0.0,5.0))
+        push!(pl,den)
     end
     println("State law coefficient values")
     display(plot(pl...; size = (1000,1000)))
@@ -340,7 +340,8 @@ Evidence for a consistent average net positive or negative effect of passing con
 In states such as AK, AZ, and AR which passed their laws long enough ago that we might expect to be able to estimate the effect, the average effect appears to be close to 0.0 with uncertainty
 relatively symmetrically distributed to both sides. The strongest estimates we have are near zero.
 
-MS appears to be an outlier, but even in that case the uncertainty interval for the coefficient of the effect is about -0.2 to 0.27 with the most likely value being slightly positive, near about 0.1
+KY, and MS appear to be outliers, but even in these cases it's ambiguous whether the law resulted in an increase or a decrease, even though increase
+appears to be the more probable direction. 
 
 The evidence simply does not show a consistent effect increasing or decreasing firearm homicides after liberalization of concealed
 carry laws.
