@@ -1,0 +1,255 @@
+"Notes"	"State"	"State Code"	"Race"	"Race Code"	Deaths	Population	Crude Rate
+	"Alabama"	"01"	"American Indian or Alaska Native"	"1002-5"	29	728703	3.980
+	"Alabama"	"01"	"Asian or Pacific Islander"	"A-PI"	45	1364562	3.298
+	"Alabama"	"01"	"Black or African American"	"2054-5"	6577	27817070	23.644
+	"Alabama"	"01"	"White"	"2106-3"	3506	73693831	4.758
+	"Alaska"	"02"	"American Indian or Alaska Native"	"1002-5"	382	2612953	14.619
+	"Alaska"	"02"	"Asian or Pacific Islander"	"A-PI"	74	1087791	6.803
+	"Alaska"	"02"	"Black or African American"	"2054-5"	109	705338	15.454
+	"Alaska"	"02"	"White"	"2106-3"	455	10894802	4.176
+	"Arizona"	"04"	"American Indian or Alaska Native"	"1002-5"	1152	7694265	14.972
+	"Arizona"	"04"	"Asian or Pacific Islander"	"A-PI"	127	4778677	2.658
+	"Arizona"	"04"	"Black or African American"	"2054-5"	1221	6726549	18.152
+	"Arizona"	"04"	"White"	"2106-3"	7364	118879934	6.194
+	"Arkansas"	"05"	"American Indian or Alaska Native"	"1002-5"	12	612644	Unreliable
+	"Arkansas"	"05"	"Asian or Pacific Islander"	"A-PI"	36	1005398	3.581
+	"Arkansas"	"05"	"Black or African American"	"2054-5"	2605	10147982	25.670
+	"Arkansas"	"05"	"White"	"2106-3"	2353	51415793	4.576
+	"California"	"06"	"American Indian or Alaska Native"	"1002-5"	467	14692140	3.179
+	"California"	"06"	"Asian or Pacific Islander"	"A-PI"	2767	120401160	2.298
+	"California"	"06"	"Black or African American"	"2054-5"	13697	59456716	23.037
+	"California"	"06"	"White"	"2106-3"	30538	621156047	4.916
+	"Colorado"	"08"	"American Indian or Alaska Native"	"1002-5"	125	1905421	6.560
+	"Colorado"	"08"	"Asian or Pacific Islander"	"A-PI"	90	3792505	2.373
+	"Colorado"	"08"	"Black or African American"	"2054-5"	849	5405419	15.706
+	"Colorado"	"08"	"White"	"2106-3"	3454	99285975	3.479
+	"Connecticut"	"09"	"Asian or Pacific Islander"	"A-PI"	34	3213242	1.058
+	"Connecticut"	"09"	"Black or African American"	"2054-5"	1192	9022615	13.211
+	"Connecticut"	"09"	"White"	"2106-3"	1355	65056396	2.083
+	"Delaware"	"10"	"Asian or Pacific Islander"	"A-PI"	10	690916	Unreliable
+	"Delaware"	"10"	"Black or African American"	"2054-5"	751	4393053	17.095
+	"Delaware"	"10"	"White"	"2106-3"	347	14320732	2.423
+	"District of Columbia"	"11"	"Asian or Pacific Islander"	"A-PI"	19	555448	Unreliable
+	"District of Columbia"	"11"	"Black or African American"	"2054-5"	3120	7325678	42.590
+	"District of Columbia"	"11"	"White"	"2106-3"	178	5671090	3.139
+	"Florida"	"12"	"American Indian or Alaska Native"	"1002-5"	34	2134372	1.593
+	"Florida"	"12"	"Asian or Pacific Islander"	"A-PI"	267	11726529	2.277
+	"Florida"	"12"	"Black or African American"	"2054-5"	12543	69361200	18.084
+	"Florida"	"12"	"White"	"2106-3"	12756	330543318	3.859
+	"Georgia"	"13"	"American Indian or Alaska Native"	"1002-5"	27	1049414	2.573
+	"Georgia"	"13"	"Asian or Pacific Islander"	"A-PI"	262	7671843	3.415
+	"Georgia"	"13"	"Black or African American"	"2054-5"	10500	65931689	15.926
+	"Georgia"	"13"	"White"	"2106-3"	5015	134728066	3.722
+	"Hawaii"	"15"	"Asian or Pacific Islander"	"A-PI"	453	19573673	2.314
+	"Hawaii"	"15"	"Black or African American"	"2054-5"	37	831904	4.448
+	"Hawaii"	"15"	"White"	"2106-3"	184	8953835	2.055
+	"Idaho"	"16"	"American Indian or Alaska Native"	"1002-5"	42	630881	6.657
+	"Idaho"	"16"	"White"	"2106-3"	686	32361019	2.120
+	"Illinois"	"17"	"American Indian or Alaska Native"	"1002-5"	14	1633962	Unreliable
+	"Illinois"	"17"	"Asian or Pacific Islander"	"A-PI"	141	13993119	1.008
+	"Illinois"	"17"	"Black or African American"	"2054-5"	13942	42900783	32.498
+	"Illinois"	"17"	"White"	"2106-3"	6681	220705616	3.027
+	"Indiana"	"18"	"American Indian or Alaska Native"	"1002-5"	10	600663	Unreliable
+	"Indiana"	"18"	"Asian or Pacific Islander"	"A-PI"	57	2691527	2.118
+	"Indiana"	"18"	"Black or African American"	"2054-5"	4572	13925246	32.832
+	"Indiana"	"18"	"White"	"2106-3"	4018	124300821	3.232
+	"Iowa"	"19"	"American Indian or Alaska Native"	"1002-5"	13	328444	Unreliable
+	"Iowa"	"19"	"Asian or Pacific Islander"	"A-PI"	31	1397896	2.218
+	"Iowa"	"19"	"Black or African American"	"2054-5"	353	2357523	14.973
+	"Iowa"	"19"	"White"	"2106-3"	1069	62777345	1.703
+	"Kansas"	"20"	"American Indian or Alaska Native"	"1002-5"	38	843625	4.504
+	"Kansas"	"20"	"Asian or Pacific Islander"	"A-PI"	62	1719221	3.606
+	"Kansas"	"20"	"Black or African American"	"2054-5"	1037	4203572	24.669
+	"Kansas"	"20"	"White"	"2106-3"	1734	55285123	3.136
+	"Kentucky"	"21"	"American Indian or Alaska Native"	"1002-5"	10	267070	Unreliable
+	"Kentucky"	"21"	"Asian or Pacific Islander"	"A-PI"	25	1274346	1.962
+	"Kentucky"	"21"	"Black or African American"	"2054-5"	1664	7930716	20.982
+	"Kentucky"	"21"	"White"	"2106-3"	3433	84902044	4.043
+	"Louisiana"	"22"	"American Indian or Alaska Native"	"1002-5"	21	767326	2.737
+	"Louisiana"	"22"	"Asian or Pacific Islander"	"A-PI"	109	1744586	6.248
+	"Louisiana"	"22"	"Black or African American"	"2054-5"	9874	33020093	29.903
+	"Louisiana"	"22"	"White"	"2106-3"	3040	64604372	4.706
+	"Maine"	"23"	"Black or African American"	"2054-5"	25	413829	6.041
+	"Maine"	"23"	"White"	"2106-3"	472	28078709	1.681
+	"Maryland"	"24"	"American Indian or Alaska Native"	"1002-5"	22	729742	3.015
+	"Maryland"	"24"	"Asian or Pacific Islander"	"A-PI"	150	7634165	1.965
+	"Maryland"	"24"	"Black or African American"	"2054-5"	9140	38757911	23.582
+	"Maryland"	"24"	"White"	"2106-3"	2206	79186818	2.786
+	"Massachusetts"	"25"	"American Indian or Alaska Native"	"1002-5"	13	717758	Unreliable
+	"Massachusetts"	"25"	"Asian or Pacific Islander"	"A-PI"	96	8531606	1.125
+	"Massachusetts"	"25"	"Black or African American"	"2054-5"	1450	11978934	12.105
+	"Massachusetts"	"25"	"White"	"2106-3"	2098	123693130	1.696
+	"Michigan"	"26"	"American Indian or Alaska Native"	"1002-5"	65	1845372	3.522
+	"Michigan"	"26"	"Asian or Pacific Islander"	"A-PI"	96	6089878	1.576
+	"Michigan"	"26"	"Black or African American"	"2054-5"	10427	32707362	31.880
+	"Michigan"	"26"	"White"	"2106-3"	4071	178444427	2.281
+	"Minnesota"	"27"	"American Indian or Alaska Native"	"1002-5"	235	1677862	14.006
+	"Minnesota"	"27"	"Asian or Pacific Islander"	"A-PI"	118	5141085	2.295
+	"Minnesota"	"27"	"Black or African American"	"2054-5"	1041	6824349	15.254
+	"Minnesota"	"27"	"White"	"2106-3"	1434	102711040	1.396
+	"Mississippi"	"28"	"American Indian or Alaska Native"	"1002-5"	28	364989	7.671
+	"Mississippi"	"28"	"Asian or Pacific Islander"	"A-PI"	50	654608	7.638
+	"Mississippi"	"28"	"Black or African American"	"2054-5"	5108	24242193	21.071
+	"Mississippi"	"28"	"White"	"2106-3"	2053	39336769	5.219
+	"Missouri"	"29"	"American Indian or Alaska Native"	"1002-5"	28	842859	3.322
+	"Missouri"	"29"	"Asian or Pacific Islander"	"A-PI"	71	2528811	2.808
+	"Missouri"	"29"	"Black or African American"	"2054-5"	6363	15886229	40.054
+	"Missouri"	"29"	"White"	"2106-3"	3914	110912986	3.529
+	"Montana"	"30"	"American Indian or Alaska Native"	"1002-5"	204	1514447	13.470
+	"Montana"	"30"	"Black or African American"	"2054-5"	16	164272	Unreliable
+	"Montana"	"30"	"White"	"2106-3"	540	19785894	2.729
+	"Nebraska"	"31"	"American Indian or Alaska Native"	"1002-5"	63	547036	11.517
+	"Nebraska"	"31"	"Asian or Pacific Islander"	"A-PI"	13	879215	Unreliable
+	"Nebraska"	"31"	"Black or African American"	"2054-5"	481	2086406	23.054
+	"Nebraska"	"31"	"White"	"2106-3"	743	36565338	2.032
+	"Nevada"	"32"	"American Indian or Alaska Native"	"1002-5"	59	1046578	5.637
+	"Nevada"	"32"	"Asian or Pacific Islander"	"A-PI"	165	5031518	3.279
+	"Nevada"	"32"	"Black or African American"	"2054-5"	1153	5518185	20.895
+	"Nevada"	"32"	"White"	"2106-3"	2529	45991912	5.499
+	"New Hampshire"	"33"	"Black or African American"	"2054-5"	11	443337	Unreliable
+	"New Hampshire"	"33"	"White"	"2106-3"	410	27570694	1.487
+	"New Jersey"	"34"	"Asian or Pacific Islander"	"A-PI"	218	16654192	1.309
+	"New Jersey"	"34"	"Black or African American"	"2054-5"	5239	29314838	17.871
+	"New Jersey"	"34"	"White"	"2106-3"	3440	145305789	2.367
+	"New Mexico"	"35"	"American Indian or Alaska Native"	"1002-5"	614	4749772	12.927
+	"New Mexico"	"35"	"Asian or Pacific Islander"	"A-PI"	21	804753	2.609
+	"New Mexico"	"35"	"Black or African American"	"2054-5"	184	1230808	14.950
+	"New Mexico"	"35"	"White"	"2106-3"	2788	37192691	7.496
+	"New York"	"36"	"American Indian or Alaska Native"	"1002-5"	43	4184454	1.028
+	"New York"	"36"	"Asian or Pacific Islander"	"A-PI"	548	34015420	1.611
+	"New York"	"36"	"Black or African American"	"2054-5"	10329	77843206	13.269
+	"New York"	"36"	"White"	"2106-3"	8872	309807263	2.864
+	"North Carolina"	"37"	"American Indian or Alaska Native"	"1002-5"	450	3237494	13.900
+	"North Carolina"	"37"	"Asian or Pacific Islander"	"A-PI"	141	5354994	2.633
+	"North Carolina"	"37"	"Black or African American"	"2054-5"	7599	46477309	16.350
+	"North Carolina"	"37"	"White"	"2106-3"	5759	150612099	3.824
+	"North Dakota"	"38"	"American Indian or Alaska Native"	"1002-5"	90	861664	10.445
+	"North Dakota"	"38"	"Black or African American"	"2054-5"	15	308933	Unreliable
+	"North Dakota"	"38"	"White"	"2106-3"	209	13831735	1.511
+	"Ohio"	"39"	"American Indian or Alaska Native"	"1002-5"	23	842702	2.729
+	"Ohio"	"39"	"Asian or Pacific Islander"	"A-PI"	94	4975080	1.889
+	"Ohio"	"39"	"Black or African American"	"2054-5"	8127	33071285	24.574
+	"Ohio"	"39"	"White"	"2106-3"	5652	214719962	2.632
+	"Oklahoma"	"40"	"American Indian or Alaska Native"	"1002-5"	650	8259782	7.869
+	"Oklahoma"	"40"	"Asian or Pacific Islander"	"A-PI"	65	1787001	3.637
+	"Oklahoma"	"40"	"Black or African American"	"2054-5"	1691	6994857	24.175
+	"Oklahoma"	"40"	"White"	"2106-3"	3202	64728944	4.947
+	"Oregon"	"41"	"American Indian or Alaska Native"	"1002-5"	70	1703761	4.109
+	"Oregon"	"41"	"Asian or Pacific Islander"	"A-PI"	82	4002603	2.049
+	"Oregon"	"41"	"Black or African American"	"2054-5"	246	2074570	11.858
+	"Oregon"	"41"	"White"	"2106-3"	2015	76134221	2.647
+	"Pennsylvania"	"42"	"American Indian or Alaska Native"	"1002-5"	19	955144	Unreliable
+	"Pennsylvania"	"42"	"Asian or Pacific Islander"	"A-PI"	184	8317229	2.212
+	"Pennsylvania"	"42"	"Black or African American"	"2054-5"	9587	32597224	29.410
+	"Pennsylvania"	"42"	"White"	"2106-3"	5790	235448903	2.459
+	"Rhode Island"	"44"	"American Indian or Alaska Native"	"1002-5"	11	219917	Unreliable
+	"Rhode Island"	"44"	"Asian or Pacific Islander"	"A-PI"	14	792818	Unreliable
+	"Rhode Island"	"44"	"Black or African American"	"2054-5"	161	1846043	8.721
+	"Rhode Island"	"44"	"White"	"2106-3"	455	20402986	2.230
+	"South Carolina"	"45"	"American Indian or Alaska Native"	"1002-5"	25	538560	4.642
+	"South Carolina"	"45"	"Asian or Pacific Islander"	"A-PI"	57	1576909	3.615
+	"South Carolina"	"45"	"Black or African American"	"2054-5"	5256	28998507	18.125
+	"South Carolina"	"45"	"White"	"2106-3"	3115	69565854	4.478
+	"South Dakota"	"46"	"American Indian or Alaska Native"	"1002-5"	270	1663802	16.228
+	"South Dakota"	"46"	"Black or African American"	"2054-5"	27	322418	8.374
+	"South Dakota"	"46"	"White"	"2106-3"	254	15734628	1.614
+	"Tennessee"	"47"	"American Indian or Alaska Native"	"1002-5"	18	588234	Unreliable
+	"Tennessee"	"47"	"Asian or Pacific Islander"	"A-PI"	86	2347783	3.663
+	"Tennessee"	"47"	"Black or African American"	"2054-5"	6003	23941640	25.073
+	"Tennessee"	"47"	"White"	"2106-3"	4674	111269166	4.201
+	"Texas"	"48"	"American Indian or Alaska Native"	"1002-5"	57	5519456	1.033
+	"Texas"	"48"	"Asian or Pacific Islander"	"A-PI"	633	24351700	2.599
+	"Texas"	"48"	"Black or African American"	"2054-5"	10777	69326380	15.545
+	"Texas"	"48"	"White"	"2106-3"	21417	449707278	4.762
+	"Utah"	"49"	"American Indian or Alaska Native"	"1002-5"	64	985086	6.497
+	"Utah"	"49"	"Asian or Pacific Islander"	"A-PI"	49	2087669	2.347
+	"Utah"	"49"	"Black or African American"	"2054-5"	62	906627	6.839
+	"Utah"	"49"	"White"	"2106-3"	1174	55841017	2.102
+	"Vermont"	"50"	"Black or African American"	"2054-5"	10	177678	Unreliable
+	"Vermont"	"50"	"White"	"2106-3"	250	13228533	1.890
+	"Virginia"	"51"	"American Indian or Alaska Native"	"1002-5"	14	926250	Unreliable
+	"Virginia"	"51"	"Asian or Pacific Islander"	"A-PI"	183	10582036	1.729
+	"Virginia"	"51"	"Black or African American"	"2054-5"	5491	35716305	15.374
+	"Virginia"	"51"	"White"	"2106-3"	3416	126721925	2.696
+	"Washington"	"53"	"American Indian or Alaska Native"	"1002-5"	248	3175118	7.811
+	"Washington"	"53"	"Asian or Pacific Islander"	"A-PI"	316	13125357	2.408
+	"Washington"	"53"	"Black or African American"	"2054-5"	864	6916827	12.491
+	"Washington"	"53"	"White"	"2106-3"	3437	124352232	2.764
+	"West Virginia"	"54"	"Black or African American"	"2054-5"	303	1529922	19.805
+	"West Virginia"	"54"	"White"	"2106-3"	1710	38230913	4.473
+	"Wisconsin"	"55"	"American Indian or Alaska Native"	"1002-5"	70	1447107	4.837
+	"Wisconsin"	"55"	"Asian or Pacific Islander"	"A-PI"	83	3140223	2.643
+	"Wisconsin"	"55"	"Black or African American"	"2054-5"	2277	8444277	26.965
+	"Wisconsin"	"55"	"White"	"2106-3"	1945	110994429	1.752
+	"Wyoming"	"56"	"American Indian or Alaska Native"	"1002-5"	67	336343	19.920
+	"Wyoming"	"56"	"Black or African American"	"2054-5"	10	173262	Unreliable
+	"Wyoming"	"56"	"White"	"2106-3"	313	11400623	2.745
+"---"
+"Dataset: Underlying Cause of Death, 1999-2020"
+"Query Parameters:"
+"Injury Intent: Homicide"
+"Group By: State; Race"
+"Show Totals: Disabled"
+"Show Zero Values: False"
+"Show Suppressed: False"
+"Calculate Rates Per: 100,000"
+"Rate Options: Default intercensal populations for years 2001-2009 (except Infant Age Groups)"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/ucd.html for more information."
+"---"
+"Query Date: Jul 7, 2022 2:41:49 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. National Vital Statistics"
+"System, Mortality 1999-2020 on CDC WONDER Online Database, released in 2021. Data are from the Multiple Cause of Death Files,"
+"1999-2020, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/ucd-icd10.html on Jul 7, 2022 2:41:49 PM"
+"---"
+Messages:
+"1. Totals are not available for these results due to suppression constraints. More Information:"
+"http://wonder.cdc.gov/wonder/help/faq.html#Privacy."
+"2. Rows with suppressed Deaths are hidden. Use Quick Options above to show suppressed rows."
+"---"
+Caveats:
+"1. As of April 3, 2017, the underlying cause of death has been revised for 125 deaths in 2014. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#2014-Revision."
+"2. Circumstances in Georgia for the years 2008 and 2009 have resulted in unusually high death counts for the ICD-10 cause of"
+"death code R99, ""Other ill-defined and unspecified causes of mortality."" Caution should be used in interpreting these data."
+"More information: http://wonder.cdc.gov/wonder/help/ucd.html#Georgia-Reporting-Anomalies."
+"3. Circumstances in New Jersey for the year 2009 have resulted in unusually high death counts for the ICD-10 cause of death code"
+"R99, ""Other ill-defined and unspecified causes of mortality"" and therefore unusually low death counts in other ICD-10 codes,"
+"most notably R95, ""Sudden Infant Death Syndrome"" and X40-X49, ""Unintentional poisoning."" Caution should be used in"
+"interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#New-Jersey-Reporting-Anomalies."
+"4. Circumstances in California resulted in unusually high death counts for the ICD-10 cause of death code R99, ""Other"
+"ill-defined and unspecified causes of mortality"" for deaths occurring in years 2000 and 2001. Caution should be used in"
+"interpreting these data. More information: http://wonder.cdc.gov/wonder/help/ucd.html#California-Reporting-Anomalies."
+"5. Data are Suppressed when the data meet the criteria for confidentiality constraints. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Assurance of Confidentiality."
+"6. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Unreliable."
+"7. Information included on the death certificate about the race and Hispanic ethnicity of the decedent is reported by the"
+"funeral director as provided by an informant, often the surviving next of kin, or, in the absence of an informant, on the basis"
+"of observation. Race and ethnicity information from the census is by self-report. To the extent that race and Hispanic origin"
+"are inconsistent between these two data sources, death rates will be biased. More information:"
+"http://wonder.cdc.gov/wonder/help/ucd.html#Racial Differences."
+"8. The population figures for year 2020 are bridged-race estimates of the July 1 resident population, from the Vintage 2020"
+"postcensal series released by NCHS on September 22, 2021. The population figures for year 2019 are bridged-race estimates of the"
+"July 1 resident population, from the Vintage 2019 postcensal series released by NCHS on July 9, 2020. The population figures for"
+"year 2018 are bridged-race estimates of the July 1 resident population, from the Vintage 2018 postcensal series released by NCHS"
+"on June 25, 2019. The population figures for year 2017 are bridged-race estimates of the July 1 resident population, from the"
+"Vintage 2017 postcensal series released by NCHS on June 27, 2018. The population figures for year 2016 are bridged-race"
+"estimates of the July 1 resident population, from the Vintage 2016 postcensal series released by NCHS on June 26, 2017. The"
+"population figures for year 2015 are bridged-race estimates of the July 1 resident population, from the Vintage 2015 postcensal"
+"series released by NCHS on June 28, 2016. The population figures for year 2014 are bridged-race estimates of the July 1 resident"
+"population, from the Vintage 2014 postcensal series released by NCHS on June 30, 2015. The population figures for year 2013 are"
+"bridged-race estimates of the July 1 resident population, from the Vintage 2013 postcensal series released by NCHS on June 26,"
+"2014. The population figures for year 2012 are bridged-race estimates of the July 1 resident population, from the Vintage 2012"
+"postcensal series released by NCHS on June 13, 2013. The population figures for year 2011 are bridged-race estimates of the July"
+"1 resident population, from the Vintage 2011 postcensal series released by NCHS on July 18, 2012. Population figures for 2010"
+"are April 1 Census counts. The population figures for years 2001 - 2009 are bridged-race estimates of the July 1 resident"
+"population, from the revised intercensal county-level 2000 - 2009 series released by NCHS on October 26, 2012. Population"
+"figures for 2000 are April 1 Census counts. Population figures for 1999 are from the 1990-1999 intercensal series of July 1"
+"estimates. Population figures for the infant age groups are the number of live births. <br/><b>Note:</b> Rates and population"
+"figures for years 2001 - 2009 differ slightly from previously published reports, due to use of the population estimates which"
+"were available at the time of release."
+"9. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/ucd.html#Age Group."

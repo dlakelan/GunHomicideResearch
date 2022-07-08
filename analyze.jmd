@@ -21,15 +21,20 @@ end
 
 
 # manually downloaded CDC wonder gun homicide data using online form 
-homicides = CSV.read("./data/wonder-gun-homicide-byyear.csv",DataFrame)
-homicides = @chain rename(homicides,Dict("Crude Rate" => "crudedeathrate", "State Code" => "StateCode", "Year Code" => "YearCode")),
-    @subset(.! ismissing.(:Deaths)),
+gunhomicidesnew = CSV.read("./data/wonder-gun-homicide-byyear.csv",DataFrame)
+gunhomicidesold = CSV.read("./data/cdc-wonder-firearm-homicide-1979-1998.csv",DataFrame)
+gunhomicides = [gunhomicidesnew ; gunhomicidesold]
+gunhomicides = @chain rename(gunhomicides,Dict("Crude Rate" => "crudedeathrate", "State Code" => "StateCode", "Year" => "year", "Year Code" => "YearCode")) begin
+    @subset(.! ismissing.(:Deaths))
     @transform(:crudedeathrate = map(x -> isnothing(x) ? missing : x, tryparse.(Float64,String.(:crudedeathrate))),
-        :state = String31.(:State)),
+        :state = String31.(:State))
     @subset(.! ismissing.(:crudedeathrate))
+    @orderby(:StateCode,:year)
+end
+
 
 gunchecks = CSV.read("./data/nics-firearm-background-checks.csv",DataFrame)
-startpops = @chain homicides, @subset(:Year .== 1999), @select(:State, :StartingPop = :Population,:StartDeathRate = :crudedeathrate)
+startpops = @chain gunhomicides, @subset(:year .== 1999), @select(:State, :StartingPop = :Population,:StartDeathRate = :crudedeathrate)
 
 
 
@@ -37,17 +42,19 @@ gunsalesest = @chain gunchecks,
     @orderby(:state,:month),
     @select(:state,:month,:salesest = 1.1 .* (:handgun .+ :long_gun) .+ 2.0 .* :multiple),
     groupby(:state),
-    @transform(:cumsales = cumsum(:salesest),:year=year.(:month))
+    @transform(:cumsales = cumsum(:salesest),:year=year.(:month)),
+    @subset(month.(:month) .== 6)
 
-joined = leftjoin(gunsalesest,homicides, on=[:state => :State,:year => :Year]; matchmissing=:notequal,makeunique=true)
+
+joined = leftjoin(gunhomicides,gunsalesest, on=[:State => :state,:year => :year]; matchmissing=:notequal,makeunique=true)
+
 joined = @chain leftjoin(joined,startpops; on=[:state => :State],makeunique=true) begin
     @subset(.! ismissing.(:Deaths) .&& .! ismissing.(:StartingPop))
-    @subset(month.(:month) .== 6)
     @subset(:StateCode .< 60)
     @transform(:cumgunrate = (:cumsales .+ 1.0 .* :StartingPop) ./ :Population )
 end
 
-joined = leftjoin(joined,fipscodes,on = :state => :STATE_NAME)
+joined = @orderby(leftjoin(joined,fipscodes,on = :state => :STATE_NAME),:StateCode,:year)
 
 
 display(plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
@@ -71,11 +78,11 @@ concarry.year = map(x -> ismissing(x) ? missing : year(x),concarry.date)
 concarry = @subset(concarry,:STATE .<= 59) #ignore minor territories
 
 let p = []
-    for (st,stusab,statename,statens,lawdate,stdate) in eachrow(concarry)
-        d = stdate
+    for (st,stusab,statename,statens,lawdate,stdate,year) in eachrow(concarry)
+        d = year
         sub = @subset(joined,:state .== statename)
         if(nrow(sub) > 0)
-            pp = plot(sub.month,sub.crudedeathrate,ylim=(0,15),size=(500,500),
+            pp = plot(sub.year,sub.crudedeathrate,ylim=(0,15),size=(500,500),
                 title="$statename death rate vs time",xlab="Year",ylab="Gun Homicide/100k/yr",legend=false)
             if(!ismissing(d))
                 pp = plot!([(d,0),(d,15)])
@@ -119,10 +126,10 @@ for statelist in stategroups
     ccdatesenact = @subset(ccdatesenact, .! ismissing.(:crudedeathrate))
     #display(ccdatesenact)
     #display(sub)
-    p = plot(sub.month,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,
+    p = plot(sub.year,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,
         title="Firearm Homicide Rate vs Time", ylab="Homicides/100k population/yr")
     if nrow(ccdatesenact) > 0
-        p = scatter!(Date.(ccdatesenact.year,6,1),ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
+        p = scatter!(ccdatesenact.year,ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
     end
     display(p)
 end
@@ -222,7 +229,7 @@ function laweffect(yr,rate,start)
 end
 
 
-statecoefpert = log(1.15)/2.0
+statecoefpert = log(1.05)/2.0
 
 include("model.jl") ## load the model, this is a separate file so we can save the output unless it changes
 
@@ -241,7 +248,7 @@ width = 7.0
 
 
 modl = guns(modeljoined.StateCode,maximum(modeljoined.StateCode),modeljoined.stgroup,maximum(modeljoined.stgroup),
-        centers, width, modeljoined.year,log.(modeljoined.crudedeathrate),lawdates.year)
+        centers, width, modeljoined.year,log.(modeljoined.crudedeathrate),lawdates.year,statecoefpert)
 
 setadbackend(:reversediff)
 Turing.setrdcache(true)
@@ -271,7 +278,10 @@ for (st,stusab) in Iterators.zip(lawdates.STATE,lawdates.STUSAB)
     statenames[st] = stusab
     end
 
+function plotlawts(s,lawdates,modeljoined)
 let pl = []
+    lawco = group(s,"statelawcoef")
+
     for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
         den = density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-log(2),log(2)))
         plot!([(0.0,0.0),(0.0,5.0)], color="red",ylim=(0.0,5.0))
@@ -305,7 +315,7 @@ let pl = []
             lawrate = s[samp,:lawrate,1]
             startlaw = lawdates[lawdates.STATE .== st,:].year[1]
             startlaw = ismissing(startlaw) ? 3000 : startlaw
-            years = 1999:2020
+            years = 1979:2020
             pred = [statebase + 
                 timeser(yr,regioncoefs .+ (statecoefpert .* statecoefs),centers,width) for yr in years]
             plot!(years,pred; color="orange",alpha=0.5)
@@ -322,9 +332,64 @@ let pl = []
 end
 
 density(s[:,:meanlawcoef,:],title="Mean law coefficient")
+end
+
+plotlawts(s,lawdates,modeljoined)
+
+```
+
+# Shall-issue vs permitless
+
+One plausible explanation for the relative lack of clear measurable effect from permitless carry laws is that permitless actually
+may have had very little effect on how many people carry firearms in public. Many of these states were shall-issue and many people 
+who wanted to carry may have had CCW permits issued before the permitless law passed. Therefore the change in number of people
+carrying may have been minimal.
+
+Using the date on which states converted to shall-issue permits, with a similar analysis, we can determine whether more of an effect was
+visible after that legal change. Some states converted from no-issue to shall issue, while others converted from may-issue to shall-issue.
+
+
+```julia{results="hidden"}
+
+# dates collected from https://en.wikipedia.org/wiki/History_of_concealed_carry_in_the_United_States
+shallissdates = CSV.read("data/ShallIssueDates.csv",DataFrame)
+
+shallissue = leftjoin(fipscodes,shallissdates; on = :STUSAB)
+
+silawdates = @chain leftjoin(DataFrame(STATE=1:55),shallissue; on=:STATE) begin
+    @subset(:STATE .< 60)
+    @rtransform(:year = ismissing(:ShallIssueDate) ? 3000 : :ShallIssueDate)
+    @orderby(:STATE)
+end
+
+modl2 = guns(modeljoined.StateCode,maximum(modeljoined.StateCode),modeljoined.stgroup,maximum(modeljoined.stgroup),
+        centers, width, modeljoined.year,log.(modeljoined.crudedeathrate),silawdates.year,statecoefpert)
+
+
+
+savedfile = "./saved/shallisssamples.dat"
+global sisam = []
+if stat(savedfile).mtime > stat("./model.jl").mtime
+    global sisam = deserialize(savedfile)
+else
+    global sisam = sample(modl2,NUTS(500,0.8),MCMCThreads(),500,3)
+    serialize(savedfile,sisam)
+end
+
+```
+
+# Shall Issue coefficients
+
+```julia
+
+
+plotlawts(sisam, silawdates,modeljoined)
 
 
 ```
+
+
+
 
 # The Take Home
 

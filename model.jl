@@ -1,5 +1,5 @@
 
-@model function guns(state,nstates,region,nregions,centers,width,year,lograte,startlaw)
+@model function guns(state,nstates,region,nregions,centers,width,year,lograte,startlaw, statecoefpert)
     ## state is an integer corresponding to the state
     n = length(lograte)
     nc = length(centers)
