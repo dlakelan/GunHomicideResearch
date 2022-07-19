@@ -2,17 +2,46 @@
 using Pkg
 Pkg.activate(".")
 
-using DataFrames, CSV, StatsPlots, Downloads, DataFramesMeta, Dates, Statistics, Turing, Memoization, ReverseDiff, Serialization
+using DataFrames, CSV, StatsPlots, Downloads, DataFramesMeta, Dates, Statistics
+using Turing, Memoization, ReverseDiff, Serialization
+using LinearAlgebra, Distributions
 
 ```
 # Firearms and Violent Crime, recent trends
 
-```julia
+In late June 2022 the Supreme Court of the United States (SCOTUS) issued a ruling in *New York State Rifle and Pistol Association v Bruen* which
+ended the possibility for any state to issue concealed weapons (CCW) permits on the basis of judgement by government employees (known as "may issue" laws).
+For example in New York an applicant had to convince a police department that they had a "special need" for protection (such as for example a credible death threat)
+and in California the Sherriff of each county had a similar discretionary ability to decide whether there was a "sufficient cause" for
+issuing a permit. Simple self defense was not enough. 
+
+In the *Bruen* ruling, either permitless systems as now exist in 25 states, or CCW permit systems in which "objective" standards apply were the only
+allowable options (known as "shall issue" laws). Objective standards are for example "has never been convicted of a felony" or "has passed a required safety class" 
+and other similar requirements which are factually verifiable by anyone.
+
+After this ruling, as with most rulings liberalizing gun laws, political opponents of the ruling predicted "wild west" style shootouts in 
+the streets. But in fact at the time of the ruling 43 states had either permitless carry (25 states) or a "shall issue" CCW permit system (18 states).
+
+The usconcealedcarry.com website [shows](https://www.usconcealedcarry.com/resources/terminology/types-of-concealed-carry-licensurepermitting-policies/shall-issue/)
+the following "shall issue" map. The only misleading data point is that Vermont is shown as red, because they have never regulated
+concealed carry in any way, it was explicitly constitutionally guaranteed from the beginning and so there is no CCW permit to issue at all. 
+
+![Shall issue states](images/shall-issue-map.png)
+
+## So what do we know about firearms carry and violence?
+
+Let's begin by loading several datasets. We have data on background checks each month, data matching FIPS codes for states, and CDC WONDER 
+data on firearms homicides, as well as all homicides. We separate homicides from firearms suicides as they have a different cause and require different 
+prevention techniques than violent crime. In general firearms suicides are about 2x as big as all homicides.
+
+Loading and munging the data into useful form:
+
+```julia{results="hidden"}
 if !Base.Filesystem.ispath("data/nics-firearm-background-checks.csv")
     Downloads.download("https://github.com/BuzzFeedNews/nics-firearm-background-checks/raw/master/data/nics-firearm-background-checks.csv","./data/nics-firearm-background-checks.csv")
 end
 
-if ~Base.Filesystem.ispath("data/fipscodes.csv")
+if !Base.Filesystem.ispath("data/fipscodes.csv")
     Downloads.download("https://www2.census.gov/geo/docs/reference/state.txt","./data/fipscodes.csv")
 end
 fipscodes = @chain CSV.read("data/fipscodes.csv",DataFrame) begin  
@@ -55,20 +84,61 @@ joined = @chain leftjoin(joined,startpops; on=[:state => :State],makeunique=true
 end
 
 joined = @orderby(leftjoin(joined,fipscodes,on = :state => :STATE_NAME),:StateCode,:year)
+```
+
+## Let's first take a look at total guns vs gun homicides
+
+Although we don't have a proper starting value for the beginning of the period, we know that for quite a while now the number of guns 
+per capita in the US is on the order of 1. We therefore put a starting value of 1 for **every state** even though in fact this should vary somewhat
+likely between 0.7 and 1.5 or so, and then cumulatively total up the approximate number of firearms purchased since then and divide by the running population estimate, 
+to calculate a firearms per capita time series. 
+
+We then plot firearms homicides vs firearms per capita as a parametric curve with time not visible. If purchasing guns causes gun homicides, then 
+as guns per capita increases through time so will firearms homicides. However there are also **other** models that could cause such trends.
+
+Nevertheless, if gun purchases do cause gun homicides, we should see these positive trending lines.
 
 
+
+```julia
 display(plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
     ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Gun Prevalence", alpha=.5))
+
+display(plot(joined.cumgunrate,joined.crudedeathrate; group=joined.state, legend=false, xlab="Gun Rate (guns/capita)",
+    ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Gun Prevalence", alpha=.5, ylim=(0,12)))
+
+
+```
+## Firearms data as a time series
+
+In addition we plot how Homicides have changed through time, and how firearms per capita has changed through time 
+```julia
 
 display(plot(joined.year,joined.crudedeathrate; group=joined.state, legend=false, xlab="Year",
     ylab="Firearm Homicide Rate (deaths/100kcapita/yr)", title="Gun Homicide vs Time", alpha=.5))
 
+display(plot(joined.year, joined.cumgunrate; group=joined.state, legend=false, xlab="Year",
+    ylab="Firearms Per Capita Estimate (guns/person)", title="Gun Ownership vs Time", alpha=.5, ylim=(0,4),xlim=(1999,2020)))
 
 ```
+## A zoom in to regional trends
 
-How has "Constitutional Carry" affected violence in states that pass those laws? Let's take a first look at the data, by plotting the 
-firearms homicide rate through time, with a marker for the onset of Constitutional Carry as found in the Wikipedia article on Constitutional
-Carry.
+
+
+# Constitutional Carry
+
+The most recent trend in firearms carry in the US is the conversion of "shall issue" states to a permitless carry system. In this system everyone over a certain age 
+(18 or 21 depending on state) who is legally able to possess a pistol may carry that pistol concealed in public subject to relatively few restrictions (such as not allowed in secure 
+areas with metal detectors etc). For the moment we ignore the issue of "open carry" which has different issues such as intimidation purposes.
+
+Of all the systems for regulating firearms in public, this is the least restrictive. There are various models one might have of how this would affect 
+gun homicides. Some might argue armed citizens deter crime, others might argue it makes it easier to commit crime, others might argue the effect if any would be 
+minimal as criminals were already carrying guns and only relatively "model citizens" would start carrying, and they are generally not involved in crime 
+in terms of committing them or as victims. It's worthwhile to look at the data to see what hypotheses are comopatible with the observed trends.
+
+We plot firearms homicide rates through time for each state. We place a vertical red line at the point in time where the constitutional carry law was signed if any.
+
+
 
 ```julia
 
@@ -83,14 +153,14 @@ let p = []
         sub = @subset(joined,:state .== statename)
         if(nrow(sub) > 0)
             pp = plot(sub.year,sub.crudedeathrate,ylim=(0,15),size=(500,500),
-                title="$statename death rate vs time",xlab="Year",ylab="Gun Homicide/100k/yr",legend=false)
+                title="$statename\nhomicides",xlab="Year",ylab="Gun Homicide/100k/yr",legend=false)
             if(!ismissing(d))
                 pp = plot!([(d,0),(d,15)])
             end
         push!(p,pp)
         end
     end
-    plot(p...; size = (2000,2000))
+    display(plot(p...; size = (2000,2000)))
 end
 
 ```
@@ -98,7 +168,7 @@ end
 # States by Geographic Group
 
 Looking at the raw data we can see that there are a number of states that have an "accelerating" trend of increased firearms homicide violence
-in the period from about 2015 onward. Some of these have converted to Constitutional Carry near the beginning of that period or during that period, with 
+in the period from about mid 2014 to 2015 onward. Some of these have converted to Constitutional Carry near the beginning of that period or during that period, with 
 the trend beginning before the carry provision for several of the states. Also many states have passed their laws in the last few years and have no 
 data post-law.
 
@@ -116,25 +186,34 @@ stategroupdf = leftjoin(fipscodes,stategroupdf; on = :STUSAB)
 
 @assert(length(unique(reduce(vcat,stategroups))) == 51) # 50 states plus DC
 
-for statelist in stategroups
-    sub = joined[in.(joined.STUSAB, Ref(statelist)),:]
-    ccdates = @chain @subset(concarry, in.(concarry.STUSAB,Ref(statelist))) begin
-        @subset(.! ismissing.(:year))
+let p1 = [], p2=[]
+    for statelist in stategroups
+        sub = joined[in.(joined.STUSAB, Ref(statelist)),:]
+        ccdates = @chain @subset(concarry, in.(concarry.STUSAB,Ref(statelist))) begin
+            @subset(.! ismissing.(:year))
+        end
+        
+        ccdatesenact = leftjoin(ccdates,sub, on = [:STUSAB => :STUSAB, :year => :year], makeunique = true)
+        ccdatesenact = @subset(ccdatesenact, .! ismissing.(:crudedeathrate))
+        #display(ccdatesenact)
+        #display(sub)
+        p = plot(sub.year,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,
+            ylab="Homicides/100k population/yr",xlab="Year")
+        if nrow(ccdatesenact) > 0
+            p = scatter!(ccdatesenact.year,ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
+        end
+        push!(p1,p)
+        p = plot(sub.cumgunrate,sub.crudedeathrate,markersize=6,linewidth=3,thickness_scaling=1, xlab="Gun Ownership (guns/person)", ylab="Homicide rate (per 100k)", group=sub.STUSAB)
+        push!(p2,p)
     end
-    
-    ccdatesenact = leftjoin(ccdates,sub, on = [:STUSAB => :STUSAB, :year => :year], makeunique = true)
-    ccdatesenact = @subset(ccdatesenact, .! ismissing.(:crudedeathrate))
-    #display(ccdatesenact)
-    #display(sub)
-    p = plot(sub.year,sub.crudedeathrate,group=sub.STUSAB,ylim=(0,20),legend=:topleft,linewidth = 3, thickness_scaling=1,
-        title="Firearm Homicide Rate vs Time", ylab="Homicides/100k population/yr")
-    if nrow(ccdatesenact) > 0
-        p = scatter!(ccdatesenact.year,ccdatesenact.crudedeathrate,markersize=6,group = ccdatesenact.STUSAB)
-    end
-    display(p)
+    display(plot(p1...; size=(1000,1000)))
+    display(plot(p2...; size=(1000,1000)))
 end
 
+
 ```
+
+
 
 # States by Relative Change
 
@@ -176,7 +255,7 @@ end
 
 # What has been the relative change?
 
-Each state plotted in a group with other geographically similar states. Firearm homicide rate relative to the recorded rate in the year 1999.
+Each state plotted in a group with other geographically similar states. Firearm homicide rate relative to average recorded rate 1999-2001.
 
 
 ```julia
@@ -195,8 +274,15 @@ the homicide rate can never be negative. It makes sense then to model the homici
 We estimate the behavior of the states as an overall level, plus a shape that is common to the region. Individual states are then allowed a small perturbation
 to the regional shape.
 
+This small perturbation method was the only way that seemed to make sense to estimate the counterfactual. Clearly none of the states will perform exactly like the average. 
+So if we use the regional average, we will bias towards a lot of noise. Obviously, there is no effect if no law was passed, so for those states with no law passed, the
+counterfactual is the same as the actual, and we then should allow a size of perturbation which allows the function to fit the actuals for those states. 
+By modifying the parameter `statecoefpert` we can make it as small as possible while still causing all the non-law states to fit reasonably well. At this point whatever
+lack of fit there is post-law in those states, could be at least partially attributed to the law. The choice of value of `log(1.25)/2.0 ~ 0.112` seemed to fit the bill, leaving only
+Maryland the only non-law not quite well fit by the model. Any smaller value left both MD and NY fitting poorly.
+
 The effect of constitutional carry law would then be estimated as the log firearm homicide rate which **exceeds the state level counterfactual estimate** in the
-years after the passage of the law.
+years after the passage of the law, with a transient onset curve included in the model.
 
 We impose an informal smoothness requirement on the counterfactual estimates by using a compact radial basis function expansion with one center every 4 years, and a maximum
 radius of 7 years so that there is overlap between adjacent centers. 
@@ -229,7 +315,7 @@ function laweffect(yr,rate,start)
 end
 
 
-statecoefpert = log(1.05)/2.0
+statecoefpert = log(1.25)/2.0
 
 include("model.jl") ## load the model, this is a separate file so we can save the output unless it changes
 
@@ -283,7 +369,8 @@ let pl = []
     lawco = group(s,"statelawcoef")
 
     for i in @select(@subset(lawdates,:year .< 2022),:STATE).STATE
-        den = density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",xlim=(-log(2),log(2)))
+        den = density(s[:,Symbol("meanlawcoef"),:] .+ lawco[:,Symbol("statelawcoef[$i]"),:], title = "State $i = $(statenames[i])",
+            legend=false,xlim=(-log(2),log(2)))
         plot!([(0.0,0.0),(0.0,5.0)], color="red",ylim=(0.0,5.0))
         push!(pl,den)
     end
@@ -393,6 +480,7 @@ plotlawts(sisam, silawdates,modeljoined)
 
 # The Take Home
 
+## Permitless/Constitutional Carry laws
 Many states that have passed constitutional carry laws have done so recently enough that there is no data on homicides available from CDC Wonder yet. 
 
 For those which passed the law long enough ago to have some post-law data, still many of them were in the last few years leaving only a few years of post-law data.
@@ -401,14 +489,32 @@ Estimates of a law effect created by comparing the actual data to counterfactual
 that has uncertain sign, with a most likely value of about 0.05 or so, meaning that gun homicides may increase by a factor of around 1.05, however the ability to resolve this number is so
 poor that the number could be anything from about -0.1 to +0.25 (multiplying the crime rate by anywhere from 0.9 to 1.28.
 
-Evidence for a consistent average net positive or negative effect of passing constitutional carry laws simply doesn't exist in the data so far. 
+Any kind of convincing evidence for a consistent average net positive or negative effect of passing constitutional carry laws simply isn't there. What's more,
+we have decent bounds on the size of this effect for most states, it should be somewhere between perhaps -0.25 and 0.25 on the log scale, meaning approximately the rate of homicides would be multiplied by
+some number in the range 0.78 to 1.28. 
 
-In states such as AK, AZ, and AR which passed their laws long enough ago that we might expect to be able to estimate the effect, the average effect appears to be close to 0.0 with uncertainty
-relatively symmetrically distributed to both sides. The strongest estimates we have are near zero.
+## Shall issue laws
 
-KY, and MS appear to be outliers, but even in these cases it's ambiguous whether the law resulted in an increase or a decrease, even though increase
-appears to be the more probable direction. 
+Because many shall-issue laws were passed in the 1990's there is much better evidence for their long term effect on crime. However,  using the same methodology as above
+the average effect is essentially symmetrically distributed around 0.0 with a posterior credible range of about -0.1 to 0.1. The only reasonably strong evidence we have
+in this data for a real effect is that Texas may have reduced crime with a coefficient around -0.3 and perhaps Pennsylvania caused an increase around 0.2, with Wisconsin
+possibly around 0.2. The PA estimate does see the counterfactual diverge around the time of the law, but the Wisconsin counterfactual diverges 20 years before the law,
+suggesting that that effect is really an artifact of a poor counterfactual estimate. 
 
-The evidence simply does not show a consistent effect increasing or decreasing firearm homicides after liberalization of concealed
-carry laws.
+## Firearms Sales
+
+Firearms sales are driven by multiple factors. One is the fear of "bans" which drove a lot of sales around the time of the Sandy Hook school shooting in Dec 2012. And in general 
+sales have increased over the last decade including a sudden increase after the turmoil of 2020, with women and racial minorities making up a historically unprecedented fraction
+of new sales ([close to 50%](https://www.wsj.com/articles/women-are-nearly-half-of-new-gun-buyers-study-finds-11631792761)).
+
+Firearms sales can plausibly be both a cause of firearms crime (when people purchase firearms to commit crime), 
+a response to violence (when people purchase firearms for defense after periods of crime), and even in some cases a deterrent to crime (when criminals meet with greater
+defensive responses than before). It is hard to say which of these effects dominates, and in fact most likely all of these occur at different times and different places.
+One thing is clear however, and that is that it is entirely possible for gun ownership to increase while crime decreases, or 
+for crime to increase while gun ownership per capita decreases. Those who somehow wish to draw a direct causal link in the US between more guns and more gun crime 
+simply do not have an easy obvious convincing argument.
+
+The evidence suggests that in the post *NYSRPA v Bruen* era, forcing CA and NY and others to shall-issue their permits will by itself have very little effect on overall
+gun crime. More likely if there is an increase it will be due to the turmoil undergoing the whole country at the moment, with high levels of inflation and the war in Ukraine
+driving food prices up and crime in general increasing over the last few years. 
 

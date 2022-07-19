@@ -1,0 +1,212 @@
+```julia
+
+using Pkg
+Pkg.activate(".")
+
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics
+
+function getifnotthere(filename,URL)
+    if !Base.Filesystem.ispath(filename)
+        # see https://www.aic.gov.au/statistics/homicide
+        Downloads.download(URL,filename)
+    end
+end
+
+getifnotthere("./data/australia-homicides.xlsx","https://www.aic.gov.au/sites/default/files/2022-03/homicideincidents1989-90to2019-20_0.xlsx")
+getifnotthere("./data/australia-suicides.xlsx","https://www.aihw.gov.au/getmedia/47de5d8a-b550-4df2-b938-d9bf3f6cd3e3/2020-aihw-suicide-and-self-harm-monitoring-nmd-suicide-icd-10-x60-x84-y87-0.xlsx.aspx")
+
+# a pdf of a report breaking down homicide information including by type of firearm
+getifnotthere("./data/aussie-homicide-report.pdf", "https://www.aic.gov.au/sites/default/files/2020-05/tandi075.pdf")
+
+# data on fatal road crashes, for use in control for risk taking behavior etc
+# see https://data.gov.au/dataset/ds-dga-5b530fb8-526e-4fbf-b0f6-aa24e84e4277/details?q=australian%20road%20deaths%20database
+
+getifnotthere("./data/aussie-crash-data.csv", "https://data.gov.au/data/dataset/5b530fb8-526e-4fbf-b0f6-aa24e84e4277/resource/d54f7465-74b8-4fff-8653-37e724d0ebbb/download/ardd_fatal_crashes_jun2022.csv")
+
+
+suicdata = DataFrame(XLSX.readtable("data/australia-suicides.xlsx",5; first_row = 2)...)
+suicdata = stack(suicdata,Not([1,2,3]))
+rename!(suicdata,Dict(:variable => :year,:value => :suicrate))
+suicdata.suicrate = map(x -> if typeof(x) == Float64 x else missing end, suicdata.suicrate)
+suicdata.year = map(x -> begin y = tryparse(Int64,x);  y; end, suicdata.year) 
+@subset!(suicdata,:Measure .== "Age-standardised rate (per 100,000)")
+
+suicall = @subset(suicdata,:Sex .== "Persons")
+
+pl = @df suicall plot(:year,:suicrate; group = :Mechanism, title= "Suicide in Australia", ylab="Rate/100k", legend=:topleft)
+
+const NFAyear = 1996
+
+@df @subset(suicall,:year .>= 1950) plot(:year,:suicrate; group = :Mechanism,xlim=(1950,2040),size=(800,800),title="Australia Suicides")
+display(plot!([1996,1996],[0,15],color="red",label="NFA year"))
+
+
+
+```
+
+Let's look at homicides:
+
+```julia
+
+
+homdata = DataFrame(XLSX.readtable("data/australia-homicides.xlsx","Table A20","A:F"; first_row=2)...)
+@subset!(homdata,.! ismissing.(:Firearm))
+homdata.year = collect(1989:2019)
+homdata
+for column in 2:6
+    setproperty!(homdata,names(homdata)[column],Vector{Float64}(Float64.(homdata[:,column])))
+end
+rename!(homdata,[:period,:firearm, :knife, :blunt, :handsfeet,:other,:year])
+
+@rtransform!(homdata,:alltype = :firearm + :knife + :blunt + :handsfeet + :other)
+
+homdata = stack(homdata,Not([:period,:year]))
+
+pl = @df homdata plot(:year,:value; group = :variable, title="Australian Homicide Rates",ylab="per 100k",size=(800,800))
+
+display(pl)
+
+```
+
+Now let's look at road crash data just because it's available and for comparison.
+
+```julia
+
+getifnotthere("./data/australia-population.xlsx","https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/dec-2021/310104.xlsx")
+
+ozpop = DataFrame(XLSX.readtable("./data/australia-population.xlsx",2; first_row=10)...)
+rename!(ozpop,[Symbol("Series ID") => :date, :A2060842F => :TotPop])
+@select!(ozpop,:date,:TotPop)
+ozpop.date = Date.(ozpop.date)
+@transform!(ozpop,:year = year.(:date))
+ozpop = @by(ozpop,:year,:TotPop = mean(:TotPop))
+
+crashdata = CSV.read("./data/aussie-crash-data.csv",DataFrame)
+rename!(crashdata,[Symbol("Number Fatalities") => :fatalities, :Year => :year])
+byyr = @by(crashdata,:year,:deaths = sum(:fatalities))
+
+@df byyr plot(:year,:deaths, title="Australian Road Fatalities",legend=:false)
+
+crashjoin = leftjoin(byyr,ozpop; on = :year)
+
+@df crashjoin plot(:year, :deaths ./ :TotPop * 100_000.0; title= "Australia Fatal Crash rate per 100k",legend=false)
+
+
+```
+
+So evidently, in Australia, crashes have **always** killed around 10x as many people as guns did, even as both have plummeted.
+
+
+# Other crimes
+
+```julia
+
+# data from https://www.abs.gov.au/articles/27-years-recorded-crime-victims-data
+# this can't actually be downloaded from these URLs unfortunately but if you go to the above URL
+# you can manually verify the data I downloaded by hand
+
+getifnotthere("./data/australia-homicide-and-related.csv","https://www.abs.gov.au/b1067eb4-bf73-4a86-86d0-b4d973df6b5c")
+getifnotthere("./data/australia-assault.csv","https://www.abs.gov.au/4a75956d-b1d0-4dda-a5a6-ef5946f51ddf")
+getifnotthere("./data/australia-sex-assault.csv","https://www.abs.gov.au/b6bdbf80-4be1-40aa-9100-a3e306d38175")
+getifnotthere("./data/australia-robbery.csv","https://www.abs.gov.au/00cf1a97-d00e-4be2-8a75-aacdd9a6a24b")
+getifnotthere("./data/australia-entry-w-intent.csv","https://www.abs.gov.au/9029832b-f956-4e53-8c99-54b3a464dcd1")
+getifnotthere("./data/australia-motor-vehicle-theft.csv","https://www.abs.gov.au/ae6584de-a07c-452e-b1ce-afacaa79fb54")
+getifnotthere("./data/australia-other-theft.csv","https://www.abs.gov.au/3c9ad1bc-d611-4161-9907-6b2dfde7cf07")
+
+```
+# How did crime rates change in the vicinity of the gun buyback
+
+```julia
+
+function readauscsv(file; footerskip = 2)
+    dat = CSV.read(file, DataFrame; skipto=3, footerskip = footerskip)
+    rename!(dat,[:year,:data])
+    dat
+end
+
+function plotdat(df; etc...)
+    @df df plot(:year,:rate; etc...)
+    p = plot!([NFAyear,NFAyear],[0.0,maximum(df.rate) * 1.25]; label="NFA Year")
+    display(p)
+    p
+end
+
+homreldat = @chain readauscsv("./data/australia-homicide-and-related.csv") begin
+    leftjoin(ozpop,on=:year)
+    @transform(:rate = :data ./ :TotPop .* 100e3)
+end
+
+assaultdat = @chain CSV.read("./data/australia-assault.csv",DataFrame;skipto=3,header=2,footerskip=4) begin
+    rename!([1=>:year])
+    stack(Not(:year))
+    rename!([:variable=>:territory])
+    @rtransform(:rate = ismissing(:value) ? missing : typeof(:value) == Float64 ? :value : tryparse(Float64,replace(:value, r"," => "")))
+end
+
+
+sexassaultdat = @chain readauscsv("./data/australia-sex-assault.csv"; footerskip=4) begin @transform(:rate = :data) end
+
+robberydat = @chain readauscsv("./data/australia-robbery.csv") begin @rtransform(:rate = tryparse(Float64, replace(:data,r"," => ""))) end
+
+entryintentdat = @chain readauscsv("./data/australia-entry-w-intent.csv") begin 
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => ""))) 
+end
+
+mvtheftdat = @chain readauscsv("./data/australia-motor-vehicle-theft.csv") begin
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => "")))
+end
+
+
+othertheftdat = @chain readauscsv("./data/australia-other-theft.csv") begin
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => "")))
+end
+
+
+plotdat(homreldat; title="Australia Homicide and Related")
+
+@df assaultdat plot(:year, :rate; group = :territory,legend=:topleft,title="Assault rates by territory")
+p = plot!([NFAyear,NFAyear],[0.0,3500.0]; label="NFA year",color="red")
+display(p)
+
+plotdat(sexassaultdat; title="Australia Sex Assault", ylab="per 100k/yr")
+plotdat(robberydat; title="Australia Robbery", ylab="per 100k/yr")
+plotdat(entryintentdat; title="Australia Entry with Intent", ylab="Count/yr")
+plotdat(mvtheftdat; title= "Australia Vehicle Theft", ylab="Count/yr")
+plotdat(othertheftdat; title="Australia Other Theft", ylab="Count/yr")
+nothing
+
+```
+# The apparent situation
+
+Post 1996 ban, apparently crime in most categories increased for several years, until shortly after 2000 when many forms of crime began an exponential plummet...
+
+What happened around the year 2000?
+
+```julia
+
+getifnotthere("./data/australia-gdp-per-capita.csv.zip","https://api.worldbank.org/v2/en/indicator/NY.GDP.PCAP.CD?downloadformat=csv")
+cd("data")
+if ! Base.Filesystem.ispath("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv")
+    run(`unzip ./australia-gdp-per-capita.csv.zip`)
+end
+cd("..")
+
+gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; header=5,skipto=6)
+rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
+
+ausgdp = @subset(gdp,:country .== "Australia")
+ausgdp = stack(ausgdp,Not([:country,:ccode,Symbol("Indicator Name"),Symbol("Indicator Code")]))
+rename!(ausgdp,[:variable => :year, :value => :gdppcap])
+ausgdp = @chain ausgdp begin @transform(:year = tryparse.(Int64,:year)) 
+    @subset(typeof.(:year) .== Int64)
+end
+
+
+@df ausgdp plot(:year,:gdppcap,title="Australia GDP/capita Constant 2022 Dollars",legend=:topleft)
+plot!([NFAyear,NFAyear],[0.0,70e3],label="NFA year")
+
+```
+
+
+
+

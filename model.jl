@@ -3,7 +3,7 @@
     ## state is an integer corresponding to the state
     n = length(lograte)
     nc = length(centers)
-    scale ~ Gamma(5.0,log(1.25)/4.0) # should predict to within 25%
+    scale ~ Gamma(9.0,log(1.20)/8.0) # should predict to within 0.2 or so on log scale
     statebase ~ MvNormal([2.0 for i in 1:nstates], 3.0)
     nationcoefs ~ MvNormal(zeros(Float64,nc),2.0)
     regioncoefs = fill(nationcoefs,nregions)
@@ -13,6 +13,7 @@
     statecoefs = fill(nationcoefs,nstates)
     for i in 1:nstates
         statecoefs[i] ~ MvNormal(fill(0.0,length(nationcoefs)),1.0)
+#        statecoefs[i] ~ MvTDist(7,fill(0.0,length(nationcoefs)),diagm(fill(1.0,length(nationcoefs)))
     end
     lawrate ~ Gamma(5.0,3.0/4.0) ## about 3/yr
     meanlawcoef ~ Normal(0.0,log(2.0)/2.0) # no more than a doubling of homicide
