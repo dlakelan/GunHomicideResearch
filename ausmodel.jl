@@ -72,5 +72,6 @@
     bne ~ MvNormal(pbne,err)
     vehth ~ MvNormal(pvehth,err)
     theft ~ MvNormal(ptheft,err)
+    return((phom = phom, prape=prape,prob=prob,pbne=pbne,pvehth=pvehth,ptheft=ptheft))
 end
 

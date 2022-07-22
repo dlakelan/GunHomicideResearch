@@ -282,3 +282,32 @@ display(p)
 
 ```
 
+## Understanding goodness of fit
+
+Let's see how well the fitted australia model reproduces the observed changes in crime.
+
+```julia
+
+gquan = generated_quantities(theaumod,ausamp)
+
+sam = sample(1:size(ausamp)[1],20)
+
+# take a look specifically at homicide, and robbery
+
+p = plot(modeldata.year,modeldata.homrate; linewidth=3, legend=false, title="AU Homicide relative change\n Actual and Predicted")
+for i in sam
+    p = plot!(modeldata.year,gquan[i,1].phom; alpha=.5)
+end
+display(p)
+
+
+p = plot(modeldata.year,modeldata.robberyrate; linewidth=3, legend=false, title="AU Robbery relative change\n Actual and Predicted")
+for i in sam
+    p = plot!(modeldata.year,gquan[i,1].prob; alpha=.5)
+end
+display(p)
+
+
+
+
+```
