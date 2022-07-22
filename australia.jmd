@@ -3,7 +3,7 @@
 using Pkg
 Pkg.activate(".")
 
-using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics, Turing, LinearAlgebra
 
 function getifnotthere(filename,URL)
     if !Base.Filesystem.ispath(filename)
@@ -25,7 +25,7 @@ getifnotthere("./data/aussie-crash-data.csv", "https://data.gov.au/data/dataset/
 
 
 suicdata = DataFrame(XLSX.readtable("data/australia-suicides.xlsx",5; first_row = 2)...)
-suicdata = stack(suicdata,Not([1,2,3]))
+suicdata = DataFramesMeta.stack(suicdata,Not([1,2,3]))
 rename!(suicdata,Dict(:variable => :year,:value => :suicrate))
 suicdata.suicrate = map(x -> if typeof(x) == Float64 x else missing end, suicdata.suicrate)
 suicdata.year = map(x -> begin y = tryparse(Int64,x);  y; end, suicdata.year) 
@@ -60,7 +60,7 @@ rename!(homdata,[:period,:firearm, :knife, :blunt, :handsfeet,:other,:year])
 
 @rtransform!(homdata,:alltype = :firearm + :knife + :blunt + :handsfeet + :other)
 
-homdata = stack(homdata,Not([:period,:year]))
+homdata = DataFramesMeta.stack(homdata,Not([:period,:year]))
 
 pl = @df homdata plot(:year,:value; group = :variable, title="Australian Homicide Rates",ylab="per 100k",size=(800,800))
 
@@ -138,7 +138,7 @@ end
 
 assaultdat = @chain CSV.read("./data/australia-assault.csv",DataFrame;skipto=3,header=2,footerskip=4) begin
     rename!([1=>:year])
-    stack(Not(:year))
+    DataFramesMeta.stack(Not(:year))
     rename!([:variable=>:territory])
     @rtransform(:rate = ismissing(:value) ? missing : typeof(:value) == Float64 ? :value : tryparse(Float64,replace(:value, r"," => "")))
 end
@@ -195,7 +195,7 @@ gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; he
 rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
 
 ausgdp = @subset(gdp,:country .== "Australia")
-ausgdp = stack(ausgdp,Not([:country,:ccode,Symbol("Indicator Name"),Symbol("Indicator Code")]))
+ausgdp = DataFramesMeta.stack(ausgdp,Not([:country,:ccode,Symbol("Indicator Name"),Symbol("Indicator Code")]))
 rename!(ausgdp,[:variable => :year, :value => :gdppcap])
 ausgdp = @chain ausgdp begin @transform(:year = tryparse.(Int64,:year)) 
     @subset(typeof.(:year) .== Int64)
@@ -207,6 +207,78 @@ plot!([NFAyear,NFAyear],[0.0,70e3],label="NFA year")
 
 ```
 
+Evidently, Australia began a rocket ride of economic boom lasting about 10 years and ultimately tripling the real per capita GDP as measured in 2021 US Dollars.
+
+It is reasonable to believe that crime rates are affected by several important considerations
+* Motive. Important motives for many crimes are economic, with the goal of acquiring someone elses property or anger about failure to repay loans etc.
+* Probability of being caught. 
+* Probability of being met with armed resistance.
+* Severity of punishment if caught
+* Relative attractiveness of alternatives (such as finding a well paid job)
+
+When economic conditions improve rapidly, not only can many people improve on their day to day income and ability to afford to purchase things they need or want, but
+also when things improve rapidly, waiting a short while until those improvements can be realized becomes more attractive compared to a situation where things remain 
+static or even decline during a recession. 
+
+```julia
+
+include("ausmodel.jl")
+
+modeldata = leftjoin(homreldat,ausgdp, on=:year)
+rename!(modeldata,[:rate => :homrate])
+modeldata = leftjoin(modeldata,sexassaultdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :sexassaultrate])
+modeldata = leftjoin(modeldata,robberydat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :robberyrate])
+modeldata = leftjoin(modeldata,entryintentdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :entryrate])
+modeldata = leftjoin(modeldata,mvtheftdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :mvtheftrate])
+modeldata = leftjoin(modeldata,othertheftdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :theftrate])
+modeldata = leftjoin(modeldata,ozpop; on = :year, makeunique=true)
+@select!(modeldata,:year,:TotPop,:homrate,:gdppcap,:sexassaultrate,:robberyrate,:entryrate,:mvtheftrate,:theftrate)
+modeldata = leftjoin(modeldata,DataFrame(year = collect(1993:2019), guns=vcat([1.0,1.0,1.0,1.0],[.8 + i* 0.25/(2019-1996) for i in 1:(2019-1996)])); on = :year)
+
+## fill in 2 missing values for 1993, 1994 as same as 1995 data
+modeldata[1,:theftrate] = 490527.0
+modeldata[2,:theftrate] = 490527.0
+
+for n in Iterators.drop(names(modeldata),1)
+    setproperty!(modeldata,n,Vector{Float64}(getproperty(modeldata,n)))
+    setproperty!(modeldata,n, getproperty(modeldata,n) ./ getproperty(modeldata,n)[1])
+
+end
+
+display(modeldata)
 
 
+theaumod = ausmodel(modeldata.year,modeldata.gdppcap, modeldata.guns,
+    modeldata.TotPop, modeldata.homrate, modeldata.sexassaultrate, 
+    modeldata.robberyrate, modeldata.entryrate, modeldata.mvtheftrate,
+    modeldata.theftrate)
+
+ausamp = sample(theaumod,NUTS(500,0.8),MCMCThreads(),500,3)
+
+p = density(group(ausamp,:homcoefs))
+display(p)
+p = density(group(ausamp,:rapecoefs))
+display(p)
+p = density(group(ausamp,:robcoefs))
+display(p)
+p = density(group(ausamp,:bnecoefs))
+display(p)
+p = density(group(ausamp,:vehthcoefs))
+display(p)
+p = density(group(ausamp,:theftcoefs))
+display(p)
+
+p = density(group(ausamp,:f))
+display(p)
+
+p = density(group(ausamp,:err))
+display(p)
+
+
+```
 
