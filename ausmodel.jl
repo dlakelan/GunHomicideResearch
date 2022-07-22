@@ -3,7 +3,7 @@
 
 
 @model function ausmodel(years::Vector{Int64},gdppercap::Vector{T},
-        guns::Vector{T}, popn::Vector{T},
+        guns::Vector{T}, gunowners::Vector{T}, popn::Vector{T},
         hom::Vector{T},rape::Vector{T},rob::Vector{T},bne::Vector{T},vehth::Vector{T},theft::Vector{T}) where T
 
     f ~ Beta(3.0,3.0)
@@ -27,12 +27,12 @@
     ptheft = copy(stuff)
     eqtheft = copy(stuff)
 
-    homcoefs ~ MvNormal(fill(0.0,5),3.0)
-    rapecoefs ~ MvNormal(fill(0.0,5),3.0)
-    robcoefs ~ MvNormal(fill(0.0,5),3.0)
-    bnecoefs ~ MvNormal(fill(0.0,5),3.0)
-    vehthcoefs ~ MvNormal(fill(0.0,5),3.0)
-    theftcoefs ~ MvNormal(fill(0.0,5),3.0)
+    homcoefs ~ MvNormal(fill(0.0,7),3.0)
+    rapecoefs ~ MvNormal(fill(0.0,7),3.0)
+    robcoefs ~ MvNormal(fill(0.0,7),3.0)
+    bnecoefs ~ MvNormal(fill(0.0,7),3.0)
+    vehthcoefs ~ MvNormal(fill(0.0,7),3.0)
+    theftcoefs ~ MvNormal(fill(0.0,7),3.0)
 
     eqhom[1] = one(typeof(stuff[1]))
     eqrape[1] = one(typeof(stuff[1]))
@@ -49,7 +49,8 @@
     ptheft[1] = one(typeof(stuff[1]))
 
     for yr in 2:length(years)
-        preds = [gdppercap[yr-1],gdppercap[yr]-gdppercap[yr-1],guns[yr-1]/popn[yr-1], guns[yr]/popn[yr] - guns[yr-1]/popn[yr-1], 1.0]
+        preds = [gdppercap[yr-1],gdppercap[yr]-gdppercap[yr-1],guns[yr-1]/popn[yr-1], guns[yr]/popn[yr] - guns[yr-1]/popn[yr-1], 
+            gunowners[yr]/popn[yr], gunowners[yr]/popn[yr] - gunowners[yr-1]/popn[yr-1],  1.0]
         
         eqhom[yr] = exp(dot(homcoefs,preds))
         eqrape[yr] = exp(dot(rapecoefs,preds))

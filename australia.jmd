@@ -3,7 +3,7 @@
 using Pkg
 Pkg.activate(".")
 
-using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics, Turing, LinearAlgebra
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics, Turing, LinearAlgebra, Interpolations
 
 function getifnotthere(filename,URL)
     if !Base.Filesystem.ispath(filename)
@@ -238,11 +238,33 @@ modeldata = leftjoin(modeldata,othertheftdat; on = :year,makeunique=true)
 rename!(modeldata,[:rate => :theftrate])
 modeldata = leftjoin(modeldata,ozpop; on = :year, makeunique=true)
 @select!(modeldata,:year,:TotPop,:homrate,:gdppcap,:sexassaultrate,:robberyrate,:entryrate,:mvtheftrate,:theftrate)
-modeldata = leftjoin(modeldata,DataFrame(year = collect(1993:2019), guns=vcat([1.0,1.0,1.0,1.0],[.8 + i* 0.25/(2019-1996) for i in 1:(2019-1996)])); on = :year)
+
+modeldata = @orderby(modeldata, :year)
+
+# now, how many guns are there in AU, and how many licensed owners?
+
+## to get this data I relied on https://www.gunpolicy.org/firearms/region/australia#number_of_licensed_firearm_owners
+
+auguns = CSV.read("data/AUGunCounts.csv",DataFrame; header=2)
+auguns.guns = Vector{Float64}(auguns.guns)
+auguns = @orderby(auguns,:year)
+interpg = LinearInterpolation(auguns.year,auguns.guns)
+
+
+augunowners = CSV.read("data/AUGunOwners.csv",DataFrame; header=2)
+augunowners.gunowners = Vector{Float64}(augunowners.gunowners)
+augunowners = @orderby(augunowners,:year)
+interpgo = LinearInterpolation(augunowners.year,augunowners.gunowners)
+
+modeldata.guns = [interpg(y) for y in modeldata.year]
+modeldata.gunowners = [interpgo(y) for y in modeldata.year]
+
 
 ## fill in 2 missing values for 1993, 1994 as same as 1995 data
 modeldata[1,:theftrate] = 490527.0
 modeldata[2,:theftrate] = 490527.0
+
+
 
 for n in Iterators.drop(names(modeldata),1)
     setproperty!(modeldata,n,Vector{Float64}(getproperty(modeldata,n)))
@@ -253,7 +275,7 @@ end
 display(modeldata)
 
 
-theaumod = ausmodel(modeldata.year,modeldata.gdppcap, modeldata.guns,
+theaumod = ausmodel(modeldata.year,modeldata.gdppcap, modeldata.guns, modeldata.gunowners,
     modeldata.TotPop, modeldata.homrate, modeldata.sexassaultrate, 
     modeldata.robberyrate, modeldata.entryrate, modeldata.mvtheftrate,
     modeldata.theftrate)
