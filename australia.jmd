@@ -259,10 +259,10 @@ interpgo = LinearInterpolation(augunowners.year,augunowners.gunowners)
 modeldata.guns = [interpg(y) for y in modeldata.year]
 modeldata.gunowners = [interpgo(y) for y in modeldata.year]
 
-p = plot(modeldata.year,modeldata.guns; title="Gun count in AU")
+p = plot(modeldata.year,modeldata.guns; title="Gun count in AU", legend=false)
 display(p)
 
-p = plot(modeldata.year,modeldata.gunowners; title="Gun owner count in AU")
+p = plot(modeldata.year,modeldata.gunowners; title="Gun owner count in AU", legend=false)
 display(p)
 
 
