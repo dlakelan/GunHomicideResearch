@@ -27,12 +27,12 @@
     ptheft = copy(stuff)
     eqtheft = copy(stuff)
 
-    homcoefs ~ MvNormal(fill(0.0,7),3.0)
-    rapecoefs ~ MvNormal(fill(0.0,7),3.0)
-    robcoefs ~ MvNormal(fill(0.0,7),3.0)
-    bnecoefs ~ MvNormal(fill(0.0,7),3.0)
-    vehthcoefs ~ MvNormal(fill(0.0,7),3.0)
-    theftcoefs ~ MvNormal(fill(0.0,7),3.0)
+    homcoefs ~ MvNormal(fill(0.0,7),5.0)
+    rapecoefs ~ MvNormal(fill(0.0,7),5.0)
+    robcoefs ~ MvNormal(fill(0.0,7),5.0)
+    bnecoefs ~ MvNormal(fill(0.0,7),5.0)
+    vehthcoefs ~ MvNormal(fill(0.0,7),5.0)
+    theftcoefs ~ MvNormal(fill(0.0,7),5.0)
 
     eqhom[1] = one(typeof(stuff[1]))
     eqrape[1] = one(typeof(stuff[1]))

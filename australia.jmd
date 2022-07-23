@@ -259,6 +259,12 @@ interpgo = LinearInterpolation(augunowners.year,augunowners.gunowners)
 modeldata.guns = [interpg(y) for y in modeldata.year]
 modeldata.gunowners = [interpgo(y) for y in modeldata.year]
 
+p = plot(modeldata.year,modeldata.guns; title="Gun count in AU")
+display(p)
+
+p = plot(modeldata.year,modeldata.gunowners; title="Gun owner count in AU")
+display(p)
+
 
 ## fill in 2 missing values for 1993, 1994 as same as 1995 data
 modeldata[1,:theftrate] = 490527.0
@@ -306,7 +312,7 @@ display(p)
 
 ## Understanding goodness of fit
 
-Let's see how well the fitted australia model reproduces the observed changes in crime.
+Let's see how well the fitted australia model reproduces the observed changes in crime. We'll show 20 example prediction curves.
 
 ```julia
 
