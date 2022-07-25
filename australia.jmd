@@ -29,7 +29,8 @@ We begin with setting up the tools we need and collecting the data.
 using Pkg
 Pkg.activate(".")
 
-using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, Dates, Statistics, Turing, LinearAlgebra, Interpolations
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, 
+    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization
 
 function getifnotthere(filename,URL)
     if !Base.Filesystem.ispath(filename)
@@ -224,7 +225,7 @@ activity, and/or when gun owners decrease rapidly, criminals may become aware of
 become harder to acquire and enforcement increases, so gun crimes may decrease. 
 
 First we will set up a model, and a dataset to analyze
-```julia
+```julia{results="hidden"}
 
 include("ausmodel.jl")
 
@@ -312,7 +313,17 @@ theaumod = ausmodel(modeldata.year,modeldata.gdppcap, modeldata.guns, modeldata.
     modeldata.robberyrate, modeldata.entryrate, modeldata.mvtheftrate,
     modeldata.theftrate)
 
-ausamp = sample(theaumod,NUTS(500,0.8),MCMCThreads(),500,3)
+
+savedfile = "./saved/ausamples.dat"
+global ausamp = []
+if stat(savedfile).mtime > stat("./ausmodel.jl").mtime
+    global ausamp = deserialize(savedfile)
+else
+    global ausamp = sample(theaumod,NUTS(500,0.8),MCMCThreads(),500,3)
+    serialize(savedfile,ausamp)
+end
+
+
 
 ```
 
@@ -398,3 +409,29 @@ display(p)
 
 
 ```
+# Suicide
+
+The story when it comes to suicides in Australia and the NFA affect seems to be fairly straightforward. Starting around 1990 an organic trend occurred where suicides by 
+firearm dropped on their own as they were replaced with suicide by hanging. Around the time of the NFA itself, the number of hangings spiked upwards in the immediate year 
+or two after the NFA buyback, and then declined for a few years until hangings took off again. Overall across these two methods, suicides trended upwards in the years after the NFA as firearm method 
+declined but hangings increased at an even greater rate. 
+
+To the extent that suicides overall, including other methods, have declined, it's primarily because suicide by "gas" has declined dramatically starting in about 1999.
+
+```julia
+suicmeth = @transform(unstack(@select(suicdata,:Mechanism,:year,:suicrate),:Mechanism,:suicrate; allowduplicates=true),:gunhang = :Firearms + :Hanging)
+
+let p1 = [], p2 = []
+
+    p1 = @df suicmeth plot(:year,:Firearms; label = "Firearms", title = "Suicide in Australia by Method",legend=:topleft)
+    @df suicmeth plot!(:year,:Hanging; label = "Hanging")
+    @df suicmeth plot!(:year,:gunhang; label = "Firearms + Hanging")
+    plot!([NFAyear,NFAyear],[0.0,10.0]; label = "NFA Year", color = "purple", alpha=0.5)
+
+    p2 = @df suicmeth plot(:year,:Gas; title = "Suicide by Gas Rate", legend=:topleft, label="Suicide by Gas")
+
+    display(plot(p1,p2,layout = @layout([a{.8h};b{0.2h}])))
+end
+
+```
+
