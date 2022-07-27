@@ -1,0 +1,48 @@
+# Comparisons of International Homicide and Gun Ownership
+
+```julia{results="hidden"}
+using Pkg
+Pkg.activate(".")
+
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, 
+    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization
+
+```
+
+```julia
+
+function getifnotthere(filename,URL)
+    if !Base.Filesystem.ispath(filename)
+        # see https://www.aic.gov.au/statistics/homicide
+        Downloads.download(URL,filename)
+    end
+end
+
+getifnotthere("data/intl-homicides-unodc.xlsx","https://dataunodc.un.org/sites/dataunodc.un.org/files/data_cts_intentional_homicide.xlsx")
+getifnotthere("data/country-populations-unpop.xlsx","https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx")
+
+homdata = DataFrame(XLSX.readtable("./data/intl-homicides-unodc.xlsx",1; first_row=3)...)
+rename!(homdata,Dict(Symbol("Unit of measurement") => :units, :VALUE => :homicide))
+@subset!(homdata,:Indicator .== "Victims of intentional homicide" .&& :Dimension .== "Total" .&& :Sex .== "Total")
+
+popdata = DataFrame(XLSX.readtable("./data/country-populations-unpop.xlsx",1,"A:BM"; first_row=17)...) 
+rename!(popdata,Dict(Symbol("ISO3 Alpha-code") => :Iso3_code, 
+    Symbol("Total Population, as of 1 January (thousands)") => :PopulationJan))
+
+@rtransform!(popdata,:PopulationJan = if :PopulationJan == "..." missing else :PopulationJan .* 1000.0 end)
+
+alldat = @orderby(@subset(leftjoin(homdata,popdata; on = [:Iso3_code,:Year],matchmissing=:notequal),
+    :units .== "Counts"), :Iso3_code,:Year)
+    
+bigcount = @subset(alldat,:PopulationJan .> 20e6)
+let p = []
+    for r in unique(bigcount.Region)
+        dat = @subset(bigcount,:Region .== r)
+        push!(p,plot(dat.Year,dat.homicide ./ dat.PopulationJan .* 100000.0; group=dat.Iso3_code, legend=:topleft, title="Homicide Rate\n$r"))
+    end
+    plot(p...,size=(1000,1000))
+end
+
+
+
+```
