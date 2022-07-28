@@ -46,3 +46,39 @@ end
 
 
 ```
+
+
+# How does homicide rate compare to gun ownership rate?
+
+```julia
+getifnotthere("data/worldbank-gini-data.zip","https://api.worldbank.org/v2/en/indicator/SI.POV.GINI?downloadformat=csv")
+
+ginidat = CSV.read("data/API_SI.POV.GINI_DS2_en_csv_v2_4333947.csv",DataFrame; skipto=6, header=5)
+ginidat = ginidat[:,1:end-1] # drop meaningless final column
+rename!(ginidat,Dict(Symbol("Country Name") => :Country, Symbol("Country Code") => :countrycode, 
+    Symbol("Indicator Name") => :indicator, Symbol("Indicator Code") => :indicatorcode))
+ginistack = DataFramesMeta.stack(ginidat,Not([:Country, :countrycode,:indicator,:indicatorcode]))
+rename!(ginistack,Dict("variable" => "Year", "value" => "ginicoef"))
+ginistack.Year = tryparse.(Int64,ginistack.Year)
+
+alldat2 = leftjoin(alldat,ginistack; on = [:Iso3_code => :countrycode, :Year], makeunique=true)
+
+@df alldat2 scatter(:ginicoef, :homicide ./ :PopulationJan .* 100000.0; title="Homicide Rate vs Inequality",ylab="Homicides/100k",xlab="Gini Index 0-100")
+
+@df alldat2 scatter(:ginicoef, log.(:homicide ./ :PopulationJan .* 100000.0); group=:Iso3_code, title="Homicide Rate vs Inequality",ylab="log(Homicides/100k)",xlab="Gini Index 0-100",legend=false, alpha=0.5)
+
+gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; header=5,skipto=6)
+rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
+gdp = gdp[:,1:end-1]
+gdpstack = DataFramesMeta.stack(gdp,Not(["country","ccode","Indicator Name","Indicator Code"]))
+
+rename!(gdpstack,Dict("variable" => "Year", "value" => "gdp2020dol"))
+gdpstack.Year = tryparse.(Int64,gdpstack.Year)
+
+alldat3 = leftjoin(alldat2,gdpstack; on = [:Iso3_code => :ccode, :Year])
+
+@df alldat3 scatter(log.(:gdp2020dol), log.(:homicide ./ :PopulationJan .*100000.0); title="Log Homicide vs Log GDP/capita",
+    xlab="log(GDP/capita)",ylab="log(homicide/100k/yr)", group=:Iso3_code,legend=false, alpha=0.2)
+
+```
+
