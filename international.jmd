@@ -129,8 +129,6 @@ countrydat = @by(@subset(alldat4,in.(:Iso3_code,Ref(countries)) .&& .! ismissing
 
 annotations = [(countrydat.ginimean[i],countrydat.loghommean[i],(countrydat.Iso3_code[i],8,colors[i])) for i in 1:nrow(countrydat)]
 annotate!(annotations)
-
-#            text(countries[c],color=colors[c],family=:serif)) for c in 1:length(countries)])
 display(p)
 
 
