@@ -41,7 +41,7 @@ countrycodes = unique(@select(popdata,:country,:Iso3_code))
 alldat = @orderby(@subset(leftjoin(homdata,popdata; on = [:Iso3_code,:Year],matchmissing=:notequal),
     :units .== "Counts"), :Iso3_code,:Year)
     
-bigcount = @subset(alldat,:PopulationJan .> 20e6)
+bigcount = @subset(alldat,:PopulationJan .> 3e6)
 let p = []
     for r in unique(bigcount.Region)
         dat = @subset(bigcount,:Region .== r)
@@ -146,3 +146,56 @@ p = @df alldat3 scatter(log.(:popdensperkm2), :loghom, title="Log homicide vs Lo
 display(p)
 
 ```
+
+# Trying to use SmallArmsSurvey.org data
+
+I downloaded the PDF file of the Annex of civilian small arms data. this is a pdf output from most likely and Excel
+spreadsheet. By copying and pasting text from the PDF into a csv I got a not correctly formatted csv file,, as it uses spaces
+for delimiters in the copy and paste, and countries and regions contain spaces in their names...
+
+The only way to use this data is to read line at a time, and keep the first column (ISO 3 code) and the second Number
+we encounter, as that's the estimate of the firearms in civilian hands, as well as the 4th number which is encoding
+the estimation method. Once we extract this data, we then write it to a usable CSV file. we build this file if it doesn't 
+exist.
+
+```julia
+
+if Base.Filesystem.ispath("data/smallarms2020-clean.csv")
+    gundata = CSV.read("data/smallarms2020-clean.csv",DataFrame)
+else
+
+    rws = CSV.Rows("data/smallarms2020.csv",header=false)
+    gundata = DataFrame(countrycode = String[],civguns= Float64[], esttype = Int64[])
+    for r in rws
+        #@show(r)
+        #@show(length(r))
+        n = 0
+        code = r[1]
+        civguns = 0
+        esttype = 0
+        for v in 2:length(r)
+            num = nothing
+            if !ismissing(r[v])
+                num = tryparse(Float64,r[v])
+            end
+            if ! isnothing(num)
+                n = n+1
+                if n == 2 
+                    civguns = num
+                elseif n == 4
+                    esttype = round(Int64,num)
+                    break
+                end
+            end
+        end
+        push!(gundata,(countrycode=code,civguns=civguns,esttype=esttype))
+    end
+    CSV.write("data/smallarms2020-clean.csv",gundata)
+end
+
+
+
+
+```
+
+
