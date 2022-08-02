@@ -196,6 +196,134 @@ end
 
 
 
+alldat5 = leftjoin(alldat4,gundata; on=:Iso3_code => :countrycode)
+
+alldat5.civgpcap = alldat5.civguns ./ alldat5.PopulationJan
+alldat5.logcivgpcap = log.(alldat5.civgpcap)
+
+alldat5recent = @subset(alldat5,in.(:Year, Ref((2017,2018,2019))))
+
+@df alldat5recent scatter(:logcivgpcap, :loghom,title="Log(Hom rate) vs log(guns/capita)")
+
+
+modlguns = lm(@formula(loghom ~ civgpcap), alldat5recent)
+
+
+
+modlwguns = lm(@formula(loghom ~ ginicoef + loggdppc + civgpcap),alldat5recent)
+
+modlwguns = lm(@formula(loghom ~ ginicoef + loggdppc + logcivgpcap),alldat5recent)
+modlwguns2019 = lm(@formula(loghom ~ ginicoef + loggdppc + logcivgpcap),@subset(alldat5recent,:Year .== 2019))
+
+scatter(residuals(modlwguns),title="Residual on model")
+
+@df @subset(alldat5,.! ismissing.(:civgpcap)) density(:civgpcap)
+
 ```
 
+```julia
 
+getifnotthere("data/pums-2020-5yr-hus.zip","https://www2.census.gov/programs-surveys/acs/data/pums/2020/5-Year/csv_hus.zip")
+
+#getifnotthere("data/pums-2020-csv-hus.zip","https://www2.census.gov/programs-surveys/acs/experimental/2020/data/pums/1-Year/csv_hus.zip")
+#getifnotthere("data/PUMS_Data_Dictionary_2020.csv","https://www2.census.gov/programs-surveys/acs/experimental/2020/documentation/pums/PUMS_Data_Dictionary_2020.csv")
+getifnotthere("data/PUMS_Data_Dectionary_2016-2020.pdf","https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2016-2020.pdf")
+
+if ! Base.Filesystem.ispath("data/psam_husa.csv") || ! Base.Filesystem.ispath("data/psam_husb.csv")
+    cd("data")
+    run(`unzip pums-2020-5yr-hus.zip`)
+    cd("..")
+end
+
+#pumsdd = CSV.read("data/PUMS_Data_Dictionary_2020.csv",DataFrame; header=false)
+#rename!(pumsdd,["IDFlag","varname","vartype","length","title_startval","endval","description"])
+
+psamh = DataFrame()
+for i in ["a","b","c","d"]
+    new = @select(CSV.read("data/psam_hus$(i).csv",DataFrame),:SERIALNO,:ST,:FINCP,:NP,:WGTP)
+    @subset!(new,.!ismissing.(:FINCP) .&& .! ismissing.(:NP))
+    psamh = [psamh ; 
+        new[wsample(1:nrow(new),new.WGTP,round(Int64,0.1*nrow(new))),:] ]
+end
+
+psamh.Year = tryparse.(Int64,psamh.SERIALNO[i][1:4] for i in 1:nrow(psamh))
+
+
+function ginicoef(incs,n)
+"Calculate the gini coefficient from a sample of incomes using sample of size n"
+    avg = mean(incs)
+    absdiff = abs.(sample(incs,n) .- sample(incs,n))
+    mean(absdiff)/2/avg
+end
+
+
+fips = CSV.read("data/fipscodes.csv",DataFrame)
+
+psamh.pcapinc = psamh.FINCP ./ psamh.NP
+
+stateginis = @by(psamh,[:Year,:ST],:gini = ginicoef(:pcapinc,2000),:logmeaninc = log(mean(:pcapinc)))
+stateginis = leftjoin(stateginis,fips; on = :ST => :STATE)
+stateginis.gini100 = stateginis.gini .* 100.0
+
+
+# manually downloaded CDC wonder gun homicide data using online form 
+gunhomicidesnew = CSV.read("./data/wonder-gun-homicide-byyear.csv",DataFrame)
+gunhomicidesold = CSV.read("./data/cdc-wonder-firearm-homicide-1979-1998.csv",DataFrame)
+gunhomicides = [gunhomicidesnew ; gunhomicidesold]
+gunhomicides = @chain rename(gunhomicides,Dict("Crude Rate" => "crudedeathrate", "State Code" => "StateCode", "Year" => "year", "Year Code" => "YearCode")) begin
+    @subset(.! ismissing.(:Deaths))
+    @transform(:crudedeathrate = map(x -> isnothing(x) ? missing : x, tryparse.(Float64,String.(:crudedeathrate))),
+        :state = String31.(:State))
+    @subset(.! ismissing.(:crudedeathrate))
+    @orderby(:StateCode,:year)
+end
+
+
+
+
+plot(@by(stateginis,:ST,:pl = plot(:Year,:gini100,title="$(:STUSAB[1])",ylim=(30,60),size=(500,500))).pl...; size=(2000,2000))
+
+
+stateginis = leftjoin(stateginis,gunhomicides; on = [:Year => :year, :ST => :StateCode])
+
+
+@df stateginis scatter(:gini100,log.(:crudedeathrate); title="log(Firearm Homicide rate) vs Gini\nUS States 2016-2020", legend=false, size=(500,500))
+
+stateginis.loghom = log.(stateginis.crudedeathrate)
+
+mod = lm(@formula(loghom ~ gini100),stateginis)
+
+Plots.abline!(coef(mod)[2],coef(mod)[1])
+
+mod2 = lm(@formula(loghom ~ gini100 + logmeaninc),stateginis)
+
+
+@df stateginis scatter(:gini100,:loghom; marker_z=:logmeaninc,title="Log(firearm homicide) vs Gini\nColor = log(MeanIncome)")
+
+
+scatter(residuals(mod2); title = "Residuals\nloghom ~ 1 + gini100 + logmeanincome")
+
+
+suic = CSV.read("data/cdc-wonder-suicide-all-byyear.csv",DataFrame)
+
+
+@subset!(suic,.! ismissing.(:Year)) # drop summary/totals etc
+rename!(suic,[:Notes,:State,:StateCode,:Year,:YearCode,:Deaths,:Population,:suicrate])
+
+stateginis = leftjoin(stateginis,suic; on = [:Year,:ST => :StateCode], makeunique=true)
+
+@df stateginis scatter(:gini100,log.(:suicrate); title = "Log(Suicide Rate) vs Gini, in US",alpha=0.2)
+@df stateginis annotate!(:gini100,log.(:suicrate),:STUSAB,font(8))
+stateginis.logsuic = log.(stateginis.suicrate)
+
+suicmod = lm(@formula(logsuic ~ gini100 + logmeaninc),stateginis)
+
+
+@df stateginis scatter(:gini100,:logmeaninc,title="log(Mean income) vs gini",alpha=0.2)
+
+
+@df stateginis annotate!(:gini100,:logmeaninc,:STUSAB,title="log(Mean income) vs gini",font(8))
+
+
+
+```
