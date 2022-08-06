@@ -1,0 +1,150 @@
+# As Gini coefficient increases, what happens to the poor and rich people?
+
+In Economics, the [Gini coefficient](https://en.wikipedia.org/wiki/Gini_coefficient) is designed to measure a "spread" of income. 
+In essence, it can be thought of as the average size of the difference between two randomly chosen people's income, as a fraction of the average income.
+The higher the Gini coefficient, the more variable should the income distribution be. 
+
+Here, we define income as "amounts of money paid to a given person/household". So we are not considering
+"net" income but rather just the receipts. This is a strictly non-negative number. Either some people paid you something, or you had no receipts at all, 
+but you can't have "negative" receipts . As it's strictly positive, the x=0 boundary
+may have some interesting properties. In particular, when it comes to explaining violence, we expect that those people at the low 
+end of income distribution have the most motivation to commit violence, for example in order to secure the necessary goods required to sustain
+life, such as food, or basic shelter. It's well established that violence is much more often committed by people desperate for resources than it is
+people who are relatively comfortable.
+
+To see what happens as Gini coefficient changes, consider the paper by E.T. Jaynes [Concentration of Distribution at Entropy Maxima](https://bayes.wustl.edu/etj/articles/entropy.concentration.pdf). 
+In this paper, he proves his "Entropy Concentration Theorem" that among all the distributions with a given mean and Gini coefficient (or any other given constraints), 
+they are all in some sense "close to" the maximum entropy distribution. This means that the maximum entropy distribution is a worthwhile distribution to look at because properties of 
+other distributions with similar mean and Gini coefficients are likely to be similar in some sense. 
+
+We proceed by directly using NLopt in Julia to maximize the entropy of a distribution subject to constraints of mean = 1 and Gini various given values. Because we are free to 
+rescale the units of measure, this is actually sufficient to handle all distributions with a given Gini and mean any dollar amount. 
+
+Using a basis expansion method using Multiquadric Radial Basis functions, we maximize the entropy subject to the constraint, with Gini values from 0.25 to 0.45 spanning the range of Ginis seen 
+in peaceful Western European nations like Czech Republic, Netherlands, France, and Germany, all the way up to countries like the US with a Gini coefficient near 0.40 - 0.45 depending on particular
+estimation methods.
+
+
+```julia
+
+
+using Pkg
+Pkg.activate(".")
+using StaticArrays, StatsPlots, Cubature, NLopt,Printf
+
+mutable struct PdfRbf{T}
+    c::SVector{13,T}
+    a::SVector{13,T}
+    scale::T
+    z::T
+end
+
+const centers = collect(-1.0:(7/12.0):6.0)
+const endpt = 5.0
+
+
+PdfRbf(c::Vector{T},a::Vector{T},sc,z) where T = PdfRbf(SVector{13,T}(c),SVector{13,T}(a),sc,z)
+
+
+function thepdf(x,expn)
+    return exp(sum(expn.a[i] * sqrt(1.0+((x-expn.c[i])/expn.scale)^2) for i in 1:13))/expn.z
+end
+
+function normalize!(p)
+    (z,err) = hquadrature(x -> thepdf(x,p),0.0,endpt)
+    p.z = p.z * z;
+    p
+end
+
+
+function entropy(p)
+    (val,err) = hquadrature(x -> -thepdf(x,p) * log(thepdf(x,p)),0.0,endpt)
+    val
+end
+
+function mean(p::PdfRbf{T}) where T
+    (var,err) = hquadrature(x-> x * thepdf(x,p),0.0,endpt)
+    var
+end
+
+function gini(p::PdfRbf{T}) where T 
+    (var,err) = hcubature( x -> abs(x[1]-x[2])*thepdf(x[1],p)*thepdf(x[2],p),[0.0,0.0],[endpt,endpt])
+    var
+end
+
+
+bar = PdfRbf(SVector{13,Float64}(collect(-1.0:1.0:11.0)),SVector{13,Float64}(rand(13).-0.5),5.0,1.0)
+normalize!(bar)
+
+gini(bar)
+
+
+function ent(x)
+    p = PdfRbf(centers,x,3.0*one(x[1]),one(x[1]))
+    normalize!(p)
+    entropy(p)
+end
+function gin(x)
+    p = PdfRbf(centers,x,3.0*one(x[1]),one(x[1]))
+    normalize!(p)
+    gini(p)
+end
+
+function muval(x)
+    p = PdfRbf(centers,x,3.0*one(x[1]),one(x[1]))
+    normalize!(p)
+    mean(p)
+end
+
+
+pps = let  startx = [-23.510548850507373, -18.100577175661254, -225.13948275760245, -1.5079838437938589, -107.51622646951546, -13.712660431707706, -0.19214600353407665, -5.26144617375756, 0.12979005796514642, 5.264732623647258, 16.157760729712592, 2.9590437873671163, 20.282057772313905] ./ 8.0,
+    pps = []
+    for g in collect(0.25:0.05:0.45)
+        opt = Opt(:LN_COBYLA,13)
+        opt.max_objective = (x,g) -> ent(x)
+        equality_constraint!(opt, (x,gg) -> gin(x) - g,0.005)
+        equality_constraint!(opt, (x,g) -> muval(x) - 1.0,0.005)
+
+
+        opt.maxtime=120
+        opt.ftol_rel = 3e-3
+        opt.xtol_rel = 1e-2
+        opt.xtol_abs = 1e-3
+
+        (optf,optx,ret) = optimize(opt,startx)
+        startx = optx ./ 2.0
+        @show(ret)
+        pp = PdfRbf(centers,optx,3.0,1.0)
+        normalize!(pp)
+        push!(pps,pp)
+    end
+    pps
+end
+
+
+xvals = collect(0.0:0.02:2.0)
+p = plot(;xlab="Income/MeanIncome",title="Maximum Entropy for Given Gini, mean = 1");
+for pp in pps
+    plot!(xvals,thepdf.(xvals,Ref(pp)),label=@sprintf("mean = %.2f, gini = %.2f",mean(pp),gini(pp)))
+end
+display(p)
+
+
+let x = [], y = [], plots = []
+    for (g,p) in Iterators.zip([0.25 0.3 0.35 0.4 0.45],pps)
+        push!(x,g)
+        push!(y,hquadrature(x -> thepdf(x,p),0.0,0.25)[1])
+    end
+    plots = plot(x,log.(y); title = "log(People below 25%) vs Gini",legend=false,xlab="Gini coef (0-1)")
+    display(plots)
+end
+
+
+```
+As can be seen in the given graphs. When income is measured as a fraction of mean income, and assuming a distribution near to the Maximum Entropy one,
+a Gini coefficient of 0.25 implies very few people in the range of incomes [0,0.25], but as Gini increases, the fraction of people in this range rises dramatically across several
+orders of magnitude. By the time Gini hits about 0.45 the probability density at 0 income is around 0.1 and the number of people in the range [0,0.25] is around 6x higher than at Gini = 0.25.
+
+Thus, by decreasing the Gini coefficient using income redistribution, we can move people away from the "desperate" region of the income spectrum, dramatically lowering the motivations
+for violence, and potentially solving many of the violence problems that the US has. 
+
