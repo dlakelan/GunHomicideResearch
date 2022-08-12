@@ -1,0 +1,278 @@
+Location,City,State,LocType,Date,Time,Perp,PerpSex,PerpAge,NRifle,NShotgun,NHandgun,NKilled,NInjured,Result,Resolver,Motive
+Edgewater Technology Inc,Wakefield,MA,Commerce,2000-12-26,11:15:00 AM,Michael M McDermott,M,42,1,1,1,7,0,Apprehended,Police,Disgruntled Worker
+Amko Trading Store,Houston,TX,Commerce,2001-01-09,12:00:00 PM,Ki Young Park,M,54,0,0,2,4,0,Suicide,Police,Relationship
+Navistar International Corp.,Melrose Park,IL,Commerce,2001-02-05,09:40:00 AM,William Daniel Baker,M,57,2,1,1,4,4,Suicide,Police,Disgruntled Worker
+Santana High School,Santee,CA,Education,2001-03-05,09:20:00 AM,Charles Andrew Williams Jr,M,15,0,0,1,2,13,Apprehended,OffDuty Police,Disgruntled Student
+Granite Hills High School,El Cajon,CA,Education,2001-03-22,12:55:00 PM,Jason Anthony Hoffman,M,18,0,1,1,0,5,Shot,Police,Disgruntled Student
+Laidlaw Transit Services Maintenance Yard,San Jose,CA,Commerce,2001-04-23,06:00:00 AM,Cathline Repunte,F,36,0,0,1,1,3,Apprehended,Citizen,Public Shooter
+Nu-Wood Decorative Millwork Plant,Goshen,IN,Commerce,2001-12-06,02:31:00 PM,Robert L Wissman,M,36,0,1,0,1,6,Suicide,Shooter,Disgruntled Worker
+Appalachian School Of Law,Grundy,VA,Education,2002-01-16,01:15:00 PM,Peter Odighizuma,M,43,0,0,1,3,3,Apprehended,Citizen,Public Shooter
+Bertrand Products Inc,South Bend,IN,Commerce,2002-03-22,08:15:00 AM,William Lockey,M,54,1,1,0,4,5,Suicide,Shooter,Disgruntled Worker
+Tom Bradley International Terminal at LAX,Los Angeles,CA,Government,2002-07-04,11:30:00 AM,Hesham Mohamed Ali Hadayet,M,43,0,0,2,2,2,Killed,Security,Public Shooter
+"18 Miles of US Route 64 from Sallisaw to Roland, OK",Sallisaw,OK,Open Space,2002-10-26,05:00:00 PM,Daniel Hawke Fears,M,18,0,1,0,2,8,Apprehended,Police,Public Shooter
+"Labor Ready, Inc",Huntsville,AL,Commerce,2003-02-25,06:25:00 AM,Emanuel Burl Patterson,M,23,0,0,1,4,1,Surrendered,Police,Public Shooter
+Red Lion Junior High School,Red Lion,PA,Education,2003-04-24,07:34:00 AM,James Sheets,M,14,0,0,3,1,0,Suicide,Shooter,Disgruntled Student
+"Case Western Reserve University, Weatherhead School of Management",Cleveland,OH,Education,2003-05-09,03:55:00 PM,Biswanath A Halder,M,62,1,0,1,1,2,Shot,Police,Public Shooter
+Modine Manufacturing Company,Jefferson City,MO,Commerce,2003-07-01,10:28:00 PM,Jonathon W Russell,M,25,0,0,1,3,5,Suicide,Police,Disgruntled Worker
+Lockheed Martin Subassembly Plant,Meridian,MI,Commerce,2003-07-08,09:30:00 AM,Douglas Paul Williams,M,48,1,1,0,6,8,Suicide,Shooter,Disgruntled Worker
+Kanawha County Board of Education,Charleston,WV,Education,2003-07-17,07:00:00 PM,Richard Dean Bright,M,58,2,0,2,0,1,Apprehended,Citizen,Public Shooter
+Gold Leaf Nursery,Boynton Beach,FL,Commerce,2003-07-28,11:40:00 AM,Agustin Casarubias-Dominguez,M,45,0,0,1,3,1,Apprehended,Citizen,Relationship
+Andover Industries,Andover,OH,Commerce,2003-08-19,08:20:00 AM,Richard Wayne Shadle,M,32,0,0,4,1,2,Suicide,Shooter,Disgruntled Worker
+Windy City Cor Supply Inc,Chicago,IL,Commerce,2003-08-27,08:30:00 AM,Salvador Tapia Solis,M,36,0,0,1,6,0,Killed,Police,Disgruntled Worker
+Rocori High School,Cold Spring,MN,Education,2003-10-24,11:35:00 AM,John Jason McLaughlin,M,15,0,0,1,2,1,Apprehended,Citizen,Disgruntled Student
+Watkins Motor Lines,West Chester,OH,Commerce,2003-11-16,09:57:00 AM,Joseph John Eschenbrenner III,M,50,0,0,2,2,3,Apprehended,Police,Disgruntled Worker
+Columbia High School,East Greenbush,NY,Education,2004-02-09,10:30:00 AM,Jon William Romano,M,16,0,1,0,0,1,Apprehended,Citizen,Disgruntled Student
+ConAgra Plant,Kansas City,KS,Commerce,2004-07-02,05:00:00 PM,Elijah J Brown,M,21,0,0,1,6,2,Suicide,Shooter,Disgruntled Worker
+Radio Shack in Gateway Mall,St Petersburg,FL,Commerce,2004-11-18,06:45:00 PM,Justin Michael Cudar,M,25,0,0,1,2,1,Sucide,Shooter,Public Shooter
+"Private Property Near Meteor, Wisconsin",Meteor,WI,Open Space,2004-11-21,12:00:00 PM,Chai Soua Vang,M,36,1,0,0,6,2,Apprehended,Police,Poacher
+DaimlerChrysler’s Toledo North Assembly Plant,Toledo,OH,Commerce,2005-01-26,08:34:00 PM,Myles Wesley Meyers,M,54,0,1,0,1,2,Suicide,Shooter,Disgruntled Worker
+Best Buy in Hudson Valley Mall,Kingston,NY,Commerce,2005-02-13,03:15:00 PM,Robert Charles Bonelli Jr,M,25,1,0,0,0,2,Apprehended,Citizen,Public Shooter
+Living Church of God,Brookfield,WI,House of Worship,2005-03-12,12:51:00 PM,Terry M Ratzmann,M,44,0,0,1,7,4,Suicide,Shooter,Public Shooter
+Red Lake High School and Residence,Red Lake,MN,Education,2005-03-21,02:49:00 PM,Jeffrey James Weise,M,16,0,1,2,9,6,Suicide,Police,Public Shooter
+California Auto Specialist and Apartment Complex,Colton,CA,Commerce,2005-08-08,02:40:00 PM,Louis Mitchell Jr,M,35,0,0,1,3,3,Apprehended,Police,Public Shooter
+"Parking Lots in Philadelphia, PA",Philadelpha,PA,Open Space,2005-10-07,10:13:00 AM,Alexander Elkin,M,45,0,0,1,2,0,Suicide,Police,Relationship
+Campbell County Comprehensive High School,Jacksboro,TN,Education,2005-11-08,02:14:00 PM,Kenneth S Bartley,M,14,0,0,1,1,2,Apprehended,Citizen,Disgruntled Student
+Tacoma Mall,Tacoma,WA,Commerce,2005-11-20,12:00:00 PM,Dominick Sergil Maldonado,M,20,1,0,1,0,6,Apprehended,Police,Public Shooter
+Burger King and Huddle House,North Augusta,SC,Commerce,2005-11-22,06:10:00 AM,,M,,1,0,0,1,2,Suspect At Large,Shooter,Public Shooter
+Santa Barbara US Postal Processing and Distribution Center,Goleta,CA,Government,2006-01-30,07:15:00 PM,Jennifer San Marco,F,44,0,0,1,6,0,Suicide,Shooter,Disgruntled Worker
+Pine Middle School,Reno,NV,Education,2006-03-14,09:00:00 AM,James Scott Newman,M,14,0,0,1,0,2,Apprehended,Citizen,Disgruntled Student
+"Residence in Capitol Hill Neighborhood, Seattle, WA",Seattle,WA,Residence,2006-03-25,07:03:00 AM,Kyle Aaron Huff,M,28,1,1,1,6,2,Suicide,Police,Public Shooter
+Safeway Warehouse,Denver,CO,Commerce,2006-06-25,03:03:00 PM,Michael Julius Ford,M,22,0,0,1,1,5,Killed,Police,Disgruntled Worker
+Jewish Federation of Greater Seattle,Seattle,WA,House of Worship,2006-07-28,04:00:00 PM,Naveed Afzal Haq,M,30,0,0,2,1,5,Apprehended,Police,Religious Intolerance
+Essex Elementary School and Two Residences,Essex,VT,Education,2006-08-24,01:55:00 PM,Christopher Williams,M,26,0,0,1,2,2,Shot,Shooter,Relationship
+Orange High School and Residence,Hillsborough,NC,Education,2006-08-30,01:00:00 PM,Alvaro Castillo,M,19,2,1,0,1,2,Apprehended,Police,Disgruntled Student
+Weston High School,Cazenovia,WI,Education,2006-09-29,08:00:00 AM,Eric Jordan Hainstock,M,15,1,0,1,1,0,Apprehended,Citizen,Disgruntled Student
+West Nickel Mines School,Bart Township,PA,Education,2006-10-02,10:30:00 AM,Charles Carl Roberts IV,M,32,1,1,1,5,5,Suicide,Police,Public Shooter
+Memorial Middle School,Joplin,MO,Education,2006-10-09,07:40:00 AM,Thomas White,M,13,1,0,1,0,0,Apprehended,Citizen,Disgruntled Student
+Trolley Square Mall,Salt Lake City,UT,Commerce,2007-02-12,06:42:00 PM,Sulejman Talovic,M,18,0,1,1,5,4,Killed,Police,Public Shooter
+ZigZag Net Inc,Philadelpha,PA,Commerce,2007-02-12,08:00:00 PM,Vincent Dortch,M,44,1,0,1,3,1,Suicide,Police,Disgruntled Worker
+Kenyon Press,Signal Hill,CA,Commerce,2007-03-05,09:00:00 AM,Alonso Jose Mendez,M,68,0,0,1,0,3,Suicide,Shooter,Disgruntled Worker
+Virginia Polytechnic Institute and State University,Blacksburg,VA,Education,2007-04-16,07:15:00 AM,Seung Hui Cho,M,23,0,0,2,32,17,Suicide,Police,Disgruntled Student
+Target Store,Kansas City,MO,Commerce,2007-04-29,03:25:00 PM,David Wayne Logsdon,M,51,1,0,0,2,8,Killed,Police,Public Shooter
+"Residence , Latah County Courthouse, and First Presbyterian Church",Moscow,ID,Government,2007-05-19,11:00:00 PM,Jason Kenneth Hamilton,M,36,2,0,0,3,3,Suicide,Police,Public Shooter
+Liberty Transportation,Perrysburg,OH,Commerce,2007-08-08,03:15:00 PM,Calvin Coolidge Neyland Jr,M,43,2,0,2,2,0,Apprehended,Police,Disgruntled Worker
+Co-op City Apartment Building’s Leasing Office,Bronx,NY,Commerce,2007-08-30,07:50:00 AM,Paulino Valenzuela,M,44,0,0,1,1,2,Apprehended,Police,Disgruntled Worker
+Giordano and Giordano Law Office,Alexandria,LA,Commerce,2007-10-04,02:00:00 PM,John Chester Ashley,M,63,0,0,1,2,3,Killed,Police,Public Shooter
+"Residence in Crandon, WI",Crandon,WI,Residence,2007-10-07,02:45:00 AM,Tyler Peterson,M,20,1,0,0,6,1,Suicide,Police,Relationship
+Am-Pac Tire Pros,Simi Valley,CA,Commerce,2007-10-08,07:30:00 AM,Robert Becerra,M,29,0,0,1,1,2,Suicide,Shooter,Public Shooter
+SuccessTech Academy,Cleveland,OH,Education,2007-10-10,01:02:00 PM,Asa Halley Coon,M,14,0,0,2,0,4,Suicide,Shooter,Disgruntled Student
+Von Maur in Westroads Mall,Omaha,NE,Commerce,2007-12-05,01:42:00 PM,Robert Arthur Hawkins,M,19,1,0,0,8,4,Suicide,Shooter,Public Shooter
+Youth with a Mission Training Center / New Life Church,Arvada,CO,House of Worship,2007-12-09,12:29:00 AM,Matthew John Murray,M,24,1,0,2,4,5,Suicide,Citizen,Disgruntled Worker
+Kirkwood City Hall,Kirkwood,MO,Government,2008-02-07,07:00:00 PM,Charles Lee Thornton,M,52,0,0,2,6,0,Killed,Police,Public Shooter
+Louisiana Technical College,Baton Rouge,LA,Education,2008-02-08,08:35:00 AM,Latina Williams,F,23,0,0,1,2,0,Suicide,Shooter,Disgruntled Student
+"Cole Hall Auditorium, Northern Illinois University",DeKalb,IL,Education,2008-02-14,03:00:00 PM,Steven Phillip Kazmierczak,M,27,0,1,3,5,16,Suicide,Shooter,Disgruntled Student
+Wendy’s Fast Food Restaurant,West Palm Beach,FL,Commerce,2008-03-03,12:15:00 PM,Alburn Edward Blake,M,60,0,0,1,1,4,Suicide,Shooter,Public Shooter
+Player’s Bar and Grill,Winnemucca,NV,Commerce,2008-05-25,02:25:00 AM,Ernesto Villagomez,M,30,0,0,1,2,2,Killed,CCW,Public Shooter
+Atlantis Plastics Factory,Henderson,KY,Commerce,2008-06-25,12:00:00 AM,Wesley Neal Higdon,M,25,0,0,1,5,1,Suicide,Shooter,Disgruntled Worker
+Tennesse Valley Unitarian Universalist Church,Knoxville,TN,House of Worship,2008-07-27,10:18:00 AM,Jim David Adkisson,M,58,0,1,0,2,7,Apprehended,Citizen,Public Shooter
+"Interstate 5 in Skagit County, WA",Alger,WA,Open Space,2008-09-02,02:15:00 PM,Isaac Lee Zamora,M,28,1,0,0,6,4,Surrendered,Police,Public Shooter
+The Zone,Portland,OR,Commerce,2009-01-24,10:37:00 PM,Erik Salvador Ayala,M,24,0,0,1,2,7,Suicide,Shooter,Public Shooter
+"Coffee and Geneva Counties, Alabama",Coffee,AL,Open Space,2009-03-10,04:00:00 PM,Michael Kenneth McLendon,M,28,1,0,0,10,1,Suicide,Police,Public Shooter
+Pinelake Health and Rehabilitation Center,Carthage,NC,Health Care,2009-03-29,10:00:00 AM,Robert Kenneth Stewart,M,45,1,1,1,8,3,Apprehended,Police,Relationship
+American Civic Association Center,Binghamton,NY,Commerce,2009-04-03,10:31:00 AM,Linh Phat Voong,M,41,0,0,2,13,4,Suicide,Shooter,Public Shooter
+Kkottongnae Retreat Camp,Temecula,CA,House of Worship,2009-04-07,07:23:00 PM,John Suchan Chong,M,69,0,0,1,1,2,Apprehended,Citizen,Disgruntled Worker
+Harkness Hall at Hampton University,Hampton,VA,Education,2009-04-26,12:57:00 AM,Odane Greg Maye,M,18,0,0,3,0,2,Shot,Shooter,Disgruntled Student
+Larose-Cut Off Middle School,Cut Off,LA,Education,2009-05-18,09:00:00 AM,Justin Doucet,M,15,0,0,1,0,0,Suicide,Shooter,Disgruntled Student
+U.S. Army Recruiting Center,North Little Rock,AR,Government,2009-06-01,10:19:00 AM,Carlos Leon Bledsoe,M,23,2,0,1,1,1,Apprehended,Police,Public Shooter
+United States Holocaust Memorial Museum,Washington DC,DC,Government,2009-06-10,12:52:00 PM,James Wenneker von Brunn,M,88,1,0,0,1,0,Shot,Police,Public Shooter
+Family Dental Care,Simi Valley,CA,Commerce,2009-07-01,10:30:00 AM,Jaime Paredes,M,30,1,0,0,1,4,Apprehended,Police,Relationship
+Club LT Tranz,Houston,TX,Commerce,2009-07-25,04:40:00 AM,,,,,,,1,2,Suspect At Large,,Public Shooter
+LA Fitness,Collier Township,PA,Commerce,2009-08-04,07:56:00 PM,George Sodini,M,48,0,0,3,3,9,Suicide,Shooter,Public Shooter
+"Multiple Locations in Owosso, Michigan",Owosso,MI,Open Space,2009-09-11,07:20:00 AM,Harlan James Drake,M,33,0,0,3,2,0,Surrendered,Police,Public Shooter
+Fort Hood Soldier Readiness Processing Center,Fort Hood,TX,Government,2009-11-05,01:20:00 PM,Nidal Malik Hasan,M,39,0,0,2,13,32,Shot,Police,Public Shooter
+"Reynolds, Smith and Hills",Orlando,FL,Commerce,2009-11-06,11:44:00 AM,Jason Samuel Rodriguez,M,40,0,0,1,1,5,Surrendered,Police,Disgruntled Worker
+Sandbar Sports Grill,Vail,CO,Commerce,2009-11-07,07:28:00 PM,Richard Allan Moreau,M,63,0,0,1,1,3,Apprehended,Police,Public Shooter
+Legacy Metrolab,Tualatin,OR,Commerce,2009-11-10,11:49:00 AM,Robert Beiser,M,39,1,1,1,1,2,Suicide,Shooter,Relationship
+Forza Coffee Shop,Pierce County,WA,Commerce,2009-11-29,08:15:00 AM,Maurice Clemmons,M,37,0,0,1,4,0,Killed,Police,Public Shooter
+Grady Crawford Construction Company,Baton Rouge,LA,Commerce,2009-12-23,01:50:00 PM,Richard Matthews,M,53,0,0,1,2,1,Apprehended,Citizen,Disgruntled Worker
+Lloyd D George US Courthouse and Federal Building,Las Vegas,NV,Government,2010-01-04,08:02:00 AM,Johnny Lee Wicks Jr,M,66,0,1,0,1,1,Killed,Police,Public Shooter
+ABB Plant,St Louis,MO,Commerce,2010-01-07,06:30:00 AM,Timothy Hedron,M,51,1,1,2,3,5,Suicide,Shooter,Disgruntled Worker
+Penske Truck Rental,Kennesaw,GA,Commerce,2010-01-12,02:00:00 PM,Jesse James Warren,M,60,0,0,2,3,2,Apprehended,Police,Disgruntled Worker
+"Residence In Brooksfille, FL",Brooksville,FL,Residence,2010-01-14,02:59:00 PM,John William Kalisz,M,55,0,0,1,3,2,Shot,Police,Relationship
+Farm King Store,Macomb,IL,Commerce,2010-02-03,12:45:00 PM,Jonathan Joseph Labbe,M,19,1,0,0,0,0,Suicide,Police,Public Shooter
+Inskip Elementary School,Knoxville,TN,Education,2010-02-10,12:49:00 PM,Mark Stephen Foster,M,48,0,0,1,0,2,Apprehended,Police,Disgruntled Worker
+"Shelby Center, University of Alabama",Huntsville,AL,Education,2010-02-12,04:00:00 PM,Amy Bishop Anderson,F,44,0,0,1,3,3,Surrendered,Police,Disgruntled Worker
+Deer Creek Middle School,LIttleton,CO,Education,2010-02-23,03:10:00 PM,Bruco Strongdale Eastwood,M,32,1,0,0,0,2,Apprehended,Citizen,
+The Pentagon,Arlington,VA,Government,2010-03-04,06:36:00 PM,John Patrick Bedell,M,36,0,0,1,0,2,Killed,Police,Public Shooter
+"The Ohio State University, Maintenance Building",Columbus,OH,Education,2010-03-09,03:30:00 AM,Nathaniel Alvin Brown,M,50,0,0,2,1,1,Suicide,Shooter,Disgruntled Worker
+Publix Super Market,Tarpon Springs,FL,Commerce,2010-03-30,12:00:00 PM,Arunya Rouch,F,41,0,0,1,1,0,Apprehended,Police,Disgruntled Worker
+Parkwest Medical Center,Knoxville,TN,Health Care,2010-04-19,04:30:00 PM,Abdo Ibssa,M,38,0,0,1,1,2,Suicide,Shooter,Disgruntled Patient
+Blue Sky Carnival,Bloomfield,NJ,Open Space,2010-05-07,10:22:00 PM,Rasheed Cherry,M,17,0,0,1,0,1,Shot,Police,Public Shooter
+Boulder Stove and Flooring,Boulder,CO,Commerce,2010-05-17,11:05:00 AM,Robert Phillip Montgomery,M,53,0,0,1,2,0,Suicide,Shooter,Disgruntled Worker
+AT&T Cellular,New York Mills,NY,Commerce,2010-05-27,01:00:00 PM,Abraham Dickan,M,79,0,0,1,0,1,Killed,OffDuty Police,Disgruntled Customer
+Yoyito Cafe,Hialeah,FL,Commerce,2010-06-06,10:00:00 PM,Gerardo Regalado,M,37,0,0,1,4,3,Suicide,Shooter,Relationship
+Emcore Corporation,Albuquerque,NM,Commerce,2010-07-12,09:30:00 AM,Robert Reza,M,37,0,0,1,2,4,Suicide,Shooter,Relationship
+Hartford Beer Distribution Center,Manchester,CT,Commerce,2010-08-03,07:00:00 AM,Omar Sheriff Thornton,M,34,0,0,2,8,2,Suicide,Police,Disgruntled Worker
+Kraft Foods Factory,Philadelpha,PA,Commerce,2010-09-09,08:35:00 PM,Yvonne Hiller,F,43,0,0,1,2,1,Apprehended,Police,Disgruntled Worker
+Fort Bliss Convenience Store,El Paso,TX,Government,2010-09-20,03:00:00 PM,Steven Jay Kropf,M,63,0,0,1,1,1,Killed,Police,Public Shooter
+AmeriCold Logistics,Crete,NE,Commerce,2010-09-22,09:54:00 PM,Akouch Kashoual,M,26,0,0,1,0,3,Suicide,Shooter,Disgruntled Worker
+Gainsville Florida,Gainsville,FL,Open Space,2010-10-04,04:00:00 PM,Clifford Louis Miller Jr,M,24,0,0,1,1,5,Suicide,Shooter,Public Shooter
+Kelly Elementary School,Carlsbad,CA,Education,2010-10-08,12:10:00 PM,Brendan O’Rourke,M,41,0,0,1,0,2,Apprehended,Citizen,Public Shooter
+Washington DC Dept of Public Works,Washington DC,DC,Education,2010-10-13,06:14:00 AM,,,,0,0,1,1,1,Suspect At Large,Shooter,Public Shooter
+Walmart,Reno,NV,Commerce,2010-10-29,08:57:00 AM,John Dennis Gillane,M,45,0,0,2,0,3,Surrendered,Police,Disgruntled Worker
+Panama City School Board Meeting,Panama City,FL,Education,2010-12-14,02:14:00 PM,Clay Allen Duke,M,56,0,0,1,0,0,Suicide,Police,Relationship
+Millard South High School,Omaha,NE,Education,2011-01-05,12:44:00 PM,Richard L Butler Jr,M,17,0,0,1,1,1,Suicide,Shooter,Disgruntled Student
+Safeway Grocery,Tucson,AZ,Open Space,2011-01-08,10:10:00 AM,Jared Lee Loughner,M,22,0,0,1,6,13,Apprehended,Citizen,Public Shooter
+Minaret Temple 174,Chester,PA,Commerce,2011-04-08,11:27:00 PM,Kanai Daniel Avery,M,16,0,0,1,2,8,Apprehended,Police,Public Shooter
+"Copley Township Neighborhood, OH",Copy Township,OH,Residence,2011-08-07,10:55:00 AM,Michael Edward Hance,M,51,0,0,2,7,1,Killed,Police,Relationship
+"House Party in South Jamaica, NY",Queens,NY,Residence,2011-08-27,12:40:00 AM,Tyrone Miller,M,22,0,0,1,0,11,Arrested,Police,Public Shooter
+International House of Pancakes,Carson City,NV,Commerce,2011-09-06,08:58:00 AM,Eduardo Sencion,M,32,1,0,0,4,7,Suicide,Shooter,Public Shooter
+Crawford County Courthouse,Girard,KS,Government,2011-09-13,03:37:00 PM,Jesse Ray Palmer,M,48,1,0,3,0,1,Killed,Police,Relationship
+Lehigh Southwest Cement Plant,Cupertino,CA,Commerce,2011-10-05,04:15:00 AM,Frank William Allman,M,49,2,1,1,3,7,Killed,Police,Disgruntled Worker
+Salon Meritage,Seal Beach,CA,Commerce,2011-10-12,01:20:00 PM,Scott Evans Dekraai,M,41,0,0,3,7,1,Apprehended,Police,Relationship
+Southern California Edison Corporate Office Building,Irwindale,CA,Commerce,2011-12-16,01:30:00 PM,Andre Turner,M,51,0,0,1,2,2,Suicide,Shooter,Disgruntled Worker
+McBride Lumber Company,Star,NC,Commerce,2012-01-13,06:10:00 AM,Ronald Dean Davis,M,50,0,1,0,3,1,Suicide,Shooter,Disgruntled Worker
+Middletown City Court,Middletown,NY,Government,2012-02-08,09:05:00 AM,Timothy Patrick Mulqueen,M,43,0,1,0,0,1,Killed,Police,Public Shooter
+Chardon High School,Chardon,OH,Education,2012-02-27,07:30:00 AM,Thomas Michael Lane III,M,17,0,0,1,3,3,Apprehended,Police,Disgruntled Student
+"University of Pittsburgh Medical Center, Western Psychiatric Institute and Clinic",Pittsburgh,PA,Education,2012-03-08,01:40:00 PM,John Shick,M,30,0,0,2,1,7,Killed,Police,Public Shooter
+JT Tire,Durham,NC,Commerce,2012-03-23,03:02:00 PM,O’Brian McNeil White,M,24,0,0,1,2,2,Apprehended,Police,Public Shooter
+Oikos University,Oakland,CA,Education,2012-04-02,10:30:00 AM,Su Nam Ko,M,43,0,0,1,7,3,Apprehended,Police,Public Shooter
+"Streets of Tulsa, OK",Tulsa,OK,Open Space,2012-04-06,01:03:00 AM,Jacob Carl England and Alvin Lee Watts,M,26,0,0,2,3,2,Apprehended,Police,Public Shooter
+Cafe Racer,Seattle,WA,Commerce,2012-05-30,10:52:00 AM,Ian Lee Stawicki,M,40,0,0,2,5,0,Suicide,Shooter,Public Shooter
+Copper Top Bar,Tuscaloosa,AL,Commerce,2012-07-17,12:29:00 AM,Nathan Van Wilkins,M,44,1,0,0,0,18,Apprehended,Police,Public Shooter
+Cinemark Century 16,Aurora,CO,Commerce,2012-07-20,12:30:00 AM,James Eagan Holmes,M,24,1,1,1,12,58,Apprehended,Police,Public Shooter
+Sikh Temple of Wisconsin,Oak Creek,WI,House of Worship,2012-08-05,10:25:00 AM,Wade Michael Page,M,40,0,0,1,6,4,Suicide,Police,Public Shooter
+Perry Hall High School,Baltimore,MD,Education,2012-08-27,10:45:00 AM,Robert Wayne Gladden Jr,M,15,0,1,0,0,1,Apprehended,Citizen,Disgruntled Student
+Pathmark Supermarket,Old Bridge,NJ,Commerce,2012-08-31,04:00:00 AM,Terence Tyler,M,23,1,0,1,2,0,Suicide,Shooter,Disgruntled Worker
+Accent SIgnage Systems,Minneapolis,MN,Commerce,2012-09-27,04:35:00 PM,Andrew John Engeldinger,M,36,0,0,1,6,2,Suicide,Shooter,Disgruntled Worker
+Las Dominicanas M&M Hair Salon,Casselberry,FL,Commerce,2012-10-18,11:04:00 AM,Bradford Ramon Baumet,M,36,0,0,1,3,1,Suicide,Shooter,Relationship
+Azana Day Salon,Brookfield,WI,Commerce,2012-10-21,11:09:00 AM,Radcliffe Franklin Haughton,M,45,0,0,1,3,4,Suicide,Shooter,Relationship
+Valley Protein,Fresno,CA,Commerce,2012-11-06,08:15:00 AM,Lawrence Jones,M,42,0,0,1,2,2,Suicide,Shooter,Disgruntled Worker
+Clackmas Town Center Mall,Happy Valley,OR,Commerce,2012-12-11,03:25:00 PM,Jacob Tyler Roberts,M,22,1,0,0,2,1,Suicide,Shooter,Public Shooter
+Sandy Hook Elementary School and Residence,Newtown,CT,Education,2012-12-14,09:30:00 AM,Adam Lanza,M,20,1,0,2,27,2,Suicide,Police,Public Shooter
+St Vincent’s Hospital,Birmingham,AL,Health Care,2012-12-15,04:00:00 AM,Jason Heath Letts,M,38,0,0,1,0,3,Killed,Police,Public Shooter
+"Frankstown Township, PA",Frankstown Township,PA,Open Space,2012-12-21,08:59:00 AM,Jeffrey Lee Michael,M,44,0,0,2,3,3,Killed,Police,Public Shooter
+Taft Union High School,Taft,CA,Education,2013-01-10,08:59:00 AM,Bryan Oliver,M,16,0,1,0,0,2,Apprehended,Citizen,Disgruntled Student
+Osborn Maledon Law Firm,Phoenix,AZ,Commerce,2013-01-30,10:45:00 AM,Arthur Douglas Harmon III,M,70,0,0,1,2,1,Suicide,Shooter,Relationship
+John’s Barbershop and Gaffey’s Clean Car Center,Herkimer,NY,Commerce,2013-03-13,09:30:00 AM,Kurt Meyers,M,64,0,1,0,4,2,Killed,Police,Public Shooter
+"New River Community College, Satellite Campus",Christiansburg,VA,Education,2013-04-12,01:55:00 PM,Nieil Allen MacInnis,M,22,0,1,0,0,2,Apprehended,Citizen,Public Shooter
+Pinewood Village Apartments,Federal Way,WA,Residence,2013-04-21,09:30:00 PM,Dennis Clark III,M,27,0,1,1,4,0,Killed,Police,Relationship
+"Brady, Texas and Jacksonville, North Carolina",Brady,TX,Open Space,2013-05-26,04:30:00 AM,Esteban Jimenez Smith,M,23,1,0,1,2,5,Killed,Police,Public Shooter
+Santa Monica College and Residence,Santa Monica,CA,Education,2013-06-07,11:52:00 AM,John Zwahri,M,23,0,0,1,5,4,Killed,Police,Public Shooter
+Parking Lots for Kellum Law Firm and Walmart,Greenville,NC,Open Space,2013-06-21,11:44:00 AM,Lakin Anthony Faust,M,23,0,1,0,0,4,Apprehended,Police,Public Shooter
+Hialeah Apartment Building,Hialeah,FL,Residence,2013-06-26,06:30:00 PM,Pedro Alberto Vargas,M,42,0,0,1,6,0,Killed,Police,Public Shooter
+Pennsylvania Municipal Building,Saylorsburg,PA,Government,2013-08-05,07:19:00 PM,Rockne Warren Newell,M,59,1,0,1,3,2,Apprehended,Citizen,Public Shooter
+Lake Butler FL,Lake Butler,FL,Open Space,2013-08-24,09:20:00 AM,Hubert Allen Jr,M,72,1,1,0,2,2,Suicide,Shooter,Disgruntled Worker
+Washington Navy Yard Building 197,Washington DC,DC,Government,2013-09-16,08:16:00 AM,Aaron Alexis,M,34,0,1,0,12,7,Killed,Police,Public Shooter
+Sparks Middle School,Sparks,NV,Education,2013-10-21,07:16:00 AM,Jose Reyes,M,12,0,0,1,1,2,Suicide,Shooter,Disgruntled Student
+Albuquerque New Mexico,Albuquerque,NM,Open Space,2013-10-26,11:20:00 AM,Christopher Thomas Chase,M,35,2,0,3,0,4,Killed,Police,Public Shooter
+Los Angeles International Airport,Los Angeles,CA,Government,2013-11-01,09:18:00 AM,Paul Anthony Ciancia,M,23,1,0,0,1,3,Apprehended,Police,Public Shooter
+Arapahoe High School,Centennial,CO,Education,2013-12-13,12:30:00 PM,Karl Halverson Pierson,M,18,0,1,0,1,0,Suicide,Police,Disgruntled Student
+Renown Regional Medical Center,Reno,NV,Health Care,2013-12-17,02:00:00 PM,Alan Oliver Frazier,M,51,0,1,2,1,2,Suicide,Police,Public Shooter
+Berrendo Middle School,Roswell,NM,Education,2014-01-14,07:30:00 AM,Mason Andrew Campbell,M,12,0,1,0,0,3,Apprehended,Citizen,Disgruntled Student
+Martin’s Supermarket,Elkhart,IN,Commerce,2014-01-15,10:09:00 PM,Shawn Walter Bair,M,22,0,0,1,2,0,Killed,Police,Public Shooter
+The Mall In Columbia,Columbia,MD,Commerce,2014-01-25,11:15:00 AM,Darion Marcus Aguilar,M,19,0,1,0,2,5,Suicide,Shooter,Public Shooter
+Cedarville Rancheria Tribal Office,Alturas,CA,Government,2014-02-20,03:30:00 PM,Cherie Louise Rhoads,F,44,0,0,1,4,2,Apprehended,Citizen,Public Shooter
+Fort Hood Army Base,Fort Hood,TX,Government,2014-04-02,04:00:00 PM,Ivan Antonio Lopez-Lopez,M,34,0,0,1,3,12,Suicide,Police,Public Shooter
+Jewish Community Center of Greater Kansas City and Village Shalom Retirement Community,Overland Park,KS,House of Worship,2014-04-13,01:00:00 PM,Frazier Glenn Miller Jr,M,73,0,1,2,3,0,Apprehended,Police,Public Shooter
+Federal Express,Kennesaw,GA,Commerce,2014-04-29,05:50:00 AM,Geddy Lee Kramer,M,19,0,1,0,0,6,Suicide,Shooter,Public Shooter
+"Residence and Construction Site In Jonesboro, Arkansas",Jonesboro,AR,Residence,2014-05-03,01:00:00 PM,Porfirio Sayago-Hernandez,M,40,0,0,1,3,4,Suicide,Shooter,Relationship
+"Multiple Locations in Isla Vista, CA",Isla Vista,CA,Open Space,2014-05-23,09:27:00 PM,Elliot Roger,M,22,0,0,1,6,14,Suicide,Police,Public Shooter
+Seattle Pacific University,Seattle,WA,Education,2014-06-05,03:25:00 PM,Aaron Rey Ybarra,M,26,0,1,0,1,3,Apprehended,Citizen,Public Shooter
+Forsyth County Courthouse,Cumming,GA,Government,2014-06-06,10:00:00 AM,Dennis Ronald Marx,M,48,1,0,3,0,1,Killed,Police,Public Shooter
+Cici’s Pizza and Walmart,Las Vegas,NV,Commerce,2014-06-08,11:20:00 AM,Jerad Dwain Miller and Amanda Renee Miller,M+F,26.5,0,1,2,3,0,Killed+Suicide,Police,Public Shooter
+Reynolds High School,Portland,OR,Education,2014-06-10,08:05:00 AM,Jared Michael Padgett,M,15,1,0,1,1,1,Suicide,Police,Disgruntled Student
+Sister Marie Lenahan Wellness Center,Darby,PA,Health Care,2014-06-24,02:20:00 PM,Richard Steven Plotts,M,49,0,0,1,1,1,Apprehended,CCW,Relationship
+Hon-Dah Resort Casino and Conference Center,Pinetop,AZ,Commerce,2014-08-02,06:38:00 PM,Justin Joe Armstrong,M,28,1,0,0,0,2,Killed,Police,Public Shooter
+United Parcel Service,Birmingham,AL,Commerce,2014-09-23,09:20:00 AM,Kerry Joe Tesney,M,45,0,0,1,2,0,Suicide,Shooter,Disgruntled Worker
+Marysville-Pilchuck High School,Marysville,WA,Education,2014-10-24,10:39:00 AM,Jaylen Ray Fryberg,M,15,0,0,1,4,3,Suicide,Citizen,Disgruntled Student
+Florida State University,Tallahassee,FL,Education,2014-11-20,12:00:00 AM,Myron May,M,31,0,0,1,0,3,Killed,Police,Public Shooter
+Neighborhood in Tallahassee Florida,Tallahassee,FL,Residence,2014-11-22,10:15:00 AM,Curtis Wade Holley,M,55,0,0,1,1,1,Killed,OffDuty Police,Public Shooter
+"Government Building in Austin, TX",Austin,TX,Government,2014-11-28,02:21:00 AM,Larry Steven McQuilliams,M,49,1,0,1,0,0,Killed,Police,Public Shooter
+"Multiple Locations in Moscow, ID",Moscow,ID,Open Space,2015-01-10,02:31:00 PM,John Lee,M,29,0,0,1,3,1,Apprehended,Police,Public Shooter
+Melbourne Square Mall,Melbourne,FL,Commerce,2015-01-17,09:31:00 AM,Jose Garcia-Rodriguez,M,57,0,0,3,1,1,Suicide,Shooter,Relationship
+New Hope City Hall,New Hope,MN,Government,2015-01-26,07:15:00 PM,Raymond Kenneth Kmetz,M,68,0,1,0,0,4,Killed,Police,Public Shooter
+Monroeville Mall,Monroeville,PA,Commerce,2015-02-07,07:33:00 PM,Tarod Tyrell Thornhill,M,17,0,0,1,0,3,Apprehended,Police,Public Shooter
+Sioux Steel Pro-Tec,Lennox,SD,Commerce,2015-02-12,02:00:00 PM,Jeffrey Scott DeZeeuw,M,51,0,0,1,1,2,Suicide,Shooter,Disgruntled Worker
+Dad’s Sing Along Club,San Antonio,TX,Commerce,2015-03-14,02:00:00 AM,Richard Castilleja,M,29,0,0,1,0,2,Killed,Police,Public Shooter
+"Multiple Locations in Mesa, Arizona",Mesa,AZ,Open Space,2015-03-18,08:39:00 AM,Ryan Elliot Giroux,M,41,0,0,1,1,5,Apprehended,Police,Public Shooter
+"Residence in Panama City Beach, Florida",Panama City Beach,FL,Residence,2015-03-28,12:53:00 AM,David Jamichael Daniels,M,21,0,0,1,0,7,Apprehended,Police,Public Shooter
+"North Milwaukee Avenue, Chicago",Chicago,IL,Open Space,2015-04-19,11:50:00 PM,Everardo Custodio,M,21,0,0,1,0,0,Apprehended,CCW,Public Shooter
+"Trestle Trail Bridge, Wisconsin",Menasha,WI,Open Space,2015-05-03,07:30:00 PM,Sergio Daniel Valencia Del Toro,M,27,0,0,2,3,1,Suicide,Shooter,Public Shooter
+Walmart Supercenter,Grand Forks,ND,Commerce,2015-05-26,01:00:00 AM,Marcell Travon Willis,M,21,0,0,1,1,1,Suicide,Shooter,Public Shooter
+Emanuel African Methodist Episcopal Church,Charleston,SC,House of Worship,2015-06-17,09:00:00 PM,Dylann Storm Roof,M,21,1,0,0,9,0,Apprehended,Police,Public Shooter
+Omni Austin Hotel Downtown,Austin,TX,Commerce,2015-07-05,04:48:00 AM,Michael Holt,M,35,1,0,0,1,0,Killed,Police,Public Shooter
+"Two Military Centers in Chattanooga, Tennessee",Chattanooga,TN,Government,2015-07-16,10:51:00 AM,Mohammad Youssuf Abdulazeez,M,24,1,0,0,5,2,Killed,Police,Public Shooter
+Grand 16 Theatre,Lafayette,LA,Commerce,2015-07-23,07:15:00 PM,John Russell Houser,M,59,0,0,1,2,9,Suicide,Police,Public Shooter
+Umpqua Community College,Roseburg,OR,Education,2015-10-01,10:38:00 AM,Christopher Sean Harper-Mercer,M,26,1,0,3,9,7,Suicide,Police,Disgruntled Student
+"Syverud Law Office and Miller-Meier Limb and Brace, Inc.",Davenport,IA,Commerce,2015-10-26,01:56:00 PM,Robert Lee Mayes Jr,M,40,0,0,1,0,2,Suicide,Police,Relationship
+"Neighborhood in Colorado Springs, Colorado",Colorado Springs,CO,Open Space,2015-10-31,08:55:00 AM,Noah Jacob Harpham,M,33,1,0,2,3,0,Killed,Police,Public Shooter
+Planned Parenthood Colorado Springs Westside Health Center,Colorado Springs,CO,Health Care,2015-11-27,11:38:00 AM,Robert Lewis Dear Jr,M,57,1,0,0,3,9,Surrendered,Police,Public Shooter
+Inland Regional Center,San Bernardino,CA,Commerce,2015-12-02,11:30:00 AM,Syed Rizwan Farook and Tashfeen Malik,M+F,28.5,2,0,2,14,22,Killed,Police,Public Shooter
+"Multiple Locations in Kalamazoo, Michigan",Kalamazoo,MI,Open Space,2016-02-20,05:40:00 PM,Jason Brian Dalton,M,45,0,0,1,6,2,Apprehended,Police,Public Shooter
+"Excel Industries and Newton and Hesston, Kansas",Newton,KS,Commerce,2016-02-25,04:57:00 PM,Cedric Larry Ford,M,38,1,0,1,3,14,Killed,Police,Public Shooter
+Madison Junior/Senior High School,Middletown,OH,Education,2016-02-29,11:30:00 AM,James Austin Hancock,M,14,0,0,1,0,4,Apprehended,Police,Disgruntled Student
+Prince George’s County Police Department District 3 Station,Landover,MD,Government,2016-03-13,04:30:00 PM,Michael Ford,M,22,0,0,1,1,0,Apprehended,Police,Public Shooter
+Antigo High School,Antigo,WI,Education,2016-04-23,11:02:00 PM,Jakob Edward Wagner,M,18,1,0,0,0,2,Killed,Police,Disgruntled Student
+Knight Transportation Building,Katy,TX,Commerce,2016-05-04,08:45:00 AM,Marion Guy Williams,M,65,0,1,1,1,2,Suicide,Police,Disgruntled Worker
+Arizona State Route 87,Phoenix,AZ,Open Space,2016-05-24,08:30:00 PM,James David Walker,M,36,1,0,0,0,2,Apprehended,Police,Public Shooter
+Memorial Tire and Auto,Houston,TX,Commerce,2016-05-29,10:15:00 AM,Dionisio Agustine Garza III,M,25,1,0,1,1,6,Killed,Police,Public Shooter
+Pulse Nightclub,Orlando,FL,Commerce,2016-06-12,02:02:00 AM,Omar Mir Seddique Mateen,M,29,1,0,1,49,53,Killed,Police,Public Shooter
+Days Inn and Volunteer Parkway,Bristol,TN,Open Space,2016-07-07,02:18:00 AM,Lakeem Keon Scott,M,37,1,0,1,1,3,Apprehended,Police,Public Shooter
+"Protest in Dallas, Texas",Dallas,TX,Open Space,2016-07-07,09:00:00 PM,Micah Xavier Johnson,M,25,2,0,1,5,11,Killed,Police,Public Shooter
+"Benny’s Car Wash, Oil Change & B-Quick and Hair Crown Beauty Supply",Baton Rouge,LA,Open Space,2016-07-17,08:40:00 AM,Gavin Eugene Long,M,29,2,0,1,3,3,Killed,Police,Public Shooter
+"House Party in Mukilteo, Washington",Mukilteo,WA,Residence,2016-07-30,12:07:00 AM,Allen Christopher Ivanov,M,19,1,0,0,3,1,Apprehended,Police,Relationship
+"Multiple Locations in Joplin, Missouri",Joplin,MO,Open Space,2016-08-13,05:08:00 AM,Tom Stanley Mourning II,M,26,1,0,1,0,5,Apprehended,Police,Public Shooter
+"Multiple Locations in Philadelphia, Pennsylvania",Philadelpha,PA,Open Space,2016-09-16,11:15:00 PM,Nicholas N Glenn,M,25,0,0,1,1,5,Killed,Police,Public Shooter
+Cascade Mall,Burlington,WA,Commerce,2016-09-23,06:52:00 PM,Arcan Cetin,M,20,1,0,0,5,0,Apprehended,Police,Public Shooter
+"Law Street in Houston, Texas",Houston,TX,Open Space,2016-09-26,06:30:00 AM,Nathan Desai,M,46,0,0,1,0,9,Killed,Police,Public Shooter
+Townville Elementary School,Townville,SC,Education,2016-09-28,01:45:00 PM,Jesse Dewitt Osborne,M,14,0,0,1,2,3,Apprehended,CCW,Disgruntled Student
+FreightCar America,Roanoke,VA,Commerce,2016-10-25,06:00:00 AM,Getachew Tereda Fekede,M,53,0,0,1,1,3,Suicide,Shooter,Disgruntled Worker
+H-E-B Grocery Store,Palmview,TX,Commerce,2016-11-28,03:15:00 AM,Raul Lopez Saenz,M,25,0,0,1,1,3,Surrendered,Police,Disgruntled Worker
+Fort Lauderdale-Hollywood International Airport,Fort Lauderdale,FL,Government,2017-01-06,01:15:00 PM,Esteban Santiago-Ruiz,M,26,0,0,1,5,8,Surrendered,Police,Public Shooter
+West Liberty-Salem High school,West Liberty,OH,Education,2017-01-20,07:36:00 AM,Ely Ray Serna,M,17,0,1,0,0,2,Apprehended,Citizen,Disgruntled Student
+"Marathon Savings Bank and Tlusty, Kennedy & Dirks, SC",Rothschild,WI,Commerce,2017-03-22,12:27:00 PM,Nengmy Vang,M,45,1,0,1,4,0,Shot,Police,Relationship
+Las Vegas Bus,Las Vegas,NV,Other,2017-03-25,10:45:00 AM,Rolando Bueno Cardenas,M,55,0,0,1,1,1,Apprehended,Police,Public Shooter
+"Residence and Bust Stop in Sanford, Florida",Sanford,FL,Open Space,2017-03-27,06:20:00 AM,Allen Dion Cashe,M,31,1,0,0,2,4,Apprehended,Police,Relationship
+The Cooler,Rock Falls,IL,Commerce,2017-04-15,09:30:00 PM,Seth Thomas Wallace,M,32,0,0,1,0,4,Apprehended,Police,Relationship
+"Multiple Locations in Fresno, California",Fresno,CA,Open Space,2017-04-18,10:45:00 AM,Kori Ali Muhammad,M,39,0,0,1,3,0,Apprehended,Police,Public Shooter
+Group Home in Topeka Kansas,Topeka,KS,Health Care,2017-04-30,03:50:00 PM,Joshua James Ray Gueary,M,25,0,0,1,3,1,Suicide,Shooter,Relationship
+La Jolla Crossroads Apartment Complex,San Diego,CA,Residence,2017-04-30,06:00:00 PM,Peter Raymond Selis,M,49,0,0,1,1,7,Killed,Police,Public Shooter
+Pine Kirk Care Center,Kirkersville,OH,Health Care,2017-05-12,07:30:00 AM,Thomas Harry Hartless,M,43,0,1,1,3,0,Suicide,Shooter,Relationship
+Fiamma Inc,Orlando,FL,Commerce,2017-06-05,08:00:00 AM,John Robert Neumann Jr,M,45,0,0,1,5,0,Suicide,Shooter,Disgruntled Worker
+Weis Supermarket,Tunkhannock,PA,Commerce,2017-06-08,01:00:00 AM,Randy Robert Stair,M,24,0,2,0,3,0,Suicide,Shooter,Disgruntled Worker
+Eugene Simpson Stadium Park,Alexandria,VA,Open Space,2017-06-14,07:15:00 AM,James Thomas Hodgkinson,M,66,1,0,1,0,4,Shot,Police,Public Shooter
+UPS Customer Center,San Francisco,CA,Commerce,2017-06-14,08:55:00 AM,Jimmy Chanh Lam,M,38,0,0,2,3,5,Suicide,Police,Disgruntled Worker
+Bronx-Lebanon Hospital Center,Bronx,NY,Health Care,2017-06-30,02:50:00 PM,Dr Henry Michael Bello,M,45,1,0,0,1,6,Suicide,Shooter,Disgruntled Worker
+"Highway 141 in Gateway, Colorado",Gateway,CO,Open Space,2017-06-30,04:15:00 PM,Rick Whited,M,54,0,0,1,0,0,Apprehended,Police,Public Shooter
+Clovis-Carver Public Library,Clovis,NM,Government,2017-08-28,04:15:00 PM,Nathanial Ray Jouett,M,16,0,0,1,2,4,Surrendered,Police,Public Shooter
+Freeman High School,Rockford,WA,Education,2017-09-13,10:00:00 AM,Caleb Sharpe,M,15,1,0,1,1,3,Apprehended,Citizen,Disgruntled Student
+Burnette Chapel Church of Christ,Antioch,TN,House of Worship,2017-09-24,11:15:00 AM,Emanuel Kidega Samson,M,25,0,0,2,1,7,Apprehended,CCW,Public Shooter
+Route 91 Harvest Festival,Las Vegas,NV,Open Space,2017-10-01,10:08:00 PM,Stephen Craig Paddock,M,64,4,0,0,58,489,Suicide,Shooter,Public Shooter
+Advanced Granite Solutions and 28th Street Auto Sales and Service,Edgewood,MD,Commerce,2017-10-18,08:58:00 AM,Radee Labeeb Prince,M,37,0,0,1,3,3,Apprehended,Police,Disgruntled Worker
+"Multiple Locations in Clearlake Oaks, California",Clearlake Oaks,CA,Commerce,2017-10-23,11:23:00 AM,Alan Ashmore,M,61,0,1,1,2,3,Apprehended,Police,Public Shooter
+"Walmart in Thornton, Colorado",Thornton,CO,Commerce,2017-11-01,06:10:00 PM,Scott Allen Ostrem,M,47,0,0,1,3,0,Apprehended,Police,Public Shooter
+"First Baptist Church in Sutherland Springs, Texas",Sutherland Springs,TX,House of Worship,2017-11-05,11:20:00 AM,Devin Patrick Kelley,M,26,1,0,0,26,20,Shot,CCW,Public Shooter
+"Rancho Tehama Elementary School and Multiple Locations in Tehama County, California",Tehama County,CA,Education,2017-11-14,07:53:00 AM,Kevin Janson Neal,M,44,1,0,2,5,14,Suicide,Police,Public Shooter
+Dollar General Store,Cheektowaga,NY,Commerce,2017-11-14,02:45:00 PM,Travis Green,M,29,2,0,0,0,1,Apprehended,Police,Public Shooter
+Schlenker Automotive,Rockledge,FL,Commerce,2017-11-17,04:30:00 PM,Robert Lorenzo Bailey Jr,M,28,0,0,1,1,1,Shot,CCW,Public Shooter
+Aztec High School,Aztec,NM,Education,2017-12-07,08:00:00 AM,William Edward Atchison,M,21,0,0,1,2,0,Suicide,Shooter,Public Shooter
+"Multiple Locations in Baltimore, Maryland",Baltimore,MD,Open Space,2017-12-15,02:55:00 PM,Mausean Vittorio Quran Carter,M,30,1,0,1,0,3,Apprehended,Citizen,Public Shooter
+University of Cincinnati Medical Center,Cincinnati,OH,Health Care,2017-12-20,02:00:00 PM,Isaiah Currie,M,20,0,0,2,0,1,Suicide,Shooter,Public Shooter
+Marshall County High School,Benton,KY,Education,2018-01-23,07:57:00 AM,Gabriel Ross Parker,M,15,0,0,1,2,21,Apprehended,Police,Disgruntled Student
+Marjory Stoneman Douglas High School,Parkland,FL,Education,2018-02-14,02:30:00 PM,Nikolas Jacob Cruz,M,19,1,0,0,17,17,Apprehended,Police,Disgruntled Student
+City Grill Cafe,Hurtsboro,AL,Commerce,2018-03-07,06:30:00 AM,Walter Frank Thomas,M,64,1,0,0,2,2,Apprehended,Police,Public Shooter
+YouTube Headquarters,San Bruno,CA,Commerce,2018-04-03,12:45:00 PM,Nasim Najafi Aghdam,F,39,0,0,1,0,4,Suicide,Shooter,Public Shooter
+Waffle House,Nashville,TN,Commerce,2018-04-22,03:30:00 AM,Travis Jeffrey Reinking,M,29,1,0,0,4,4,Apprehended,Police,Public Shooter
+"Highway 365 Near Whitehall Road In Gainesville, Georgia",Gainesville,GA,Open Space,2018-05-04,11:58:00 AM,Rex Whitmire Harbour,M,26,0,0,1,0,3,Suicide,Police,Public Shooter
+Dixon High School,Dixon,IL,Education,2018-05-16,08:00:00 AM,Matthew A Milby Jr,M,19,1,0,0,0,0,Shot,Police,Disgruntled Student
+Santa Fe High School,Santa Fe,TX,Education,2018-05-18,07:30:00 AM,Dimitrios Pagourtzis,M,17,0,1,1,10,12,Apprehended,Police,Disgruntled Student
+Loui’s Lakeside Eatery,Oklahoma City,OK,Commerce,2018-05-24,06:30:00 PM,Alexander C Tilghmann,M,28,0,0,1,0,4,Killed,CCW,Public Shooter
+Noblesville West Middle School,Noblesville,IN,Education,2018-05-25,09:06:00 AM,Unnamed,M,13,0,0,2,0,2,Apprehended,Citizen,Disgruntled Student
+Highway 509 Near Seattle-Tacoma International Airport,Seattle,WA,Open Space,2018-06-13,01:42:00 PM,unnamed,,,,,,0,0,Suspect At Large,Shooter,Public Shooter
+Capital Gazette,Annapolis,MD,Commerce,2018-06-29,02:34:00 PM,Jarrod Warren Ramos,M,38,0,1,0,5,2,Apprehended,Police,Public Shooter
+Ben E Keith Gulf Coast,Missouri City,TX,Commerce,2018-08-20,02:00:00 AM,Kristine Peralez,F,38,0,0,1,1,1,Suicide,Police,Disgruntled Worker
+GLHF Game Bar,Jacksonville,FL,Commerce,2018-08-26,01:34:00 PM,David Bennett Katz,M,24,0,0,2,2,11,Suicide,Shooter,Public Shooter
+Fifth Third Center,Cincinnati,OH,Commerce,2018-09-06,09:10:00 AM,Omar Enrique Santa Perez,M,29,0,0,1,3,2,Killed,Police,Public Shooter
+T&T Trucking Inc and a Residence,Bakersfield,CA,Commerce,2018-09-12,05:20:00 PM,Javier Casarez,M,54,0,0,1,5,0,Suicide,Police,Public Shooter
+WTS Paradigm,Middleton,WI,Commerce,2018-09-19,10:30:00 AM,Anthony Yente Tong,M,43,0,0,1,0,4,Killed,Police,Disgruntled Worker
+Masontown Borough Municipal Center,Masontown,PA,Government,2018-09-19,02:00:00 PM,Patrick Shaun Dowdell,M,61,0,0,1,0,4,Killed,Police,Relationship
+Rite Aid Perryman Distribution Center’s Liberty Support Center,Aberdeen,MD,Commerce,2018-09-20,09:06:00 AM,Snochia Moseley,F,26,0,0,1,3,3,Suicide,Shooter,Disgruntled Worker
+"Kroger Grocery Store In Jeffersontown, Kentucky",Jeffersontown,KY,Commerce,2018-10-24,03:00:00 PM,Gregory Alan Bush,M,51,0,0,1,2,0,Apprehended,Police,Public Shooter
+Tree of Life Synagogue,Pittsburgh,PA,House of Worship,2018-10-27,09:45:00 AM,Robert Gregory Bowers,M,46,1,0,3,11,6,Apprehended,Police,Public Shooter
+Hot Yoga Tallahassee,Tallahassee,FL,Commerce,2018-11-02,05:37:00 PM,Scott Paul Beierle,M,40,0,0,1,2,5,Suicide,Shooter,Public Shooter
+Helen Vine Recovery Center,San Rafael,CA,Health Care,2018-11-05,01:30:00 AM,Davance Lamar Reed,M,37,0,0,1,1,2,Apprehended,Police,Relationship
+Borderline Bar and Grill,Thousand Oaks,CA,Commerce,2018-11-07,11:20:00 PM,Ian David Long,M,28,0,0,1,12,16,Suicide,Police,Public Shooter
+Ben E Keith Albuquerque,Albuquerque,NM,Commerce,2018-11-12,06:56:00 PM,Waid Anthony Melton,M,30,0,0,1,0,3,Suicide,Shooter,Disgruntled Worker
+Mercy Hospital & Medical Center,Chicago,IL,Health Care,2018-11-19,03:20:00 PM,Juan Lopez,M,32,0,0,1,3,0,Suicide,Police,Relationship
+"Motel 6 in Albuquerque, New Mexico",Albuquerque,NM,Commerce,2018-12-24,11:00:00 AM,Abdias Ucdiel Flores-Corado,M,35,1,0,0,0,0,Killed,Police,Public Shooter

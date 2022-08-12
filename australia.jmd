@@ -360,7 +360,17 @@ sam = sample(1:size(ausamp)[1],20)
 
 # take a look specifically at homicide
 
-p = density(group(ausamp,:homcoefs))
+function getcoefsrename(chain,thegroup)
+    mycoefnames = ["GDP/capita coef", "d/dt GDP/capita coef","Guns/capita coef",
+        "d/dt Guns/capita coef", "Gun Owner coef", "d/dt Gun owner coef","Constant"]
+
+    coefgroup = group(chain,thegroup)
+    orignames = String.(names(coefgroup))
+    coefgroup = MCMCChains.replacenames(coefgroup,Dict([orignames[i] => "$(thegroup): $(mycoefnames[i])" for i in 1:length(mycoefnames)]))
+end
+
+
+p = density(getcoefsrename(ausamp,:homcoefs))
 display(p)
 
 
@@ -375,7 +385,7 @@ display(p)
 
 
 ```julia
-p = density(group(ausamp,:robcoefs))
+p = density(getcoefsrename(ausamp,:robcoefs))
 display(p)
 
 
@@ -392,13 +402,13 @@ display(p)
 
 
 ```julia 
-p = density(group(ausamp,:rapecoefs))
+p = density(getcoefsrename(ausamp,:rapecoefs))
 display(p)
-p = density(group(ausamp,:bnecoefs))
+p = density(getcoefsrename(ausamp,:bnecoefs))
 display(p)
-p = density(group(ausamp,:vehthcoefs))
+p = density(getcoefsrename(ausamp,:vehthcoefs))
 display(p)
-p = density(group(ausamp,:theftcoefs))
+p = density(getcoefsrename(ausamp,:theftcoefs))
 display(p)
 
 p = density(group(ausamp,:f))
