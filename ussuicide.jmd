@@ -1,0 +1,25 @@
+# If mass shootings are a kind of Suicide, what is driving changes in Suicide?
+
+To answer this, let's look at CDC Wonder data for suicide, by year, age group, state, and sex. First we downloaded the data by manually requesting it on CDC Wonder:
+
+```julia
+using Pkg
+Pkg.activate(".")
+
+using CSV, DataFrames, DataFramesMeta, StatsPlots, GLM
+
+
+suicdet = CSV.read("data/cdc-suicide-by-year-age-state-sex.csv",DataFrame; normalizenames=true,missingstring="Unreliable",footerskip=12723-12657+1)
+
+
+
+let pl = []
+    for st in unique(suicdet.State)
+        p = @df @subset(suicdet,:Gender_Code .== "M" .&& :State .== st) plot(:Year,:Deaths ./ :Population .* 100_000,group=:Ten_Year_Age_Groups_Code,title="$st",ylim=(0,100))
+        push!(pl,p)
+    end
+    plot(pl...,size=(3000,3000))
+end
+
+
+```
