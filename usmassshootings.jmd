@@ -5,14 +5,15 @@
 using Pkg
 Pkg.activate(".")
 
-using CSV,DataFrames,StatsPlots,Dates,Loess,DataFramesMeta,StatsBase
+using CSV,DataFrames,StatsPlots,Dates,Loess,DataFramesMeta,StatsBase,GLM
 
 sdata = CSV.read("data/FBIShooterDB.csv",DataFrame)
 
 
 ```
 
-The above data set was hand transcribed from the FBI PDF files available in the data directory. Please report any transcription errors you detect!
+The above data set was hand transcribed from the FBI PDF files available in the data directory. The original is the .ods spreadsheet file. The csv is exported from there.
+Please report any transcription errors you detect!
 
 
 
@@ -22,11 +23,12 @@ weirddates = [i for i in 2:nrow(sdata) if sdata[i,:Date] < sdata[i-1,:Date]  ]
 
 
 sdata.yearmon = tuple.(year.(sdata.Date),month.(sdata.Date))
+sdata.year = year.(sdata.Date)
 
 yearmon2date(x) = Date(x[1],x[2],15)
+@subset!(sdata,.! ismissing.(:NShotgun) .&& .!ismissing.(:NHandgun) .&& .!ismissing.(:NRifle) .&& .!ismissing.(:NKilled) .&& .!ismissing.(:Motive))
 
-
-sdatamon = @by(@subset(sdata,.! ismissing.(:NShotgun) .&& .!ismissing.(:NHandgun) .&& .!ismissing.(:NRifle) .&& .!ismissing.(:NKilled) .&& .!ismissing.(:Motive)),
+sdatamon = @by(sdata,
     :yearmon,:TotKilled = sum(:NKilled),:HGKilled = sum(:NKilled .* (:NHandgun .> 0 .&& :NRifle .==0 .&& :NShotgun .== 0)),
     :RifleKilled = sum(:NKilled .* (:NHandgun .== 0 .&& :NRifle .> 0 .&& :NShotgun .== 0)),
     :ShotgunKilled = sum(:NKilled .* (:NHandgun .== 0 .&& :NRifle .== 0 .&& :NShotgun .> 0)),
@@ -206,3 +208,36 @@ ginishootmon = @orderby(leftjoin(sdatamon,usgini, on = :Year),:yearmon)
 @df ginishootmon scatter(:ginicoef,log.(cumsum(:PubShoots)),title="Public Shootings vs Gini")
 
 ```
+
+# How do suicides track active shootings
+
+Many active shootings are explicitly a form of suicide. The shooter has no intention of surviving, and intends to lash out as their last action. 
+If this is true, then perhaps the things that drive mass shootings also drive suicide increases of other forms? Also, mass shootings are overwhelmingly
+committed by male perpetrators, so we will look at male suicide rates.
+
+```julia
+
+suic = @select(@subset(CSV.read("data/who-suicide-data.csv",DataFrame; select = [:SpatialDimValueCode,:Period,:Dim1,:FactValueNumeric]), 
+                        :SpatialDimValueCode .== "USA" .&& :Dim1 .== "Male"),
+                        :Year = :Period, :Country = :SpatialDimValueCode, :SuicRate = :FactValueNumeric)
+
+
+@df suic scatter(:Year, :SuicRate,ylab="Male Suicide/100k/yr",xlab="Year",legend=false)
+
+
+pubshoots = @by(sdata,:year,:ShootCount = sum(:Motive .== "Public Shooter"))
+
+suicandshoots = leftjoin(suic,pubshoots; on = :Year => :year)
+
+@df suicandshoots plot(:Year,:ShootCount;title="Public Shooting Counts", legend=false)
+
+@df suicandshoots scatter(:SuicRate, :ShootCount;xlab="Male Suicide Rate / 100k/yr",ylab="Public Shooting Count",legend=false,title="US Shooting Count vs Suicide Rate")
+
+suicmod = lm(@formula(ShootCount ~ 1 + SuicRate),suicandshoots)
+Plots.abline!(coef(suicmod)[2],coef(suicmod)[1])
+
+plot(residuals(suicmod))
+std(residuals(suicmod))
+
+```
+
