@@ -6,14 +6,14 @@ function geturlh(yr)
     if yr < 2007
         return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/csv_hus.zip"
     else
-        return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/1-year/csv_hus.zip"
+        return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/1-Year/csv_hus.zip"
     end
 end
 function geturlp(yr)
     if yr < 2007
         return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/csv_pus.zip"
     else
-        return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/1-year/csv_pus.zip"
+        return "https://www2.census.gov/programs-surveys/acs/data/pums/$yr/1-Year/csv_pus.zip"
     end
 end
 
