@@ -18,17 +18,23 @@ function geturlp(yr)
 end
 
 
-let f = ""
+let f = "", maindir = pwd()
     for i in 2000:2020
         mkpath("data/pums/$i"; mode = 0o750)
         f = "data/pums/$i/csv_hus.zip"
         if !isfile(f)
             Downloads.download(geturlh(i),f)
         end
+        cd(dirname(f))
+        run(`unzip $f`)
+        cd(maindir)
+
         f = "data/pums/$i/csv_pus.zip"
         if !isfile(f)
             Downloads.download(geturlp(i),f)
         end
+        cd(dirname(f))
+        run(`unzip $f`)
+        cd(maindir)
     end
-
 end
