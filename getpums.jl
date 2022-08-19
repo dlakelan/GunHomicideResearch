@@ -19,7 +19,7 @@ end
 
 
 let f = "", maindir = pwd()
-    for i in 2000:2020
+    for i in 2000:2019
         mkpath("data/pums/$i"; mode = 0o750)
         f = "data/pums/$i/csv_hus.zip"
         if !isfile(f)
