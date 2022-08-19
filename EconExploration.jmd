@@ -72,7 +72,7 @@ incsamps = let ss = Dict(), yr = 2000
             @show file
             df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
             for r in eachrow(df)
-                if ! ismissing(r.FINCP) && ! ismissing(r.NP) && ! ismissing(r.WGTP)
+                if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
                     if haskey(ss,(year,r.ST))
                         for i in 1:r.NP
                             push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
