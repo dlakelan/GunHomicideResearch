@@ -26,7 +26,7 @@ let f = "", maindir = pwd()
             Downloads.download(geturlh(i),f)
         end
         cd(dirname(f))
-        run(`unzip $(basename(f))`)
+        run(`unzip -o $(basename(f))`)
         cd(maindir)
 
         f = "data/pums/$i/csv_pus.zip"
@@ -34,7 +34,7 @@ let f = "", maindir = pwd()
             Downloads.download(geturlp(i),f)
         end
         cd(dirname(f))
-        run(`unzip $(basename(f))`)
+        run(`unzip -o $(basename(f))`)
         cd(maindir)
     end
 end
