@@ -1,0 +1,105 @@
+```julia
+
+using Pkg
+Pkg.activate(".")
+
+using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase
+
+FrAPI = "8827e587e9702525c583c914277cdd2e"
+
+f = Fred(FrAPI)
+
+
+m2 = get_data(f,"WM2NS")
+
+
+p = @df m2.data plot(:date,log.(:value))
+display(p)
+
+m2data = m2.data
+m2data.logval = log.(m2data.value)
+m2data.delyr = let x = (m2data.date - Date("2000-01-01")); map(x->x.value/365.0,x) end
+
+m21999 = @subset(m2.data,:date .> Date("1999-01-01") .&& :date .< Date("2018-01-01"))
+
+p = @df m21999 plot(:date,log.(:value))
+display(p)
+
+mod = lm(@formula( logval ~ delyr),m21999)
+
+
+m2covid = @subset(m2data,:date .> Date("2020-04-01") .&& :date .< Date("2020-07-01"))
+
+p = @df m2covid plot(:date,:logval)
+display(p)
+
+modcov = lm(@formula( logval ~ delyr),m2covid)
+display(modcov)
+
+
+m2postcov = @subset(m2data,:date .> Date("2020-07-01") .&& :date .< Date("2022-04-01"))
+
+p = @df m2postcov plot(:date,:logval)
+display(p)
+
+modpostcov = lm(@formula(logval ~ delyr),m2postcov)
+display(modpostcov)
+
+cpidat = get_data(f,"CPIAUCSL")
+
+cpidatdf = cpidat.data
+cpidatdf.delyr  = map(cpidatdf.date .- Date("2000-01-01")) do x 
+    x.value ./ 365.0 
+end
+
+cpidatdf.logval = log.(cpidatdf.value)
+
+cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01") .&& :date .< Date("2018-01-01")))
+
+
+```
+
+
+# Exploring the PUMS data for state by state per-capita income distribution
+
+```julia
+
+incsamps = let ss = Dict(), yr = 2000
+    for year in 2001:2019
+        for file in filter(readdir("data/pums/$year")) do x 
+                    occursin(r"hus?\.csv",x)
+            end
+            @show file
+            df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
+            for r in eachrow(df)
+                if ! ismissing(r.FINCP) && ! ismissing(r.NP) && ! ismissing(r.WGTP)
+                    if haskey(ss,(year,r.ST))
+                        for i in 1:r.NP
+                            push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
+                        end
+                    else
+                        ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP) for i in 1:r.NP]
+                    end
+                end
+            end
+        end
+    end
+    ss
+end
+
+fips = CSV.read("data/fipscodes.csv",DataFrame)
+
+
+for r in eachrow(fips)
+    stnum = r.STATE
+    stcode = r.STUSAB
+    for i in 2001:2019
+        incs = incsamps[(i,stnum)]
+
+        h = histogram(map(x->x.inc,sample(incs,map(x -> x.wght,incs),2000)); title = "$stcode Income Distribution")
+        display(h)
+    end
+end
+
+
+```
