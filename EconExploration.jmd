@@ -72,7 +72,7 @@ incsamps = let ss = Dict(), yr = 2000
             @show file
             df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
             for r in eachrow(df)
-                if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
+                    if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
                     if haskey(ss,(year,r.ST))
                         for i in 1:r.NP
                             push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
@@ -95,12 +95,16 @@ for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
     for i in 2001:2019
+        h = plot()
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
-
-            h = histogram(map(x->x.inc,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)); title = "$stcode Income Distribution $i",xlim=(0,300000))
-            display(h)
+            if i == 2001
+                h = density(map(x->x.inc,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)); title = "$stcode Income Distribution $i",xlim=(0,300000),label=2001)
+            else
+                h = density!(map(x->x.inc,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)); title = "$stcode Income Distribution $i",xlim=(0,300000),label=i)
+            end
         end
+        display(h)
     end
 end
 
