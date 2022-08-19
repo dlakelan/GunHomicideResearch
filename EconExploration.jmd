@@ -3,7 +3,7 @@
 using Pkg
 Pkg.activate(".")
 
-using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase
+using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV
 
 FrAPI = "8827e587e9702525c583c914277cdd2e"
 
@@ -67,7 +67,7 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 incsamps = let ss = Dict(), yr = 2000
     for year in 2001:2019
         for file in filter(readdir("data/pums/$year")) do x 
-                    occursin(r"hus?\.csv",x)
+                    occursin(r"hus.?\.csv",x)
             end
             @show file
             df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
@@ -90,14 +90,17 @@ end
 fips = CSV.read("data/fipscodes.csv",DataFrame)
 
 
+
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
     for i in 2001:2019
-        incs = incsamps[(i,stnum)]
+        if haskey(incsamps,(i,stnum))
+            incs = incsamps[(i,stnum)]
 
-        h = histogram(map(x->x.inc,sample(incs,map(x -> x.wght,incs),2000)); title = "$stcode Income Distribution")
-        display(h)
+            h = histogram(map(x->x.inc,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)); title = "$stcode Income Distribution $i",xlim=(0,300000))
+            display(h)
+        end
     end
 end
 
