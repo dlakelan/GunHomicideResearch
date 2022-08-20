@@ -64,6 +64,9 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
+misszero(x) = ismissing(x) ? 0.0 : x;
+
+
 if isfile("saved/incdist.dat")
     incsamps = Serialization.deserialize("saved/incdist.dat")
 else
@@ -78,10 +81,10 @@ else
                         if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
                         if haskey(ss,(year,r.ST))
                             for i in 1:r.NP
-                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
+                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=(misszero(r.MRGP) + misszero(r.RNTP))/r.NP))
                             end
                         else
-                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP) for i in 1:r.NP]
+                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=(misszero(r.MRGP) + misszero(r.RNTP))/r.NP) for i in 1:r.NP]
                         end
                     end
                 end
@@ -99,11 +102,13 @@ fips = CSV.read("data/fipscodes.csv",DataFrame)
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
-    h = plot(; title = "$stcode Income Distribution",xlim=(0,300),xlab="Income \$1000")
+    h = plot(; title = "$stcode Income/Housing20%tile Distribution",xlim=(0,300),xlab="Income/Housing Ratio")
     for i in 2001:2019
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
-            h = density!(map(x->x.inc/1000.0,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)),label=i)
+            sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
+            qh20 = quantile(map(x->sam.housing,sam), 0.2)
+            h = density!(map(x->x.inc/qh20,sam),label=i)
         end
     end
     display(h)
