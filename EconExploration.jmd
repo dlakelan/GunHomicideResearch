@@ -64,16 +64,18 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
-housecost(x,y) = if !ismissing(x) && !ismissing(y)
-        Float64(x+y)
+function housecost(x,y)
+    if !ismissing(x) && !ismissing(y)
+        z = x+y
     else 
         z = coalesce(x,y)
-        if !ismissing(z)
-            Float64(z)
-        else
-            missing
-        end
     end
+    if typeof(z) <: Number
+        Float64(z)
+    else
+        missing
+    end
+end
 
 if isfile("saved/incdist.dat")
     incsamps = Serialization.deserialize("saved/incdist.dat")
