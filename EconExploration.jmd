@@ -64,8 +64,11 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
-misszero(x) = ismissing(x) ? 0.0 : x;
-
+housecost(x,y) = if !ismissing(x) && !ismissing(y)
+        x+y
+    else 
+        coalesce(x,y)
+    end
 
 if isfile("saved/incdist.dat")
     incsamps = Serialization.deserialize("saved/incdist.dat")
@@ -78,13 +81,13 @@ else
                 @show file
                 df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
                 for r in eachrow(df)
-                        if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && r.NP > 0 && typeof(r.WGTP) == Int64
+                    if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && r.NP > 0 && typeof(r.WGTP) == Int64
                         if haskey(ss,(year,r.ST))
                             for i in 1:r.NP
-                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=(r.MRGP + r.RNTP)/r.NP))
+                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP))
                             end
                         else
-                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=(r.MRGP + r.RNTP)/r.NP) for i in 1:r.NP]
+                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP) for i in 1:r.NP]
                         end
                     end
                 end
