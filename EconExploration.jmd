@@ -67,7 +67,12 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 housecost(x,y) = if !ismissing(x) && !ismissing(y)
         Float64(x+y)
     else 
-        Float64(coalesce(x,y))
+        z = coalesce(x,y)
+        if !ismissing(z)
+            Float64(z)
+        else
+            missing
+        end
     end
 
 if isfile("saved/incdist.dat")
