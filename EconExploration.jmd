@@ -64,7 +64,7 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
-function housecost(x,y)
+function housecost(x,y)::Union{Float64,Missing}
     if !ismissing(x) && !ismissing(y)
         z = x+y
     else 
@@ -91,10 +91,10 @@ else
                     if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && r.NP > 0 && typeof(r.WGTP) == Int64
                         if haskey(ss,(year,r.ST))
                             for i in 1:r.NP
-                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP))
+                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP)::Tuple{Float64,Float64,Union{Float64,Missing}})
                             end
                         else
-                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP) for i in 1:r.NP]
+                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP)::Tuple{Float64,Float64,Union{Float64,Missing}} for i in 1:r.NP]
                         end
                     end
                 end
