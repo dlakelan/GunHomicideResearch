@@ -99,11 +99,11 @@ fips = CSV.read("data/fipscodes.csv",DataFrame)
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
-    h = plot(; title = "$stcode Income Distribution",xlim=(0,300000),label=i)
+    h = plot(; title = "$stcode Income Distribution",xlim=(0,300),label=i,xlab="Income $1000")
     for i in 2001:2019
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
-            h = density!(map(x->x.inc,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)))
+            h = density!(map(x->x.inc/1000.0,sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)))
         end
     end
     display(h)
