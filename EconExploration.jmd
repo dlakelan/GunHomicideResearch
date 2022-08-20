@@ -102,8 +102,8 @@ fips = CSV.read("data/fipscodes.csv",DataFrame)
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
-    h = plot(; title = "$stcode (Income/ Median Housing) Distribution",xlim=(0,100),xlab="Income/Housing Ratio")
-    for i in 2001:2019
+    h = plot(; title = "$stcode (Income/ Median Housing) Distribution",xlim=(0,40),xlab="Income/Housing Ratio")
+    for i in 2001:4:2019
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
             sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
