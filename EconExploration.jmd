@@ -3,7 +3,7 @@
 using Pkg
 Pkg.activate(".")
 
-using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV
+using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV, Serialization
 
 FrAPI = "8827e587e9702525c583c914277cdd2e"
 
@@ -64,27 +64,32 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
-incsamps = let ss = Dict(), yr = 2000
-    for year in 2001:2019
-        for file in filter(readdir("data/pums/$year")) do x 
-                    occursin(r"hus.?\.csv",x)
-            end
-            @show file
-            df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
-            for r in eachrow(df)
-                    if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
-                    if haskey(ss,(year,r.ST))
-                        for i in 1:r.NP
-                            push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
+if isfile("saved/incdist.dat")
+    incsamps = Serialization.deserialize("saved/incdist.dat")
+else
+    incsamps = let ss = Dict(), yr = 2000
+        for year in 2001:2019
+            for file in filter(readdir("data/pums/$year")) do x 
+                        occursin(r"hus.?\.csv",x)
+                end
+                @show file
+                df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
+                for r in eachrow(df)
+                        if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && typeof(r.WGTP) == Int64
+                        if haskey(ss,(year,r.ST))
+                            for i in 1:r.NP
+                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP))
+                            end
+                        else
+                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP) for i in 1:r.NP]
                         end
-                    else
-                        ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP) for i in 1:r.NP]
                     end
                 end
             end
         end
+        ss
     end
-    ss
+    Serialization.serialize("saved/incdist.dat",incsamps)
 end
 
 fips = CSV.read("data/fipscodes.csv",DataFrame)
