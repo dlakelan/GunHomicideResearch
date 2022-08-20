@@ -107,7 +107,7 @@ for r in eachrow(fips)
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
             sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
-            qh20 = quantile(map(x->x.housing,filter(!(ismissing),sam)), 0.2)
+            qh20 = quantile(map(x->x.housing,filter(x -> ! ismissing(x) && !isnan(x),sam)), 0.2)
             h = density!(map(x->x.inc/qh20,sam),label=i)
         end
     end
