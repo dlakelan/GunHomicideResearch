@@ -102,12 +102,16 @@ fips = CSV.read("data/fipscodes.csv",DataFrame)
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
-    h = plot(; title = "$stcode Income/Housing20%tile Distribution",xlim=(0,300),xlab="Income/Housing Ratio")
+    h = plot(; title = "$stcode (Income/ Median Housing) Distribution",xlim=(0,100),xlab="Income/Housing Ratio")
     for i in 2001:2019
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
             sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
-            qh20 = quantile(filter(x -> ! ismissing(x) && !isnan(x),getproperty.(sam,:housing)), 0.2)
+            hsamp = filter(x -> ! ismissing(x) && !isnan(x),getproperty.(sam,:housing))
+            #@show hsamp
+            @assert ! any(isnan,hsamp)
+            @assert ! any(ismissing,hsamp)
+            qh20 = 12.0 * quantile(hsamp, 0.5)
             h = density!(map(x->x.inc/qh20,sam),label=i)
         end
     end
