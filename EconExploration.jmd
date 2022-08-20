@@ -94,7 +94,7 @@ else
                                 push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP))
                             end
                         else
-                            ss[(year,r.ST)] = [(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP) for i in 1:r.NP]
+                            ss[(year,r.ST)] = Tuple{(:inc,:wght,:housing),Float64,Int64,Union{Float64,Missing}}[(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP) for i in 1:r.NP]
                         end
                     end
                 end
