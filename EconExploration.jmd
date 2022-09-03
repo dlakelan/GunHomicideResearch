@@ -1,16 +1,22 @@
 ```julia
 
-using Pkg
-Pkg.activate(".")
+using Distributed 
+censproc = addprocs(["census.lan"]; dir = "/var/local/dlakelan/GunHomicideResearch/", exename="/home/dlakelan/julia/bin/julia")
 
-using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV, Serialization
+@everywhere using Pkg
+@everywhere Pkg.activate(".")
+
+@everywhere using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV, Serialization, Downloads, Interpolations
 
 FrAPI = "8827e587e9702525c583c914277cdd2e"
 
 f = Fred(FrAPI)
 
 
-m2 = get_data(f,"WM2NS")
+
+
+
+m2 = get_data(f,"WM2NS") # the m2 money supply
 
 
 p = @df m2.data plot(:date,log.(:value))
@@ -64,46 +70,59 @@ cpimod = lm(@formula(logval ~ delyr),@subset(cpidatdf,:date .> Date("1999-01-01"
 
 ```julia
 
-function housecost(x,y)::Union{Float64,Missing}
-    if !ismissing(x) && !ismissing(y)
-        z = x+y
-    else 
-        z = coalesce(x,y)
-    end
-    if typeof(z) <: Number
-        Float64(z)
-    else
-        missing
-    end
+@everywhere function housecost(mrg,smp,rent)::Union{Float64,Missing}
+    v = [mrg smp rent]
+    all(ismissing,v) ? missing : sum(map(x->ismissing(x) ? 0.0 : x,v))
 end
 
-if isfile("saved/incdist.dat")
-    incsamps = Serialization.deserialize("saved/incdist.dat")
-else
-    incsamps = let ss = Dict(), yr = 2000
-        for year in 2001:2019
-            for file in filter(readdir("data/pums/$year")) do x 
-                        occursin(r"hus.?\.csv",x)
-                end
-                @show file
-                df = CSV.read("data/pums/$year/$file",DataFrame; select=[:RT,:ST,:WGTP,:NP,:FINCP,:MRGP,:RNTP])
-                for r in eachrow(df)
-                    if typeof(r.FINCP) == Int64 && typeof(r.NP) == Int64 && r.NP > 0 && typeof(r.WGTP) == Int64
-                        if haskey(ss,(year,r.ST))
-                            for i in 1:r.NP
-                                push!(ss[(year,r.ST)],(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP))
+@everywhere recalc = true
+
+
+
+incsamps = @spawnat censproc[1] begin
+
+    if recalc
+        try 
+            rm("saved/incdist.dat") 
+        catch 
+            nothing
+        finally 
+            @warn "saved/incdist.dat removed" 
+        end
+    end
+    if isfile("saved/incdist.dat")
+        incsamps = Serialization.deserialize("saved/incdist.dat")
+    else
+        incsamps = let ss = Dict()
+            for year in 2001:2019
+                for file in filter(readdir("data/pums/$year")) do x 
+                            occursin(r"hus.?\.csv",x)
+                    end
+                    @show file
+                    rmfield = year < 2008 ? :RMS : :RMSP
+                    fields = [:RT,:ST,:WGTP,:NP,:HINCP,:MRGP,:RNTP,:SMP, rmfield]
+                    df = CSV.read("data/pums/$year/$file",DataFrame; select=fields)
+                    for r in eachrow(df)
+                        if typeof(r.HINCP) == Int64 && typeof(r.NP) == Int64 && r.NP > 0 && typeof(r.WGTP) == Int64
+                            if haskey(ss,(year,r.ST))
+                                for i in 1:r.NP
+                                    push!(ss[(year,r.ST)],(np = r.NP, inc=r.HINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.SMP, r.RNTP)/r.NP, nr = getproperty(r,rmfield)))
+                                end
+                            else
+                                ss[(year,r.ST)] = Any[(np= r.NP, inc=r.HINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.SMP, r.RNTP)/r.NP,nr = getproperty(r,rmfield)) for i in 1:r.NP]
                             end
-                        else
-                            ss[(year,r.ST)] = Any[(inc=r.FINCP/r.NP,wght=r.WGTP,housing=housecost(r.MRGP , r.RNTP)/r.NP) for i in 1:r.NP]
                         end
                     end
                 end
             end
+            ss
         end
-        ss
+        Serialization.serialize("saved/incdist.dat",incsamps)
     end
-    Serialization.serialize("saved/incdist.dat",incsamps)
+    incsamps
 end
+
+incsamps = fetch(incsamps)
 
 fips = CSV.read("data/fipscodes.csv",DataFrame)
 
@@ -112,7 +131,7 @@ fips = CSV.read("data/fipscodes.csv",DataFrame)
 for r in eachrow(fips)
     stnum = r.STATE
     stcode = r.STUSAB
-    h = plot(; title = "$stcode (Income/ Median Housing) Distribution",xlim=(0,40),xlab="Income/Housing Ratio")
+    h = plot(; title = "$stcode (Income/ Median Housing) Distribution",xlim=(0,15),xlab="Income/Housing Ratio",ylim=(0.0,.2))
     for i in 2001:4:2019
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
@@ -121,12 +140,188 @@ for r in eachrow(fips)
             #@show hsamp
             @assert ! any(isnan,hsamp)
             @assert ! any(ismissing,hsamp)
-            qh20 = 12.0 * quantile(hsamp, 0.5)
+            qh50 = 12.0 * quantile(hsamp, 0.5)
+            h = density!(map(x->x.inc/qh50,sam),label=i)
+        end
+    end
+    display(h)
+    h = plot(; title = "$stcode (Income/ 20% Housing) Distribution",xlim=(0,15),xlab="Income/Housing Ratio",ylim=(0.0,.2))    
+    for i in 2001:4:2019
+        if haskey(incsamps,(i,stnum))
+            incs = incsamps[(i,stnum)]
+            sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
+            hsamp = filter(x -> ! ismissing(x) && !isnan(x),getproperty.(sam,:housing))
+            #@show hsamp
+            @assert ! any(isnan,hsamp)
+            @assert ! any(ismissing,hsamp)
+            qh20 = 12.0 * quantile(hsamp, 0.20)
             h = density!(map(x->x.inc/qh20,sam),label=i)
         end
     end
     display(h)
+    h = plot(;title="$stcode (Income / Actual Housing) Distribution", xlim=(0,15),xlab="Income/Housing Ratio",ylim=(0.0,.2))
+    for i in 2001:4:2019
+        if haskey(incsamps,(i,stnum))
+            incs = incsamps[(i,stnum)]
+            sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
+            sam = filter(x -> ! ismissing(x.housing),sam)
+            h = density!(map(x->x.inc/(12.0*(max(100.0,x.housing))),sam); npoints = 2048, label="$i n=$(length(sam))")
+        end
+    end
+    display(h)
+    h = plot(;title="$stcode (Rooms / Person) Distribution", xlim=(0,5),xlab="Rooms/Person Ratio",ylim=(0.0,.75))
+    for i in 2001:4:2019
+        if haskey(incsamps,(i,stnum))
+            incs = incsamps[(i,stnum)]
+            sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
+            sam = filter(x -> ! ismissing(x.np) && !ismissing(x.nr),sam)
+            h = density!(map(x->x.nr/x.np,sam); npoints = 2048, label="$i n=$(length(sam))")
+        end
+    end
+    display(h)
+    h = plot(;title="$stcode (People / Household) Distribution", xlim=(0,8),xlab="People",ylim=(0.0,.75))
+    for i in 2001:4:2019
+        if haskey(incsamps,(i,stnum))
+            incs = incsamps[(i,stnum)]
+            sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
+            sam = filter(x -> ! ismissing(x.np) && !ismissing(x.nr),sam)
+            h = histogram!(map(x->x.np,sam); bins=collect(0.5:1:10.5) , normalize=true , alpha = 0.25, label="$i n=$(length(sam))")
+        end
+    end
+    display(h)
+    
 end
 
 
+
+
+
+
 ```
+
+
+# Let's take a look at how cost of living changed through time.
+
+```julia
+
+res = @spawnat censproc[1] let files=["data/bls/ap.data.3.Food", "data/bls/ap.area","data/bls/ap.item"]
+    urls=["https://download.bls.gov/pub/time.series/ap/ap.data.3.Food","https://download.bls.gov/pub/time.series/ap/ap.area","https://download.bls.gov/pub/time.series/ap/ap.item"]
+    mkpath("data/bls")
+    for (u,f) = Iterators.zip(urls,files)
+        Downloads.download(u,f)
+    end
+end
+res = fetch(res)
+
+area = @spawnat censproc[1] CSV.read("data/bls/ap.area",DataFrame)
+area = fetch(area)
+
+items = @spawnat censproc[1] CSV.read("data/bls/ap.item",DataFrame)
+items = fetch(items)
+
+prices = @spawnat censproc[1] CSV.read("data/bls/ap.data.3.Food",DataFrame)
+prices = fetch(prices)
+rename!(prices,strip.(names(prices)))
+prices.value = tryparse.(Float64,prices.value)
+
+prices.region = SubString.(prices.series_id,4,7)
+prices.season = SubString.(prices.series_id,3,3)
+prices.item_code = SubString.(prices.series_id,8,13)
+
+prices.date = prices.year + map(x -> (tryparse(Int64,x[2:3])-1)/12.0,prices.period )
+
+mypricelist = DataFrame(item_code = ["706111","702212","712311","703511","712211","711111",
+                                        "708111","701322","711311","710212","707111"],
+    shortname = ["chicken","bread","tomatoes","steak","lettuce","apples","eggs","spaghetti","oranges","cheese","tuna"],
+    quantpermo = [13.0,5.0,16.0,13.0,2.0,16.0,5.0,8.0,16.0,4.0,4.0],
+    caloriesper100g=[166.0, 254.0, 22.0, 129.0, 14.0, 62.0, 143.0,371.0,46.0,409.0,85.0],
+    quantg = [453.6, 453.6, 453.6, 453.6, 453.6, 453.6, 120.0*6, 453.6, 453.6,453.6, 453.6]) # calories looked up on https://fdc.nal.usda.gov/fdc-app.html#/food-details/169736/nutrients
+# to calculate egg weight, I weighed 2 eggs and multiplied by 6 for a dozen
+
+
+chix = @subset(items,occursin.("Chick",:item_name))
+bread = @subset(items,occursin.("Bread",:item_name))
+spagh = @subset(items,occursin.("Spag",:item_name))
+tomat = @subset(items,occursin.("Tomato",:item_name))
+lett = @subset(items,occursin.("Lett",:item_name))
+orang = @subset(items,occursin.("Orange",:item_name))
+pean = @subset(items,occursin.("Peanut",:item_name))
+appl = @subset(items,occursin.("Apples",:item_name))
+beef = @subset(items,occursin.("eef",:item_name) .|| occursin.("roast",:item_name) .|| occursin.("Steak",:item_name))
+
+
+pricecounts = @by(leftjoin(items,prices,on= :item_code),:item_code,:N = length(:value),:dmin = minimum(:year),:dmax=maximum(:year))
+
+gooditems = leftjoin(@subset(pricecounts, :N .> 1000 .&& :dmin .< 1999),items,on=:item_code)
+
+
+myindex = leftjoin(mypricelist,gooditems,on=:item_code)
+
+basketcalsperday = sum(@with(myindex,:quantg .* :caloriesper100g ./ 100 .* :quantpermo))/30
+
+
+
+interpprices = groupby(leftjoin(myindex,prices,on=:item_code),[:region,:item_code])
+interpprices = let interpprices = interpprices, D = DataFrame()
+    for g in interpprices
+        dates = collect(minimum(g.date):1.0/12.0:maximum(g.date))
+        #@show g.value
+        interp = LinearInterpolation(Float64.(g.date),Float64.(g.value))
+        #@show interp(dates[2])
+        prices = [interp(d) for d in dates]
+        #@show dates
+        #@show prices
+        D = [D ; DataFrame(date=dates,value=prices,item_code = [g.item_code[1] for i in 1:length(dates)],
+                            region = [g.region[1] for i in 1:length(dates)])]
+    end
+    D 
+end
+
+
+
+function bumprbf(x)
+    (x < -1.0 || x > 1.0) && return 0.0
+    exp(1.0-1.0/(1.0-x^2))
+end
+
+
+function rbfeval(x,c,sc,coeff,offs)
+    val = collect(co * bumprbf((x-cent)/sc) for (cent,co) in zip(c,coeff))
+    @show val
+    sum(val)+offs
+end
+
+
+# example plot to make sure it's working
+#plot(x->rbfeval(x,collect(-10.0:10.0),3.0,collect(1.0/(x^2+1.0) for x in -10:10),1.0),xlim=(-10.0,10.0))
+
+
+
+@model cpifood(date,item,region,price,punit,cals,cunit)
+    # a model of a food price index for 2000 calories a day of food 
+    # chosen in a moderately healthy balance, interpolating missing prices
+    # and with regional variations
+
+
+end
+
+
+
+
+
+myitemsprcs = @chain @transform(leftjoin(myindex,interpprices; on= :item_code),:monthcost = :value .* :quantpermo) begin 
+    @orderby(:date,:region) end
+
+foodcost = @chain @by(myitemsprcs,[:date,:region],:monthcost = sum(:monthcost),:nitems = length(:monthcost)) begin
+    @orderby(:date,:region)
+    end
+
+@df @subset(foodcost,:nitems .== 12) plot(:date,:monthcost; group = :region,legend=:topleft,title="Nominal Dollars 1 mo Food 1 Person")
+
+
+
+
+```
+
+## Lets create a food and shelter index... interpolating with Turing to create a stable index
+
