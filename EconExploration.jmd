@@ -8,6 +8,9 @@ censproc = addprocs(["census.lan"]; dir = "/var/local/dlakelan/GunHomicideResear
 
 @everywhere using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV, Serialization, Downloads, Interpolations
 
+@everywhere include("utilities.jl")
+
+
 FrAPI = "8827e587e9702525c583c914277cdd2e"
 
 f = Fred(FrAPI)
@@ -286,9 +289,7 @@ end
 
 
 function rbfeval(x,c,sc,coeff,offs)
-    val = collect(co * bumprbf((x-cent)/sc) for (cent,co) in zip(c,coeff))
-    @show val
-    sum(val)+offs
+    sum(co * bumprbf((x-cent)/sc) for (cent,co) in zip(c,coeff))+offs
 end
 
 
@@ -297,14 +298,39 @@ end
 
 
 
-@model cpifood(date,item,region,price,punit,cals,cunit)
+@model cpifood(date,item,nitem,region,nregion,centers,rbfsc,price,prunitg,cals,cunitg)
     # a model of a food price index for 2000 calories a day of food 
     # chosen in a moderately healthy balance, interpolating missing prices
     # and with regional variations
+    ncenters = length(centers)
+    coefs ~ MvNormal([0.0 for i in 1:nitems*nregion*ncenters],10.0)
+    offsetlog ~ MvNormal([log(2.0) for i in 1:nitems*nregion],log(2.0))
+    offset = reinterpret(exp.(offsetlog),(nitem,nregion))
+    coefsm = reinterpret(coefs,(ncenters,nitems,nregion));
+    measerr ~ Gamma(20.0,.5/19)
+    quantlogs ~ MvNormal([log(5.0) for i in 1:nitem],log(2.0))
+    quants = exp.(quantlogs)
+    alldates = round(minimum(date)):1.0/4:round(maximum(date))
+    prices = zeros(typeof(quants[1]),length(alldates),nitem,nregion)
+    cost = zeros(typeof(quants[1]),length(alldates),nitem,nregion)
+    ## predict price with the RBF model for every date, every region, every item..
+    ## utilize those prices which are known to inform the model through a likelihood
 
+    ## include the measured data on prices through a likelihood
+    for (d,i,r,p) in zip(date,item,region,price)
+        pred = rbfeval(d,centers,rbfsc,view(coefsm,:,i,r),offset[i,r])
+        @addlogprob!(logpdf(Normal(0.0,measerr),pred-p))
+    end
+    # using the coefficients, estimate all the prices quarterly...
+    for (d,i,r) in product(1:length(alldates),1:nitem,1:nregion)
+        prices[d,i,r] = rbfeval(alldates[d],centers,rbfsc,view(coefsm,:,i,r),offset[i,r])
+    end
 
 end
 
+
+
+getifnotthere("data/FoodData_Central_foundation_food_csv_2022-04-28.zip","https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_csv_2022-04-28.zip")
 
 
 
