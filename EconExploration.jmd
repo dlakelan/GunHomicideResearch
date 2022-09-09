@@ -6,7 +6,8 @@ censproc = addprocs(["census.lan"]; dir = "/var/local/dlakelan/GunHomicideResear
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
 
-@everywhere using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase, FredData, CSV, Serialization, Downloads, Interpolations
+@everywhere using StatsPlots, DataFrames, DataFramesMeta, FredData, Dates, GLM, StatsBase,
+    FredData, CSV, Serialization, Downloads, Interpolations, Optim, Turing, LinearAlgebra, CategoricalArrays, ReverseDiff, Memoization
 
 @everywhere include("utilities.jl")
 
@@ -179,11 +180,7 @@ for r in eachrow(fips)
             sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
             sam = filter(x -> ! ismissing(x.np) && !ismissing(x.nr),sam)
             h = density!(map(x->x.nr/x.np,sam); npoints = 2048, label="$i n=$(length(sam))")
-        end
-    end
-    display(h)
-    h = plot(;title="$stcode (People / Household) Distribution", xlim=(0,8),xlab="People",ylim=(0.0,.75))
-    for i in 2001:4:2019
+        endpricecounts = @by(leftjoin(items,prices,on= :item_code),:item_c
         if haskey(incsamps,(i,stnum))
             incs = incsamps[(i,stnum)]
             sam = sample(incs,FrequencyWeights(map(x -> x.wght,incs)),2000)
@@ -236,9 +233,7 @@ prices.date = prices.year + map(x -> (tryparse(Int64,x[2:3])-1)/12.0,prices.peri
 mypricelist = DataFrame(item_code = ["706111","702212","712311","703511","712211","711111",
                                         "708111","701322","711311","710212","707111"],
     shortname = ["chicken","bread","tomatoes","steak","lettuce","apples","eggs","spaghetti","oranges","cheese","tuna"],
-    quantpermo = [13.0,5.0,16.0,13.0,2.0,16.0,5.0,8.0,16.0,4.0,4.0],
-    caloriesper100g=[166.0, 254.0, 22.0, 129.0, 14.0, 62.0, 143.0,371.0,46.0,409.0,85.0],
-    quantg = [453.6, 453.6, 453.6, 453.6, 453.6, 453.6, 120.0*6, 453.6, 453.6,453.6, 453.6]) # calories looked up on https://fdc.nal.usda.gov/fdc-app.html#/food-details/169736/nutrients
+    quantg = [453.6, 453.6, 453.6, 453.6, 453.6, 453.6, 120.0*6, 453.6, 453.6,453.6, 453.6]) # grams purchased for the given price
 # to calculate egg weight, I weighed 2 eggs and multiplied by 6 for a dozen
 
 
@@ -251,6 +246,10 @@ orang = @subset(items,occursin.("Orange",:item_name))
 pean = @subset(items,occursin.("Peanut",:item_name))
 appl = @subset(items,occursin.("Apples",:item_name))
 beef = @subset(items,occursin.("eef",:item_name) .|| occursin.("roast",:item_name) .|| occursin.("Steak",:item_name))
+tuna = @subset(items,occursin.("una",:item_name))
+
+# hand picked matches for the items in the fdc_id usda foods
+mypricelist.fdc_id = [171450,172686,170457,168694,169248,168201,172183,168937,169918,173414,173709]
 
 
 pricecounts = @by(leftjoin(items,prices,on= :item_code),:item_code,:N = length(:value),:dmin = minimum(:year),:dmax=maximum(:year))
@@ -260,30 +259,56 @@ gooditems = leftjoin(@subset(pricecounts, :N .> 1000 .&& :dmin .< 1999),items,on
 
 myindex = leftjoin(mypricelist,gooditems,on=:item_code)
 
-basketcalsperday = sum(@with(myindex,:quantg .* :caloriesper100g ./ 100 .* :quantpermo))/30
 
+myprices = leftjoin(myindex,prices;on = :item_code)
 
+# grab food nutrition data from USDA
 
-interpprices = groupby(leftjoin(myindex,prices,on=:item_code),[:region,:item_code])
-interpprices = let interpprices = interpprices, D = DataFrame()
-    for g in interpprices
-        dates = collect(minimum(g.date):1.0/12.0:maximum(g.date))
-        #@show g.value
-        interp = LinearInterpolation(Float64.(g.date),Float64.(g.value))
-        #@show interp(dates[2])
-        prices = [interp(d) for d in dates]
-        #@show dates
-        #@show prices
-        D = [D ; DataFrame(date=dates,value=prices,item_code = [g.item_code[1] for i in 1:length(dates)],
-                            region = [g.region[1] for i in 1:length(dates)])]
+getifnotthere("data/FoodData_Central_foundation_food_csv_2022-04-28.zip","https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_csv_2022-04-28.zip")
+getifnotthere("data/FoodData_Central_sr_legacy_food_csv_2019-04-02.zip","https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_%202019-04-02.zip")
+getifnotthere("data/FoodData_Central_Supporting_Data_csv_2022-04-28.zip","https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_Supporting_Data_csv_2022-04-28.zip")
+
+cwd = pwd()
+try 
+    cd("./data")
+    if !ispath("FoodData_Central_foundation_food_csv_2022-04-28")
+        run(`unzip -u FoodData_Central_foundation_food_csv_2022-04-28.zip`)
     end
-    D 
+    mkpath("FoodData_Central_legacy"; mode=0o755)
+    cd("FoodData_Central_legacy")
+    run(`unzip -u ../FoodData_Central_sr_legacy_food_csv_2019-04-02.zip`)
+    cd("..")
+    run(`unzip -u FoodData_Central_Supporting_Data_csv_2022-04-28.zip`)
+finally 
+    cd(cwd)
 end
+
+# legacy foods is by far the more complete dataset even if it's less detailed, we match 
+# the price data to the nearest food items in the USDA database, then get calories, protein, fat, carbs
+# for each food. measured in per 100g
+
+usdafoods = CSV.read("data/FoodData_Central_legacy/food.csv",DataFrame)
+
+
+usdanutrient = CSV.read("data/FoodData_Central_legacy/food_nutrient.csv",DataFrame)
+
+pricelistnutr = leftjoin(mypricelist,usdafoods; on=:fdc_id)
+
+pricelistnutdetails = leftjoin(pricelistnutr,usdanutrient; on = :fdc_id)
+
+pricelistsum = @by pricelistnutdetails :fdc_id begin
+    :calories = sum(:amount[:nutrient_id .== 1008])
+    :protein = sum(:amount[:nutrient_id .== 1003])
+    :fat = sum(:amount[:nutrient_id .== 1004])
+    :carbs = sum(:amount[:nutrient_id .== 1005])
+    end
+
+pricelistnutr = leftjoin(pricelistnutr,pricelistsum;on=:fdc_id)
 
 
 
 function bumprbf(x)
-    (x < -1.0 || x > 1.0) && return 0.0
+    (x < -1.0 || x > 1.0) && return zero(x)
     exp(1.0-1.0/(1.0-x^2))
 end
 
@@ -298,17 +323,20 @@ end
 
 
 
-@model cpifood(date,item,nitem,region,nregion,centers,rbfsc,price,prunitg,cals,cunitg)
+@model function cpifood(date,item,nitem,region,nregion,centers,rbfsc,price,cals,prot,fat,carb)
     # a model of a food price index for 2000 calories a day of food 
     # chosen in a moderately healthy balance, interpolating missing prices
-    # and with regional variations
+    # and with regional variations. input prices should be in $/100g and 
+    # cals is calories/100g for each item
+    # prot is grams protein/100g item
+    # fat and carb similar to prot
     ncenters = length(centers)
-    coefs ~ MvNormal([0.0 for i in 1:nitems*nregion*ncenters],10.0)
-    offsetlog ~ MvNormal([log(2.0) for i in 1:nitems*nregion],log(2.0))
-    offset = reinterpret(exp.(offsetlog),(nitem,nregion))
-    coefsm = reinterpret(coefs,(ncenters,nitems,nregion));
+    coefs ~ MvNormal([0.0 for i in 1:nitem*nregion*ncenters],10.0)
+    offsetlog ~ MvNormal([log(5.0) for i in 1:nitem*nregion],log(5.0)/2.0)
+    offset = reshape(exp.(offsetlog),(nitem,nregion))
+    coefsm = reshape(coefs,(ncenters,nitem,nregion));
     measerr ~ Gamma(20.0,.5/19)
-    quantlogs ~ MvNormal([log(5.0) for i in 1:nitem],log(2.0))
+    quantlogs ~ MvNormal([log(20.0) for i in 1:nitem],log(2.0)) # quantity of item in basket in 100g increments, 20 = 2kg, 2kg * 4 = 20kg upper end ish for each quantity
     quants = exp.(quantlogs)
     alldates = round(minimum(date)):1.0/4:round(maximum(date))
     prices = zeros(typeof(quants[1]),length(alldates),nitem,nregion)
@@ -319,18 +347,53 @@ end
     ## include the measured data on prices through a likelihood
     for (d,i,r,p) in zip(date,item,region,price)
         pred = rbfeval(d,centers,rbfsc,view(coefsm,:,i,r),offset[i,r])
-        @addlogprob!(logpdf(Normal(0.0,measerr),pred-p))
+        Turing.@addlogprob!(logpdf(Normal(0.0,measerr),pred-p))
     end
     # using the coefficients, estimate all the prices quarterly...
-    for (d,i,r) in product(1:length(alldates),1:nitem,1:nregion)
+    for (d,i,r) in Iterators.product(1:length(alldates),1:nitem,1:nregion)
         prices[d,i,r] = rbfeval(alldates[d],centers,rbfsc,view(coefsm,:,i,r),offset[i,r])
     end
+    ## establish prior on quantities such that quantities which result in 2000 cal/day +- 50 cal are much more probable
+    Turing.@addlogprob!(logpdf(Normal(2000.0,25.0),dot(quants, cals) /(365.0/12.0)))
+    ## establish balanced diet... around 30%,30%,40% protein, fat, carbs
+    macronuts = [dot(quants,prot) * 4.0 ,dot(quants,fat) * 9.0 ,dot(quants,carb) * 4.0 ] # calculate quantities in grams, multiply by calories / gram
+    macronuts = macronuts/sum(macronuts) # normalize to get fraction of calories
+    Turing.@addlogprob!(logpdf(Dirichlet([30,30,40]),macronuts)) # prior is near 30,30,40 ratio of calories from each source
 
+    ## calculate the index.
+    priceindex = zeros(typeof(price[1]*quants[1]),(length(alldates),nregion))
+    for (d,r) in Iterators.product(1:length(alldates),1:nregion)
+        priceindex[d,r] = dot(view(prices,d,:,r), quants) # dot product
+    end
+    return priceindex,quants
 end
 
 
+myprices.itemcat = categorical(myprices.item_code)
+myprices.regioncat = categorical(myprices.region)
+myprices.price = myprices.value .* 100.0 ./ myprices.quantg # price per 100g
 
-getifnotthere("data/FoodData_Central_foundation_food_csv_2022-04-28.zip","https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_csv_2022-04-28.zip")
+@subset!(myprices,:year .>= 1999 )
+
+ouritems = pricelistnutr[:,[:item_code, :calories, :protein,:fat,:carbs]]
+ouritems.item_code = categorical(ouritems.item_code)
+ouritems = @orderby(ouritems,:item_code)
+
+
+foodmodel = cpifood(myprices.date,levelcode.(myprices.itemcat),length(levels(myprices.itemcat)),
+                    levelcode.(myprices.regioncat),length(levels(myprices.regioncat)),collect(1999:3:2022),6.0,myprices.price,ouritems.calories,ouritems.protein,ouritems.fat,ouritems.carbs)
+
+
+
+setadbackend(:reversediff)
+Turing.setrdcache(true)
+
+mapest = Optim.optimize(foodmodel,MAP(),LBFGS(),Optim.Options(x_tol=1e-5,f_tol=0.01,allow_f_increases=true,f_calls_limit=1_000_000,
+    iterations=100_000,show_every=1000,time_limit=240))
+
+
+samps = sample(foodmodel,NUTS(50,.7),50)
+
 
 
 

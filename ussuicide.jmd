@@ -21,5 +21,17 @@ let pl = []
     plot(pl...,size=(3000,3000))
 end
 
+let pl = []
+    for st in unique(suicdet.State)
+        p = @df @subset(suicdet,:Gender_Code .== "M" .&& :State .== st .&& in.(:Ten_Year_Age_Groups_Code,Ref(["15-24","25-34"]))) plot(:Year,:Deaths ./ :Population .* 100_000,group=:Ten_Year_Age_Groups_Code,title="$st",ylim=(0,100))
+        push!(pl,p)
+    end
+    plot(pl...,size=(3000,3000))
+end
+
+
+
+
 
 ```
+
