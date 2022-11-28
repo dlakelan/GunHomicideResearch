@@ -1,0 +1,442 @@
+# Australia Gun Control Experience
+
+In 1996 Australia created the "National Firearms Agreement" (NFA) in which all the different territories agreed to unify their gun laws, many guns were banned for normal 
+use based on various categories, license schemes were put in place for those who still continued to own the unbanned guns, and possibly the largest buyback in any country occurred
+where the governments confiscated around 650,000 firearms, most of which were pump action shotguns but also various semi-automatic rifles and shotguns, etc.
+
+This occurred during a period when Australia had around 3.5 Million legally owned firearms country wide, in a population of about 18 Million people. 
+
+To evaluate what happened, we will first find various data sources, compile them together to give a picture of what data is available, and then analyze the data in the context
+of several potential models. The goal being to determine whether there is a clear-cut effect of banning firearms on crime statistics, and/or what one would find 
+reasonable to believe quantitatively if one held various assumptions about the way firearms and crime interact. 
+
+There is simply not any definitive way to analyze this data. In the first place, the experiment took place in a time where many things were changing in Australia. So differentiating
+between those effects requires making assumptions about how they work. Furthermore, there was no control country, similar to australia in most respects, which did NOT implement
+a ban at the same time. The key to understanding the causal effect of gun bans is to understand that this causal effect is the difference between what did happen
+in the presence of the ban, and what **would have happened** if the ban were not implemented. For example, perhaps the ban occured and crime decreased... but our magic crystal ball 
+tells us that they would have decreased **even more** if the ban had not occurred. In those kinds of circumstances, then the effect of the ban was to **increase crime**.
+
+Similarly if the ban had not occurred, and crime decreased, but would have decreased **even more** with a ban, then the effect of the ban would have been to decrease crime.
+
+Since inherently the question involves comparing something that did happen to an estimate of what **would have happened** if the world had been different, 
+we need methods to predict what would have happened, and such methods always rely on some assumptions. The only way to address this question fairly is to address 
+a range of possible models for what might have happened if Australia had not enacted the NFA.
+
+We begin with setting up the tools we need and collecting the data.
+
+```{julia}
+
+using Pkg
+Pkg.activate(".")
+
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, 
+    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization
+
+include("utilities.jl")
+
+getifnotthere("./data/australia-homicides.xlsx","https://www.aic.gov.au/sites/default/files/2022-03/homicideincidents1989-90to2019-20_0.xlsx")
+getifnotthere("./data/australia-suicides.xlsx","https://www.aihw.gov.au/getmedia/47de5d8a-b550-4df2-b938-d9bf3f6cd3e3/2020-aihw-suicide-and-self-harm-monitoring-nmd-suicide-icd-10-x60-x84-y87-0.xlsx.aspx")
+
+# a pdf of a report breaking down homicide information including by type of firearm
+getifnotthere("./data/aussie-homicide-report.pdf", "https://www.aic.gov.au/sites/default/files/2020-05/tandi075.pdf")
+
+# data on fatal road crashes, for use in control for risk taking behavior etc
+# see https://data.gov.au/dataset/ds-dga-5b530fb8-526e-4fbf-b0f6-aa24e84e4277/details?q=australian%20road%20deaths%20database
+
+getifnotthere("./data/aussie-crash-data.csv", "https://data.gov.au/data/dataset/5b530fb8-526e-4fbf-b0f6-aa24e84e4277/resource/d54f7465-74b8-4fff-8653-37e724d0ebbb/download/ardd_fatal_crashes_jun2022.csv")
+
+getifnotthere("./data/australia-population.xlsx","https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/dec-2021/310104.xlsx")
+
+ozpop = DataFrame(XLSX.readtable("./data/australia-population.xlsx",2; first_row=10)...)
+rename!(ozpop,[Symbol("Series ID") => :date, :A2060842F => :TotPop])
+@select!(ozpop,:date,:TotPop)
+ozpop.date = Date.(ozpop.date)
+@transform!(ozpop,:year = year.(:date))
+ozpop = @by(ozpop,:year,:TotPop = mean(:TotPop))
+
+
+
+suicdata = DataFrame(XLSX.readtable("data/australia-suicides.xlsx",5; first_row = 2)...)
+suicdata = DataFramesMeta.stack(suicdata,Not([1,2,3]))
+rename!(suicdata,Dict(:variable => :year,:value => :suicrate))
+suicdata.suicrate = map(x -> if typeof(x) == Float64 x else missing end, suicdata.suicrate)
+suicdata.year = map(x -> begin y = tryparse(Int64,x);  y; end, suicdata.year) 
+@subset!(suicdata,:Measure .== "Age-standardised rate (per 100,000)")
+
+suicall = @subset(suicdata,:Sex .== "Persons")
+
+pl = @df suicall plot(:year,:suicrate; group = :Mechanism, title= "Suicide in Australia", ylab="Rate/100k", legend=:topleft)
+
+const NFAyear = 1996
+
+@df @subset(suicall,:year .>= 1950) plot(:year,:suicrate; group = :Mechanism,xlim=(1950,2040),size=(800,800),title="Australia Suicides")
+display(plot!([1996,1996],[0,15],color="red",label="NFA year"))
+
+
+
+```
+
+
+# Crime data
+
+Australia has collected various crime data extending back to the 1990's. Apparently there were two separate datasets, but these were consolidated
+recently into a single long time series dataset.
+
+The data [can be found here](https://www.abs.gov.au/articles/27-years-recorded-crime-victims-data) and was copy and pasted into the files below because the data 
+appears to be embedded in the page via javascript or something similar rather than actually separately downloadable with links. Nevertheless, the data files included 
+in the data directory are the csv files published by Australia's government that were downloaded by clicking the download links.
+
+```{julia}
+
+# data from https://www.abs.gov.au/articles/27-years-recorded-crime-victims-data
+# this can't actually be downloaded from these URLs unfortunately but if you go to the above URL
+# you can manually verify the data I downloaded by hand
+
+getifnotthere("./data/australia-homicide-and-related.csv","https://www.abs.gov.au/b1067eb4-bf73-4a86-86d0-b4d973df6b5c")
+getifnotthere("./data/australia-assault.csv","https://www.abs.gov.au/4a75956d-b1d0-4dda-a5a6-ef5946f51ddf")
+getifnotthere("./data/australia-sex-assault.csv","https://www.abs.gov.au/b6bdbf80-4be1-40aa-9100-a3e306d38175")
+getifnotthere("./data/australia-robbery.csv","https://www.abs.gov.au/00cf1a97-d00e-4be2-8a75-aacdd9a6a24b")
+getifnotthere("./data/australia-entry-w-intent.csv","https://www.abs.gov.au/9029832b-f956-4e53-8c99-54b3a464dcd1")
+getifnotthere("./data/australia-motor-vehicle-theft.csv","https://www.abs.gov.au/ae6584de-a07c-452e-b1ce-afacaa79fb54")
+getifnotthere("./data/australia-other-theft.csv","https://www.abs.gov.au/3c9ad1bc-d611-4161-9907-6b2dfde7cf07")
+
+```
+
+# Let's start with the history of Crime Rates
+
+Using the Australia crime data above, we can first take a look at what happened to various crimes through time.
+
+
+
+```{julia}
+
+function readauscsv(file; footerskip = 2)
+    dat = CSV.read(file, DataFrame; skipto=3, footerskip = footerskip)
+    rename!(dat,[:year,:data])
+    dat
+end
+
+function plotdat(df; etc...)
+    @df df plot(:year,:rate; etc...)
+    p = plot!([NFAyear,NFAyear],[0.0,maximum(df.rate) * 1.25]; label="NFA Year")
+    display(p)
+    p
+end
+
+homreldat = @chain readauscsv("./data/australia-homicide-and-related.csv") begin
+    leftjoin(ozpop,on=:year)
+    @transform(:rate = :data ./ :TotPop .* 100e3)
+end
+
+assaultdat = @chain CSV.read("./data/australia-assault.csv",DataFrame;skipto=3,header=2,footerskip=4) begin
+    rename!([1=>:year])
+    DataFramesMeta.stack(Not(:year))
+    rename!([:variable=>:territory])
+    @rtransform(:rate = ismissing(:value) ? missing : typeof(:value) == Float64 ? :value : tryparse(Float64,replace(:value, r"," => "")))
+end
+
+
+sexassaultdat = @chain readauscsv("./data/australia-sex-assault.csv"; footerskip=4) begin @transform(:rate = :data) end
+
+robberydat = @chain readauscsv("./data/australia-robbery.csv") begin @rtransform(:rate = tryparse(Float64, replace(:data,r"," => ""))) end
+
+entryintentdat = @chain readauscsv("./data/australia-entry-w-intent.csv") begin 
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => ""))) 
+end
+
+mvtheftdat = @chain readauscsv("./data/australia-motor-vehicle-theft.csv") begin
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => "")))
+end
+
+
+othertheftdat = @chain readauscsv("./data/australia-other-theft.csv") begin
+    @rtransform(:rate = tryparse(Float64,replace(:data,r"," => "")))
+end
+
+
+plotdat(homreldat; title="Australia Homicide and Related")
+
+@df assaultdat plot(:year, :rate; group = :territory,legend=:topleft,title="Assault rates by territory")
+p = plot!([NFAyear,NFAyear],[0.0,3500.0]; label="NFA year",color="red")
+display(p)
+
+plotdat(sexassaultdat; title="Australia Sex Assault", ylab="per 100k/yr")
+plotdat(robberydat; title="Australia Robbery", ylab="per 100k/yr")
+plotdat(entryintentdat; title="Australia Entry with Intent", ylab="Count/yr")
+plotdat(mvtheftdat; title= "Australia Vehicle Theft", ylab="Count/yr")
+plotdat(othertheftdat; title="Australia Other Theft", ylab="Count/yr")
+nothing
+
+```
+# The apparent situation
+
+Post 1996 ban, apparently crime in most categories increased for several years, until shortly after 2000 when many forms of crime began an exponential plummet...
+
+What happened around the year 2000? One critically important fact is that Australia began a **huge** increase in GDP/capita, nearly tripling the quantity as measured 
+in constant current US dollars. The World Bank provides this information. As best as I can tell, this increase was caused largely by providing the raw materials
+such as iron ore and coal to fuel China's economic growth through the 2000-present time period.
+
+```{julia}
+
+getifnotthere("./data/australia-gdp-per-capita.csv.zip","https://api.worldbank.org/v2/en/indicator/NY.GDP.PCAP.CD?downloadformat=csv")
+cd("data")
+if ! Base.Filesystem.ispath("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv")
+    run(`unzip ./australia-gdp-per-capita.csv.zip`)
+end
+cd("..")
+
+gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; header=5,skipto=6)
+rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
+
+ausgdp = @subset(gdp,:country .== "Australia")
+ausgdp = DataFramesMeta.stack(ausgdp,Not([:country,:ccode,Symbol("Indicator Name"),Symbol("Indicator Code")]))
+rename!(ausgdp,[:variable => :year, :value => :gdppcap])
+ausgdp = @chain ausgdp begin @transform(:year = tryparse.(Int64,:year)) 
+    @subset(typeof.(:year) .== Int64)
+end
+
+
+@df ausgdp plot(:year,:gdppcap,title="Australia GDP/capita Constant 2022 Dollars",legend=:topleft)
+plot!([NFAyear,NFAyear],[0.0,70e3],label="NFA year")
+
+```
+
+
+It is reasonable to believe that crime rates are affected by several important considerations
+* Motive. Important motives for many crimes are economic, with the goal of acquiring someone elses property or anger about failure to repay loans etc.
+* Probability of being caught. 
+* Probability of being met with armed resistance.
+* Severity of punishment if caught
+* Relative attractiveness of alternatives (such as finding a well paid job)
+
+When economic conditions improve rapidly, not only can many people improve on their day to day income and ability to afford to purchase things they need or want, but
+also when things improve rapidly, waiting a short while until those improvements can be realized becomes more attractive compared to a situation where things remain 
+static or even decline during a recession. 
+
+This suggests a model in which the level of various crimes is predicted as a difference equation, with next years value being the same as the current years value, plus 
+some change in the direction of an equilibrium value predicted by the current level of GDP, guns, and gun owners. In addition to the current levels, we also can include 
+the rate of change of those predictors, as when for example GDP/capita increases rapidly, many more people may choose to move away from crime towards some lower risk
+activity, and/or when gun owners decrease rapidly, criminals may become aware of this and choose these times to commit crimes in relative safety, or alternatively, guns may
+become harder to acquire and enforcement increases, so gun crimes may decrease. 
+
+First we will set up a model, and a dataset to analyze
+```{julia}{results="hidden"}
+
+include("ausmodel.jl")
+
+modeldata = leftjoin(homreldat,ausgdp, on=:year)
+rename!(modeldata,[:rate => :homrate])
+modeldata = leftjoin(modeldata,sexassaultdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :sexassaultrate])
+modeldata = leftjoin(modeldata,robberydat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :robberyrate])
+modeldata = leftjoin(modeldata,entryintentdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :entryrate])
+modeldata = leftjoin(modeldata,mvtheftdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :mvtheftrate])
+modeldata = leftjoin(modeldata,othertheftdat; on = :year,makeunique=true)
+rename!(modeldata,[:rate => :theftrate])
+modeldata = leftjoin(modeldata,ozpop; on = :year, makeunique=true)
+@select!(modeldata,:year,:TotPop,:homrate,:gdppcap,:sexassaultrate,:robberyrate,:entryrate,:mvtheftrate,:theftrate)
+
+modeldata = @orderby(modeldata, :year)
+
+# now, how many guns are there in AU, and how many licensed owners?
+
+## to get this data I relied on https://www.gunpolicy.org/firearms/region/australia#number_of_licensed_firearm_owners
+
+# The survey is not carried out each year, so I linearly interpolate the data between surveys
+
+auguns = CSV.read("data/AUGunCounts.csv",DataFrame; header=2)
+auguns.guns = Vector{Float64}(auguns.guns)
+auguns = @orderby(auguns,:year)
+interpg = LinearInterpolation(auguns.year,auguns.guns)
+
+
+augunowners = CSV.read("data/AUGunOwners.csv",DataFrame; header=2)
+augunowners.gunowners = Vector{Float64}(augunowners.gunowners)
+augunowners = @orderby(augunowners,:year)
+interpgo = LinearInterpolation(augunowners.year,augunowners.gunowners)
+
+modeldata.guns = [interpg(y) for y in modeldata.year]
+modeldata.gunowners = [interpgo(y) for y in modeldata.year]
+```
+
+## What happened to Gun ownership
+
+Let's first see how many guns and gun owners Australia has had in the last few decades. 
+
+
+```{julia}
+
+let p = plot(modeldata.year,modeldata.guns ./ 1e6; title="Gun count in AU (millions)", legend=false, ylim=[0.0,4.0])
+    p = plot!([NFAyear,NFAyear],[0.0,4.0]; color="red")
+    display(p)
+
+    p = plot(modeldata.year,modeldata.gunowners ./ 1e6; title="Gun owner count in AU (millions)", legend=false, ylim=[0.0,2.0])
+    p = plot!([NFAyear,NFAyear],[0.0,2]; color="red")
+    display(p)
+end
+```
+
+As can be seen, Australia started out with around 3.5M guns, the total number plummeted after implementing the NFA buyback, and then after about 2000 
+grew over the next 20 years or so back to approximately its original value. However, gun ownership declined rapidly post 1996 and recovered somewhat but is 
+approximately 45% of what it was at the beginning of the data collection period.
+
+
+
+```{julia}
+
+## fill in 2 missing values for 1993, 1994 as same as 1995 data
+modeldata[1,:theftrate] = 490527.0
+modeldata[2,:theftrate] = 490527.0
+
+rawdata = copy(modeldata) # save the unnormalized data
+
+# Normalize all the data by the value at the beginning of the period (in 1993)
+for n in Iterators.drop(names(modeldata),1)
+    setproperty!(modeldata,n,Vector{Float64}(getproperty(modeldata,n)))
+    setproperty!(modeldata,n, getproperty(modeldata,n) ./ getproperty(modeldata,n)[1])
+
+end
+
+display(modeldata)
+
+
+theaumod = ausmodel(modeldata.year,modeldata.gdppcap, modeldata.guns, modeldata.gunowners,
+    modeldata.TotPop, modeldata.homrate, modeldata.sexassaultrate, 
+    modeldata.robberyrate, modeldata.entryrate, modeldata.mvtheftrate,
+    modeldata.theftrate)
+
+
+savedfile = "./saved/ausamples.dat"
+global ausamp = []
+if stat(savedfile).mtime > stat("./ausmodel.jl").mtime
+    global ausamp = deserialize(savedfile)
+else
+    global ausamp = sample(theaumod,NUTS(500,0.8),MCMCThreads(),500,3)
+    serialize(savedfile,ausamp)
+end
+
+
+
+```
+
+## What does the model suggest?
+
+Let's look at each of the major crimes. In the model we linearly predict the "next year" rates from the current year predicted rates, and some fraction **f** of the difference between 
+the predicted equilibrium value (from a linear model) and the current value. In other words, if f is 0.1 then the rate would move 10% of the way towards the predicted 
+value in each year. As the predictors change, each year the "set point" changes and the prediction "chases" these values with a kind of "drag" that prevents it from moving
+all at once. This results in the time series.
+
+Each different crime rate is predicted in a linear model as $$ \exp(coefs \cdot predictors)$$ with the predictors being:
+
+* GDP/capita 
+* d/dt (GDP/capita)
+* Guns/capita 
+* d/dt (Guns/capita)
+* Gun Owners/Capita 
+* d/dt (Gun Owners/Capita)
+* 1.0
+
+
+With 1.0 acting as a constant offset. Because we've normalized these values to their value at the beginning of the time series, they are all O(1) and we use a Normal(0.0,5.0)
+prior for all coefficients, as exp(5) ~ 148 which would be an enormous change from the original values, so we expect that coefficients outside that range are incompatible with the real world 
+values which stay O(1). However we do allow symmetry in the predictions on the log scale, meaning, a-priori increasing or decreasing crime is equally likely for each of the 
+predictors.
+
+## Let's look at Homicide and related crimes:
+
+
+```{julia}
+gquan = generated_quantities(theaumod,ausamp)
+
+sam = sample(1:size(ausamp)[1],20)
+
+# take a look specifically at homicide
+
+function getcoefsrename(chain,thegroup)
+    mycoefnames = ["GDP/capita coef", "d/dt GDP/capita coef","Guns/capita coef",
+        "d/dt Guns/capita coef", "Gun Owner coef", "d/dt Gun owner coef","Constant"]
+
+    coefgroup = group(chain,thegroup)
+    orignames = String.(names(coefgroup))
+    coefgroup = MCMCChains.replacenames(coefgroup,Dict([orignames[i] => "$(thegroup): $(mycoefnames[i])" for i in 1:length(mycoefnames)]))
+end
+
+
+p = density(getcoefsrename(ausamp,:homcoefs))
+display(p)
+
+
+p = plot(modeldata.year,modeldata.homrate; linewidth=3, legend=false, title="AU Homicide relative change\n Actual and Predicted")
+for i in sam
+    p = plot!(modeldata.year,gquan[i,1].phom; alpha=.5)
+end
+display(p)
+```
+
+## Let's look at robbery:
+
+
+```{julia}
+p = density(getcoefsrename(ausamp,:robcoefs))
+display(p)
+
+
+
+p = plot(modeldata.year,modeldata.robberyrate; linewidth=3, legend=false, title="AU Robbery relative change\n Actual and Predicted")
+for i in sam
+    p = plot!(modeldata.year,gquan[i,1].prob; alpha=.5)
+end
+display(p)
+```
+
+
+## How about the coefficients for the other major crimes?
+
+
+```{julia}
+p = density(getcoefsrename(ausamp,:rapecoefs))
+display(p)
+p = density(getcoefsrename(ausamp,:bnecoefs))
+display(p)
+p = density(getcoefsrename(ausamp,:vehthcoefs))
+display(p)
+p = density(getcoefsrename(ausamp,:theftcoefs))
+display(p)
+
+p = density(group(ausamp,:f))
+display(p)
+
+p = density(group(ausamp,:err))
+display(p)
+
+
+```
+# Suicide
+
+The story when it comes to suicides in Australia and the NFA affect seems to be fairly straightforward. Starting around 1990 an organic trend occurred where suicides by 
+firearm dropped on their own as they were replaced with suicide by hanging. Around the time of the NFA itself, the number of hangings spiked upwards in the immediate year 
+or two after the NFA buyback, and then declined for a few years until hangings took off again. Overall across these two methods, suicides trended upwards in the years after the NFA as firearm method 
+declined but hangings increased at an even greater rate. 
+
+To the extent that suicides overall, including other methods, have declined, it's primarily because suicide by "gas" has declined dramatically starting in about 1999.
+
+```{julia}
+suicmeth = @transform(unstack(@select(suicdata,:Mechanism,:year,:suicrate),:Mechanism,:suicrate; allowduplicates=true),:gunhang = :Firearms + :Hanging)
+
+let p1 = [], p2 = []
+
+    p1 = @df suicmeth plot(:year,:Firearms; label = "Firearms", title = "Suicide in Australia by Method",legend=:topleft)
+    @df suicmeth plot!(:year,:Hanging; label = "Hanging")
+    @df suicmeth plot!(:year,:gunhang; label = "Firearms + Hanging")
+    plot!([NFAyear,NFAyear],[0.0,10.0]; label = "NFA Year", color = "purple", alpha=0.5)
+
+    p2 = @df suicmeth plot(:year,:Gas; title = "Suicide by Gas Rate", legend=:topleft, label="Suicide by Gas")
+
+    display(plot(p1,p2,layout = @layout([a{.8h};b{0.2h}])))
+end
+
+```
+
