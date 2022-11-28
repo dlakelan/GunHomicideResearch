@@ -10,6 +10,6 @@ Gun ownership varies widely across countries, as does income inequality, health 
 and other aspects of overall quality of life. All of these can influence crime and violence especially 
 homicide, robbery, rape, and suicide. This website analyzes several aspects of these issues across cultures, and is a work in progress.
 
-For example: 
-[Australia](australia.html)
+I've just decided to organize this repository using Quarto and will be converting all the documents to qmd files, they'll be available soon.
+
 
