@@ -1,0 +1,475 @@
+---
+weave_options:
+    line_width: 120
+    fig_width : 8
+    fig_height : 8
+    dpi : 100
+---
+# Comparisons of International Homicide and Gun Ownership
+
+```julia{results="hidden"}
+using Pkg
+Pkg.activate(".")
+
+using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, 
+    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization,
+    GLM, Colors, ColorSchemes
+
+```
+
+# How do countries compare regarding homicides, suicides, and guns
+
+We can access homicide data from the UN, economic data from WorldBank, and Suicide data from WHO. 
+
+In addition, for comparisons across states in the US, to understand if international patterns repeat in cross-state comparisons, we can use the Census ACS.
+
+Let's get some data and put it together.
+
+
+```julia
+
+function getifnotthere(filename,URL)
+    if !Base.Filesystem.ispath(filename)
+        # see https://www.aic.gov.au/statistics/homicide
+        Downloads.download(URL,filename)
+    end
+end
+
+getifnotthere("data/intl-homicides-unodc.xlsx","https://dataunodc.un.org/sites/dataunodc.un.org/files/data_cts_intentional_homicide.xlsx")
+getifnotthere("data/country-populations-unpop.xlsx","https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx")
+
+homdata = DataFrame(XLSX.readtable("./data/intl-homicides-unodc.xlsx",1; first_row=3)...)
+rename!(homdata,Dict(Symbol("Unit of measurement") => :units, :VALUE => :homicide))
+@subset!(homdata,:Indicator .== "Victims of intentional homicide" .&& :Dimension .== "Total" .&& :Sex .== "Total")
+
+popdata = DataFrame(XLSX.readtable("./data/country-populations-unpop.xlsx",1,"A:BM"; first_row=17)...) 
+rename!(popdata,Dict(Symbol("ISO3 Alpha-code") => :Iso3_code, 
+    Symbol("Region, subregion, country or area *") => :country,
+    Symbol("Total Population, as of 1 January (thousands)") => :PopulationJan,
+        Symbol("Population Density, as of 1 July (persons per square km)") => :popdensperkm2,
+        Symbol("Median Age, as of 1 July (years)") => :medianage))
+
+@rtransform!(popdata,:PopulationJan = if :PopulationJan == "..." missing else :PopulationJan .* 1000.0 end)
+
+countrycodes = unique(@select(popdata,:country,:Iso3_code))
+
+
+alldat = @orderby(@subset(leftjoin(homdata,popdata; on = [:Iso3_code,:Year],matchmissing=:notequal),
+    :units .== "Counts"), :Iso3_code,:Year)
+    
+## plot comparisons for countries with 3M people by region
+bigcount = @subset(alldat,:PopulationJan .> 3e6)
+let p = []
+    for r in unique(bigcount.Region)
+        dat = @subset(bigcount,:Region .== r)
+        push!(p,plot(dat.Year,log.(dat.homicide ./ dat.PopulationJan .* 100000.0); group=dat.Iso3_code, title="log(Homicide Rate)\n$r",legend=false,ylim=(log(0.1),log(150.0))))
+    end
+    plot(p...)
+end
+
+
+
+```
+
+As we see from these plots, homicide rates vary over multiple orders of magnitude. These range from around 0.1 (log(0.1) = -2.3) 
+to over 100 homicides/100k/yr (log(100) = 4.6).
+
+In graphs mentioning logarithms remember that each increase of 1 unit implies that the original quantity was **multiplied** by a factor of `e = 2.718...`
+
+Why do homicide rate vary over so many orders of magnitude from place to place? 
+
+It turns out that economic conditions are a powerful explanatory variable. In particular, measures of inequality in the income distribution. 
+
+The [Gini coefficient](https://en.wikipedia.org/wiki/Gini_coefficient) can be thought of as the average size of the difference between two randomly
+selected people's incomes for the region in question. This average size is then normalized to 2x the average size to produce a dimensionless ratio describing
+the variation in income in the region as a fraction of the average. In this case, due to the formula, the Gini coefficient can be between 0 and 1 or is usually
+rescaled to 0 to 100.
+
+Explaining the multiple orders of magnitude is easier when we discover that Homicide rate varies exponentially with Gini coefficient. Although we would still prefer 
+a mechanistic explanation just verifying this association is useful.
+
+
+# Homicide increases exponentially with increasing Gini coefficient
+
+
+
+
+
+```julia
+getifnotthere("data/worldbank-gini-data.zip","https://api.worldbank.org/v2/en/indicator/SI.POV.GINI?downloadformat=csv")
+
+ginidat = CSV.read("data/API_SI.POV.GINI_DS2_en_csv_v2_4333947.csv",DataFrame; skipto=6, header=5)
+ginidat = ginidat[:,1:end-1] # drop meaningless final column
+rename!(ginidat,Dict(Symbol("Country Name") => :Country, Symbol("Country Code") => :countrycode, 
+    Symbol("Indicator Name") => :indicator, Symbol("Indicator Code") => :indicatorcode))
+ginistack = DataFramesMeta.stack(ginidat,Not([:Country, :countrycode,:indicator,:indicatorcode]))
+rename!(ginistack,Dict("variable" => "Year", "value" => "ginicoef"))
+ginistack.Year = tryparse.(Int64,ginistack.Year)
+
+alldat2 = leftjoin(alldat,ginistack; on = [:Iso3_code => :countrycode, :Year], makeunique=true)
+
+p = @df @subset(alldat2,:PopulationJan .> 1e6) scatter(:ginicoef, :homicide ./ :PopulationJan .* 100000.0; title="Homicide Rate vs Inequality",
+    ylab="Homicides/100k",xlab="Gini Index 0-100",legend=false)
+display(p)
+
+p = @df @subset(alldat2,:PopulationJan .> 1e6) scatter(:ginicoef, log.(:homicide ./ :PopulationJan .* 100000.0); group=:Iso3_code, title="log(Homicide Rate) vs Gini (Inequality)",ylab="log(Homicides/100k)",
+    xlab="Gini Index 0-100",legend=false, alpha=0.5)
+display(p)
+```
+
+Seeing the above graphs makes it clear that countries experiencing low levels of inequality, with Gini in the range 20-35 also tend to experience low homicide rates. 
+These are most of the countries usually used in comparisons discussing gun control. European nations such as Austria, Czech Republic, Germany, France, Switzerland are all in this low end,
+and countries experiencing higher levels of inequality see exponential increases in violence. On this graph, exponential increases in violence correspond to a linear relationship
+between log(homicide rate) and Gini coefficient.
+
+
+
+
+```julia
+gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; header=5,skipto=6)
+rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
+gdp = gdp[:,1:end-1]
+gdpstack = DataFramesMeta.stack(gdp,Not(["country","ccode","Indicator Name","Indicator Code"]))
+
+rename!(gdpstack,Dict("variable" => "Year", "value" => "gdp2020dol"))
+gdpstack.Year = tryparse.(Int64,gdpstack.Year)
+
+alldat3 = leftjoin(alldat2,gdpstack; on = [:Iso3_code => :ccode, :Year],makeunique=true)
+
+alldat3.medianage = map(x -> if typeof(x) != Float64 missing else x end,alldat3.medianage)
+alldat3.popdensperkm2 = map(x -> if typeof(x) != Float64 missing else x end,alldat3.popdensperkm2)
+alldat3.loghom = log.((alldat3.homicide .+ 0.1) ./ alldat3.PopulationJan .* 100e3)
+alldat3.loggdppc = log.(alldat3.gdp2020dol)
+alldat3.logpopdens = log.(alldat3.popdensperkm2)
+
+alldat4 = @subset(alldat3,.!ismissing.(alldat3.gdp2020dol) .&& .! ismissing.(alldat3.ginicoef))
+
+#p = scatter(alldat4.ginicoef,alldat4.loghom; marker_z=alldat4.gdp2020dol ./ 75000.0, legend=false, seriescolor = cgrad([:lightgrey,:darkblue]), title="Log(Homicide rate) vs Gini\nActual (Color = GDP/capita)",ylim=(-4,4))
+
+#display(p)
+
+p = scatter(alldat4.ginicoef,alldat4.loghom;  color = "black", title="Log(Homicide rate) vs Gini",
+    ylim=(-2,5),xlim=(25,60),label="worldwide",legend=false,alpha=0.1)
+
+countries = ("USA","AUT","AUS","CHE","ISR","NLD","NOR","ESP","DEU","FRA","CZE","GRC","BRA","MEX","ARG","CAN")
+colors = [get(colorschemes[:rainbow],(i-1) / length(countries)) for i in 1:length(countries)]
+selectcountry = @subset(alldat4,in.(alldat4.Iso3_code,Ref(countries)))
+#@df selectcountry scatter!(:ginicoef,:loghom,markercolor=colors[indexin(:Iso3_code,collect(countries))])
+
+countrydat = @by(@subset(alldat4,in.(:Iso3_code,Ref(countries)) .&& .! ismissing.(:ginicoef)),:Iso3_code,
+    :ginimean = mean(:ginicoef),
+    :loghommean = mean(:loghom))
+
+
+annotations = [(countrydat.ginimean[i],countrydat.loghommean[i],(countrydat.Iso3_code[i],8 #,colors[i]
+    )) for i in 1:nrow(countrydat)]
+annotate!(annotations)
+display(p)
+
+```
+
+In addition to Gini coefficient, which is a measure of variation in income, also the overall level of income is important. We can measure this by GDP/capita
+and this provides additional information that can be used to predict homicide rates.
+
+
+
+```julia
+
+
+p = @df alldat3 scatter(:loggdppc, :loghom; title="Log Homicide vs Log GDP/capita",
+    xlab="log(GDP/capita)",ylab="log(homicide/100k/yr)", legend=false, alpha=0.2,smooth=true,linewidth=5)
+display(p)
+
+
+gdpmod = lm(@formula(loghom ~ loggdppc + loggdppc^2),alldat3)
+
+plot!(collect(4:1:12),predict(gdpmod,DataFrame(loggdppc=collect(4:1:12))))
+
+mod = lm(@formula(loghom  ~ loggdppc + ginicoef + logpopdens  ),alldat3)
+
+display(mod)
+p = scatter(alldat4.ginicoef,predict(mod,alldat4),alpha=.1, title="Predicted Log(Homicide rate) vs Gini",ylim=(-2,5),xlim=(25,60),legend=false)
+
+
+display(p)
+
+@df alldat4 scatter(:ginicoef, residuals(mod); title = "Residual error in model vs Gini")
+
+
+
+```
+
+# How much does firearms ownership matter?
+
+
+It's not exactly easy to estimate how many legally owned firearms are in every country in the world. Some places are regulated in such a way
+that registrations are a good indicator. For example perhaps Switzerland or Austria or Australia may be good examples. Other places such as Yemen 
+has gun ownership as a guaranteed right in their constitution, but is in the process of fighting a Civil War which began in 2014 and continues even now.
+There is very little chance of a government having a clear idea of anything during a Civil War.
+
+Nevertheless, the smallarmssurvey.org data has some sort of estimates of civilian firearms in various countries. Their dataset for 2019 is published on 
+their website as a PDF printout of what appears to be an Excel spreadsheet. However, I have copied and pasted the text into a LibreOffice Calc spreadsheet 
+then exported that as a csv file. The export does not immediately form a usable data file because of spaces in the names of countries and similar issues, however 
+it can be read in and then reduced to a usable form. I extract the 3 letter country code, and the estimated number of guns, as well as the indicator for the 
+methodology of the estimate. Using that data, we can ask whether guns per capita are related in any way to homicide results.
+
+
+# Trying to use SmallArmsSurvey.org data
+
+I downloaded the PDF file of the Annex of civilian small arms data. this is a pdf output from most likely and Excel
+spreadsheet. By copying and pasting text from the PDF into a csv I got a not correctly formatted csv file,, as it uses spaces
+for delimiters in the copy and paste, and countries and regions contain spaces in their names...
+
+The only way to use this data is to read line at a time, and keep the first column (ISO 3 code) and the second Number
+we encounter, as that's the estimate of the firearms in civilian hands, as well as the 4th number which is encoding
+the estimation method. Once we extract this data, we then write it to a usable CSV file. we build this file if it doesn't 
+exist.
+
+```julia
+
+if Base.Filesystem.ispath("data/smallarms2020-clean.csv")
+    gundata = CSV.read("data/smallarms2020-clean.csv",DataFrame)
+else
+
+    rws = CSV.Rows("data/smallarms2020.csv",header=false)
+    gundata = DataFrame(countrycode = String[],civguns= Float64[], esttype = Int64[])
+    for r in rws
+        #@show(r)
+        #@show(length(r))
+        n = 0
+        code = r[1]
+        civguns = 0.0
+        esttype = 0
+        for v in 2:length(r)
+            num = nothing
+            if !ismissing(r[v])
+                num = tryparse(Float64,r[v])
+            end
+            if ! isnothing(num)
+                n = n+1
+                if n == 2 
+                    civguns = num
+                elseif n == 4
+                    esttype = round(Int64,num)
+                    break
+                end
+            end
+        end
+        push!(gundata,(countrycode=code,civguns=civguns,esttype=esttype))
+    end
+    CSV.write("data/smallarms2020-clean.csv",gundata)
+end
+
+
+
+
+alldat5 = leftjoin(alldat4,gundata; on=:Iso3_code => :countrycode)
+
+alldat5.civgpcap = alldat5.civguns ./ alldat5.PopulationJan
+alldat5.logcivgpcap = log.(alldat5.civgpcap)
+
+alldat5recent = @subset(alldat5,in.(:Year, Ref((2017,2018,2019))))
+
+p = @df alldat5recent scatter(:logcivgpcap, :loghom,title="Log(Hom rate) vs log(guns/capita)\n2017-2019",legend=false)
+display(p)
+
+# we only have an estimate of the guns/capita at a single time point, if we use multiple years, the changing "capita" 
+# will create an artificial trend 
+modlwguns2019 = lm(@formula(loghom ~ ginicoef + loggdppc + logcivgpcap),@subset(alldat5recent,:Year .== 2019))
+
+display(modlwguns2019)
+
+p = scatter(residuals(modlwguns2019),title="Residual on model\n(yr = 2019)",legend=false)
+
+display(p)
+
+p = @df @subset(alldat5,.! ismissing.(:civgpcap) .&& :Year .== 2019) histogram(:civgpcap; title="Distribution of Guns/Capita\n(2019)", bins=40,legend=false)
+
+display(p)
+
+```
+
+```julia
+
+getifnotthere("data/pums-2020-5yr-hus.zip","https://www2.census.gov/programs-surveys/acs/data/pums/2020/5-Year/csv_hus.zip")
+
+#getifnotthere("data/pums-2020-csv-hus.zip","https://www2.census.gov/programs-surveys/acs/experimental/2020/data/pums/1-Year/csv_hus.zip")
+#getifnotthere("data/PUMS_Data_Dictionary_2020.csv","https://www2.census.gov/programs-surveys/acs/experimental/2020/documentation/pums/PUMS_Data_Dictionary_2020.csv")
+getifnotthere("data/PUMS_Data_Dectionary_2016-2020.pdf","https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2016-2020.pdf")
+
+if ! Base.Filesystem.ispath("data/psam_husa.csv") || ! Base.Filesystem.ispath("data/psam_husb.csv")
+    cd("data")
+    run(`unzip pums-2020-5yr-hus.zip`)
+    cd("..")
+end
+
+#pumsdd = CSV.read("data/PUMS_Data_Dictionary_2020.csv",DataFrame; header=false)
+#rename!(pumsdd,["IDFlag","varname","vartype","length","title_startval","endval","description"])
+
+psamh = let psamh = DataFrame()
+    for i in ["a","b","c","d"]
+        new = CSV.read("data/psam_hus$(i).csv",DataFrame,select=[:SERIALNO,:ST,:FINCP,:NP,:WGTP])
+        @subset!(new,.!ismissing.(:FINCP) .&& .! ismissing.(:NP))
+        psamh = [psamh ; 
+            new[wsample(1:nrow(new),new.WGTP,round(Int64,0.1*nrow(new))),:] ]
+    end
+    psamh
+end
+psamh.Year = tryparse.(Int64,psamh.SERIALNO[i][1:4] for i in 1:nrow(psamh))
+
+
+function ginicoef(incs,n)
+"Calculate the gini coefficient from a sample of incomes using sample of size n"
+    avg = mean(incs)
+    absdiff = abs.(sample(incs,n) .- sample(incs,n))
+    mean(absdiff)/2/avg
+end
+
+
+fips = CSV.read("data/fipscodes.csv",DataFrame)
+
+psamh.pcapinc = psamh.FINCP ./ psamh.NP
+
+stateginis = @by(psamh,[:Year,:ST],:gini = ginicoef(:pcapinc,2000),:logmeaninc = log(mean(:pcapinc)))
+stateginis = leftjoin(stateginis,fips; on = :ST => :STATE)
+stateginis.gini100 = stateginis.gini .* 100.0
+
+
+# manually downloaded CDC wonder gun homicide data using online form 
+gunhomicidesnew = CSV.read("./data/wonder-gun-homicide-byyear.csv",DataFrame)
+gunhomicidesold = CSV.read("./data/cdc-wonder-firearm-homicide-1979-1998.csv",DataFrame)
+gunhomicides = [gunhomicidesnew ; gunhomicidesold]
+gunhomicides = @chain rename(gunhomicides,Dict("Crude Rate" => "crudedeathrate", "State Code" => "StateCode", "Year" => "year", "Year Code" => "YearCode")) begin
+    @subset(.! ismissing.(:Deaths))
+    @transform(:crudedeathrate = map(x -> isnothing(x) ? missing : x, tryparse.(Float64,String.(:crudedeathrate))),
+        :state = String31.(:State))
+    @subset(.! ismissing.(:crudedeathrate))
+    @orderby(:StateCode,:year)
+end
+
+
+
+
+p = plot(@by(stateginis,:ST,:pl = plot(:Year,:gini100,title="$(:STUSAB[1])",ylim=(30,60))).pl...)
+display(p)
+
+stateginis = leftjoin(stateginis,gunhomicides; on = [:Year => :year, :ST => :StateCode])
+
+
+p = @df stateginis scatter(:gini100,log.(:crudedeathrate); title="log(Firearm Homicide rate) vs Gini\nUS States 2016-2020", legend=false)
+display(p)
+
+stateginis.loghom = log.(stateginis.crudedeathrate)
+
+mod = lm(@formula(loghom ~ gini100),stateginis)
+display(mod)
+
+Plots.abline!(coef(mod)[2],coef(mod)[1])
+
+mod2 = lm(@formula(loghom ~ gini100 + logmeaninc),stateginis)
+display(mod2)
+
+p = @df stateginis scatter(:gini100,:loghom; marker_z=:logmeaninc,title="Log(firearm homicide) vs Gini\nColor = log(MeanIncome)")
+display(p)
+
+p = scatter(residuals(mod2); title = "Residuals\nloghom ~ 1 + gini100 + logmeanincome",markercolor=:white,markerstrokecolor=:white,legend=false)
+p = annotate!(1:nrow(stateginis),residuals(mod2),stateginis.STUSAB,font(8))
+display(p)
+
+suic = CSV.read("data/cdc-wonder-suicide-all-byyear.csv",DataFrame)
+
+
+@subset!(suic,.! ismissing.(:Year)) # drop summary/totals etc
+rename!(suic,[:Notes,:State,:StateCode,:Year,:YearCode,:Deaths,:Population,:suicrate])
+
+stateginis = leftjoin(stateginis,suic; on = [:Year,:ST => :StateCode], makeunique=true)
+
+p = @df stateginis scatter(:gini100,log.(:suicrate); title = "Log(Suicide Rate) vs Gini, in US",alpha=0.2)
+p = @df stateginis annotate!(:gini100,log.(:suicrate),:STUSAB,font(8))
+display(p)
+
+stateginis.logsuic = log.(stateginis.suicrate)
+
+suicmod = lm(@formula(logsuic ~ gini100 + logmeaninc),stateginis)
+display(suicmod)
+
+p = @df stateginis scatter(:gini100,:logmeaninc,title="log(Mean income) vs gini",alpha=0.2)
+
+p = @df stateginis annotate!(:gini100,:logmeaninc,:STUSAB,title="log(Mean income) vs gini",font(8))
+display(p)
+
+
+
+```
+
+Intriguingly looking at the state-by-state analysis in the US, we see a downward trend of suicides vs increasing Gini. This is rather interesting, and 
+somewhat inexplicable. It may be that suicide in different age groups responds differently. For example if as people age their incomes increase and this is driver of 
+inequality, and also increased income reduces suicide risk, then older people may reduce their suicide risk by being in a more unequal society. In more equal societies if it occurs 
+because as people age they aren't able to get ahead economically, then older people may be more prone to suicide in more equal societies, in part because they're less well off.
+
+These sorts of explanations may be relevant in the US where suicide risk increases with age, but other societies may have different issues. We can look across countries for comparisons.
+
+
+
+# WHO has suicide data
+
+```julia
+
+
+## Downloaded csv file from "https://www.who.int/data/gho/data/themes/mental-health/suicide-rates"
+getifnotthere("data/who-suicide-data.csv","blob:null/25854b46-0aa5-4169-803f-54f897a51fb9") ## this doesn't actually work obviously, but it's the link on the above page where I got the data
+
+whosuic = CSV.read("data/who-suicide-data.csv",DataFrame)
+
+
+whosuicbs = @select(@subset(whosuic,:Dim1 .== "Both sexes"),:countrycode = :SpatialDimValueCode,:Year = :Period,:suicrate = :FactValueNumeric)
+
+
+suicginidat = leftjoin(whosuicbs,ginistack; on = [:countrycode, :Year],makeunique=true)
+suicginidat.logsuic = log.(suicginidat.suicrate)
+
+p = @df suicginidat scatter(:ginicoef,log.(:suicrate); title = "global log(Suicide) vs gini",legend=false)
+display(p)
+
+suimod = lm(@formula(logsuic ~ ginicoef),suicginidat)
+
+display(suimod)
+
+```
+
+The graph shows that the pattern of declining suicide with increasing inequality repeats across the available country data from the WHO.
+
+The existence of opposing trends implies that there should be an "optimum" amount of inequality. Inequality that reflects for example work experience related gains in income
+may be seen as "desirable" while inequality that comes about because of rent-seeking behavior, a rigged system that favors certain people, and similar effects would be generally 
+seen as undesirable and stress inducing. Inequality that comes about because of large numbers of very poor people would drive particularly bad problems. 
+
+We can graph the log of the sum of suicide rate and homicide rate, and fit a parabola to see approximately where the optimal quantity of inequality would be.
+
+
+
+```julia
+
+
+
+
+suihomcomb = @select(leftjoin(alldat2,whosuicbs; on = [:Iso3_code => :countrycode,:Year]),:countrycode=:Iso3_code,:Year,:homiciderate = :homicide ./ :PopulationJan .* 100_000,:suicrate,:ginicoef)
+
+
+suihomcomb.logshrate = log.(suihomcomb.suicrate .+ suihomcomb.homiciderate)
+
+p = @df suihomcomb scatter(:ginicoef,log.(:homiciderate .+ :suicrate); title = "log(Suic+Hom) vs Gini",label="log(Suicide + Homicide)")
+
+shmod2 = lm(@formula(logshrate ~ 1 + ginicoef + ginicoef^2),suihomcomb)
+
+
+
+plot!(collect(20:60),predict(shmod2,DataFrame(ginicoef=collect(20:60))); linewidth=3,label="prediction",legend=false)
+
+display(p)
+
+
+```
+
+It appears Gini coefficient in the range 30-35 is associated with least risk of violent harm and suicide put together.
+
+
