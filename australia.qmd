@@ -220,7 +220,7 @@ activity, and/or when gun owners decrease rapidly, criminals may become aware of
 become harder to acquire and enforcement increases, so gun crimes may decrease. 
 
 First we will set up a model, and a dataset to analyze
-```{julia}{results="hidden"}
+```{julia}
 
 include("ausmodel.jl")
 
@@ -285,7 +285,7 @@ approximately 45% of what it was at the beginning of the data collection period.
 
 
 
-```{julia}
+```{julia} 
 
 ## fill in 2 missing values for 1993, 1994 as same as 1995 data
 modeldata[1,:theftrate] = 490527.0
@@ -396,7 +396,7 @@ display(p)
 ## How about the coefficients for the other major crimes?
 
 
-```{julia}
+```{julia} 
 p = density(getcoefsrename(ausamp,:rapecoefs))
 display(p)
 p = density(getcoefsrename(ausamp,:bnecoefs))
@@ -439,4 +439,3 @@ let p1 = [], p2 = []
 end
 
 ```
-

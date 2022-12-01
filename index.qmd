@@ -3,13 +3,44 @@ title: Crime and Firearms Research
 author: Daniel Lakeland, Lakeland Applied Sciences LLC
 ---
 
+## About me and this project
+
+Firearms politics is a contentious issue. Politically I'm a relatively Liberal person who believes for example in equal rights for minorities, gay marriage, individual body autonomy, social safety nets implemented by Universal Basic Income, and the importance of a market based economy driven by fair and just regulations rather than crony capitalism, but who diverges strongly from the Democratic Party platform when it comes to firearms. I believe that each person bears some responsibility for protecting society, their family, and their fellow citizens from crime, from political violence, and from other risks to health such as pandemic viruses. To me firearms in the hands of responsible citizens are like vaccines against contagious pathogens, and are a responsibility we should all wield for mutual benefit, and that through training and proper usage, firearms are a net benefit to society, particularly in so far as they empower minorities, women, and other vulnerable groups to resist violence from physically more powerful people (primarily male criminals).
+
+I am however a data analyst at heart, with a strong belief that Bayesian causal and mechanistic/structural methods are the correct way to assess what we can learn from data. And I am a strong believer in Open Science. These analyses are based on data collected off the internet, archived into the data directories, and using code which is **right here** in the repository for you to read. You can and should use my repository to perform your own analysis, and feel free to discuss alternative analyses openly, and **respectfully**. I do not claim that my analyses are error-free nor are they definitively the correct analysis to perform, only that **given the analysis choices I made, and whatever bugs there may be in the code, the results are what you see here**
+
+
 # Some basic exploratory analysis of firearms ownership and crime across countries
 
 
-Gun ownership varies widely across countries, as does income inequality, health care, economic opportunity, racism, 
-and other aspects of overall quality of life. All of these can influence crime and violence especially 
+Gun ownership varies widely across countries, as does income inequality, health care, economic opportunity, racism, and other aspects of overall quality of life. All of these can influence crime and violence especially 
 homicide, robbery, rape, and suicide. This website analyzes several aspects of these issues across cultures, and is a work in progress.
 
-I've just decided to organize this repository using Quarto and will be converting all the documents to qmd files, they'll be available soon.
+
+## United States
+
+In the last 30 years or so, there have been some major changes in firearms laws across the US, including passage of the "Assault Weapon" ban in 1994 which expired in 2004, liberalization of the CCW laws throughout the country, and then recently elimination of the requirement for CCW license (so called "constitutional carry") in about half of the states. In 2022 the [US Supreme Court ruled](https://www.supremecourt.gov/opinions/21pdf/20-843_7j80.pdf) in _New York State Rifle and Pistol Association vs Bruen_ (aka _Bruen_ or _NYSRPA vs Bruen_) that US Citizens have a Second Amendment right that protects the use of firearms in public places for self defense, a ruling which also will affect through precedent the way that many lawsuits opposing firearms laws will be decided in the next few years.
+
+We have also seen a significant increase in the rate at which untargeted mass public shootings are committed.
+
+I have several analyses that try to tease out what happened around some of these changes.
+
+For example an analysis focusing on [Concealed Carry in the US](USCarry.html)
+
+In the US, the biggest category of deaths from firearms by far is [US firearm deaths by suicide](ussuicide.html). And while suicide attempt by firearm is usually more often fatal than other attempts, it's not clear that reducing access to firearms overall is likely to reduce suicides. The experience in Australia certainly did not go that way (shown in the international section below).
+
+One of the least common but most often discussed categories in the US is [Mass Public Shootings](usmassshootings.html). Roughly this is where a person goes to a public place and begins shooting either due to a specific disgruntlement with the particular people there (usually workplace shootings or family shootings), or out of a general desire to commit suicide while killing as many random citizens as possible. 
+
+Recently some activists have tried to recategorize a "mass shooting" as simply any shooting where multiple people were struck by bullets (with varying thresholds for how many qualify). But this captures a lot of "ordinary" organized crime, drug dealers, and liquor store holdups etc. The motivations are so different that it's important criminologically to make a distinction between these different types of crime.
 
 
+
+## International Violence
+
+The US is often discussed as a major outlier in the "developed world" in terms of violence and especially gun violence. Often it's compared to Australia which had a major gun-banning event in 1996, but also compared to the UK, Germany, Switzerland, Austria, Canada or Japan.
+
+[International outcomes](international.html) are heavily influenced by major differences between culture, education, and other government policy. In particular, we can see in the international analysis that **income inequality** is an extremely strong predictor of violence overall. 
+
+[Australias results](australia.html) are often taken to mean that gun bans work to reduce homicide and other violence. However, this analysis using a Bayesian dynamic model taking into account both gun prevalence and economic conditions shows that violent crime actually increased shortly after the gun ban and buyback, and then decreased when the Australian economy took off like a rocket. Then through time, more guns were purchased, and today although crime is still low, guns per capita are at similar or even higher levels to what was the case before the buyback. Dynamic Bayesian models show that Economic improvements, not firearms bans seems to be the major driver of reduction in violence. To the extent that they had an effect, laws restricting guns appear more likely to have **increased** crime in Australia.
+
+Furthermore, Australian suicide data shows that Australians rapidly exchanged guns for hanging **starting before and continuing after** the buyback event. Looking at the sum of gun suicide and hanging suicide, the overall sum actually increased after the gun buyback, and the overall drop in all forms of suicide was clearly driven by a rapid reduction in "gas" suicides starting around 1998 or so.

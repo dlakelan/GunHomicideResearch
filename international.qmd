@@ -7,7 +7,7 @@ weave_options:
 ---
 # Comparisons of International Homicide and Gun Ownership
 
-```julia{results="hidden"}
+```{julia}
 using Pkg
 Pkg.activate(".")
 
@@ -26,7 +26,7 @@ In addition, for comparisons across states in the US, to understand if internati
 Let's get some data and put it together.
 
 
-```julia
+```{julia}
 
 function getifnotthere(filename,URL)
     if !Base.Filesystem.ispath(filename)
@@ -95,7 +95,7 @@ a mechanistic explanation just verifying this association is useful.
 
 
 
-```julia
+```{julia}
 getifnotthere("data/worldbank-gini-data.zip","https://api.worldbank.org/v2/en/indicator/SI.POV.GINI?downloadformat=csv")
 
 ginidat = CSV.read("data/API_SI.POV.GINI_DS2_en_csv_v2_4333947.csv",DataFrame; skipto=6, header=5)
@@ -125,7 +125,7 @@ between log(homicide rate) and Gini coefficient.
 
 
 
-```julia
+```{julia}
 gdp = CSV.read("data/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4251004.csv",DataFrame; header=5,skipto=6)
 rename!(gdp,[Symbol("Country Name") => :country, Symbol("Country Code") => :ccode])
 gdp = gdp[:,1:end-1]
@@ -173,7 +173,7 @@ and this provides additional information that can be used to predict homicide ra
 
 
 
-```julia
+```{julia}
 
 
 p = @df alldat3 scatter(:loggdppc, :loghom; title="Log Homicide vs Log GDP/capita",
@@ -225,7 +225,7 @@ we encounter, as that's the estimate of the firearms in civilian hands, as well 
 the estimation method. Once we extract this data, we then write it to a usable CSV file. we build this file if it doesn't 
 exist.
 
-```julia
+```{julia}
 
 if Base.Filesystem.ispath("data/smallarms2020-clean.csv")
     gundata = CSV.read("data/smallarms2020-clean.csv",DataFrame)
@@ -289,7 +289,7 @@ display(p)
 
 ```
 
-```julia
+```{julia}
 
 getifnotthere("data/pums-2020-5yr-hus.zip","https://www2.census.gov/programs-surveys/acs/data/pums/2020/5-Year/csv_hus.zip")
 
@@ -413,7 +413,7 @@ These sorts of explanations may be relevant in the US where suicide risk increas
 
 # WHO has suicide data
 
-```julia
+```{julia}
 
 
 ## Downloaded csv file from "https://www.who.int/data/gho/data/themes/mental-health/suicide-rates"
@@ -447,7 +447,7 @@ We can graph the log of the sum of suicide rate and homicide rate, and fit a par
 
 
 
-```julia
+```{julia}
 
 
 
