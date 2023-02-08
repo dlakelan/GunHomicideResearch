@@ -30,7 +30,9 @@ using Pkg
 Pkg.activate(".")
 
 using CSV,DataFrames,Downloads,DataFramesMeta, StatsPlots, XLSX, 
-    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization
+    Dates, Statistics, Turing, LinearAlgebra, Interpolations, Serialization, Logging
+
+disable_logging(Logging.Info)
 
 include("utilities.jl")
 
@@ -203,6 +205,7 @@ plot!([NFAyear,NFAyear],[0.0,70e3],label="NFA year")
 
 
 It is reasonable to believe that crime rates are affected by several important considerations
+
 * Motive. Important motives for many crimes are economic, with the goal of acquiring someone elses property or anger about failure to repay loans etc.
 * Probability of being caught. 
 * Probability of being met with armed resistance.

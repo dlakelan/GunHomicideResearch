@@ -1,7 +1,7 @@
 # Mass shootings in USA
 
 
-```julia
+```{julia}
 using Pkg
 Pkg.activate(".")
 
@@ -17,7 +17,9 @@ Please report any transcription errors you detect!
 
 
 
-```julia{results="hidden"}
+```{julia}
+
+#| output: false
 
 weirddates = [i for i in 2:nrow(sdata) if sdata[i,:Date] < sdata[i-1,:Date]  ]
 
@@ -59,7 +61,7 @@ There are a variety of interesting summaries of the data. By grouping by month i
 
 For example, we can compare how many people were killed with each type of weapon.
 
-```julia
+```{julia}
 
 
 
@@ -74,7 +76,7 @@ Another interesting question is how does the motivation/type of event break down
 an approximately constant rate, there has been a much more serious exponential type rise in public shooting deaths over the timeperiod.
 
 
-```julia
+```{julia}
 p = @df sdatamon plot(map(yearmon2date,:yearmon),cumsum(:DWDeaths),label="Disgruntled Worker Deaths",legend=:topleft,title="Killings by Motivation/Type",ylab="Cumulative Deaths")
 @df sdatamon plot!(map(yearmon2date,:yearmon),cumsum(:DSDeaths),label="Disgruntled Student Deaths")
 @df sdatamon plot!(map(yearmon2date,:yearmon),cumsum(:RelDeaths),label="Relationship Deaths")
@@ -93,7 +95,7 @@ display(p)
 
 The exponential growth is not just exponential growth in victim count, but actually shows near exponential growth in event count, with Handgun only events making up a nearly constant 60% or so of all events.
 
-```julia
+```{julia}
 p = @df sdatamon plot(map(yearmon2date,:yearmon),cumsum(:ShootCountAll),label="All Events",title="Cumulative Event Count",legend=:topleft)
 @df sdatamon plot!(map(yearmon2date,:yearmon),cumsum(:ShootCountHG),label="Handgun Events")
 display(p)
@@ -113,7 +115,7 @@ display(p)
 Although School shootings get the most press, in fact most active shooter events take place at commerce locations such as malls, big box stores, restaurants, and similar.
 
 
-```julia
+```{julia}
 
 p = @df sdatamon plot(map(yearmon2date,:yearmon),cumsum(:CommDeaths),label="Commerce",legend=:topleft,title="Killings by Location")
 @df sdatamon plot!(map(yearmon2date,:yearmon),cumsum(:EdDeaths),label="Education")
@@ -129,7 +131,7 @@ attention, in the bulk of the distribution, there are not clear reasons to think
 
 
 
-```julia
+```{julia}
 
 
 
@@ -155,7 +157,7 @@ Looking at cumulative distribution functions, the vast majority of events involv
 for example the Glock 17 handgun with two 17 round magazines.
 
 
-```julia
+```{julia}
 
 p = @df sdata plot(ecdf(:NKilled),legend=false,title="ECDF of Death Count")
 display(p)
@@ -190,7 +192,7 @@ Although individual
 
 
 
-```julia
+```{julia}
 
 ginidat = CSV.read("data/API_SI.POV.GINI_DS2_en_csv_v2_4333947.csv",DataFrame; skipto=6, header=5)
 ginidat = ginidat[:,1:end-1] # drop meaningless final column
@@ -215,28 +217,29 @@ Many active shootings are explicitly a form of suicide. The shooter has no inten
 If this is true, then perhaps the things that drive mass shootings also drive suicide increases of other forms? Also, mass shootings are overwhelmingly
 committed by male perpetrators, so we will look at male suicide rates.
 
-```julia
+```{julia}
 
 suic = @select(@subset(CSV.read("data/who-suicide-data.csv",DataFrame; select = [:SpatialDimValueCode,:Period,:Dim1,:FactValueNumeric]), 
                         :SpatialDimValueCode .== "USA" .&& :Dim1 .== "Male"),
                         :Year = :Period, :Country = :SpatialDimValueCode, :SuicRate = :FactValueNumeric)
 
 
-@df suic scatter(:Year, :SuicRate,ylab="Male Suicide/100k/yr",xlab="Year",legend=false)
+@df suic scatter(:Year, :SuicRate,ylab="Male Suicide/100k/yr",xlab="Year",legend=false) |> display
 
 
 pubshoots = @by(sdata,:year,:ShootCount = sum(:Motive .== "Public Shooter"))
 
 suicandshoots = leftjoin(suic,pubshoots; on = :Year => :year)
 
-@df suicandshoots plot(:Year,:ShootCount;title="Public Shooting Counts", legend=false)
+@df suicandshoots plot(:Year,:ShootCount;title="Public Shooting Counts", legend=false) |> display
 
-@df suicandshoots scatter(:SuicRate, :ShootCount;xlab="Male Suicide Rate / 100k/yr",ylab="Public Shooting Count",legend=false,title="US Shooting Count vs Suicide Rate")
+p = @df suicandshoots scatter(:SuicRate, :ShootCount;xlab="Male Suicide Rate / 100k/yr",ylab="Public Shooting Count",legend=false,title="US Shooting Count vs Suicide Rate") 
 
 suicmod = lm(@formula(ShootCount ~ 1 + SuicRate),suicandshoots)
 Plots.abline!(coef(suicmod)[2],coef(suicmod)[1])
+display(p)
 
-plot(residuals(suicmod))
+scatter(residuals(suicmod),title="Residual Error in Linear Predictor",xlab="Data Point Number",ylab="Error in Count") |> display
 std(residuals(suicmod))
 
 ```
