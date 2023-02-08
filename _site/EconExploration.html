@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>International Crime and Firearms Analysis – econexploration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">International Crime and Firearms Analysis</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="dropdown-header">
+ <span class="menu-text">about.qmd</span></li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exploring-the-economic-trajectory-of-the-us-for-its-role-in-creating-inequality-and-eventually-risk-of-violence" id="toc-exploring-the-economic-trajectory-of-the-us-for-its-role-in-creating-inequality-and-eventually-risk-of-violence" class="nav-link active" data-scroll-target="#exploring-the-economic-trajectory-of-the-us-for-its-role-in-creating-inequality-and-eventually-risk-of-violence">Exploring the Economic trajectory of the US for its role in creating inequality and eventually risk of violence</a></li>
+  <li><a href="#a-core-theory-is-related-to-fed-policy-and-money-supply-inflation" id="toc-a-core-theory-is-related-to-fed-policy-and-money-supply-inflation" class="nav-link" data-scroll-target="#a-core-theory-is-related-to-fed-policy-and-money-supply-inflation">A core theory is related to Fed policy and money supply inflation</a></li>
+  <li><a href="#exploring-the-pums-data-for-state-by-state-per-capita-income-distribution" id="toc-exploring-the-pums-data-for-state-by-state-per-capita-income-distribution" class="nav-link" data-scroll-target="#exploring-the-pums-data-for-state-by-state-per-capita-income-distribution">Exploring the PUMS data for state by state per-capita income distribution</a></li>
+  <li><a href="#lets-take-a-look-at-how-cost-of-living-changed-through-time." id="toc-lets-take-a-look-at-how-cost-of-living-changed-through-time." class="nav-link" data-scroll-target="#lets-take-a-look-at-how-cost-of-living-changed-through-time.">Let’s take a look at how cost of living changed through time.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="exploring-the-economic-trajectory-of-the-us-for-its-role-in-creating-inequality-and-eventually-risk-of-violence" class="level1">
+<h1>Exploring the Economic trajectory of the US for its role in creating inequality and eventually risk of violence</h1>
+<p>For this workbook I have stored some large data files from the census etc on a particular machine on my network and use Distributed to run some data summaries on that machine.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributed </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmprocs</span>.(<span class="fu">workers</span>())</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>censproc <span class="op">=</span> <span class="fu">addprocs</span>([<span class="st">"census.lan"</span>]; dir <span class="op">=</span> <span class="st">"/var/local/dlakelan/GunHomicideResearch/"</span>, exename<span class="op">=</span><span class="st">"/home/dlakelan/julia/bin/julia"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">@everywhere</span> <span class="im">using</span> <span class="bu">Pkg</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@everywhere</span> <span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="st">"."</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="pp">@everywhere</span> <span class="im">using</span> <span class="bu">StatsPlots</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">FredData</span>, <span class="bu">Dates</span>, <span class="bu">GLM</span>, <span class="bu">StatsBase</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">FredData</span>, <span class="bu">CSV</span>, <span class="bu">Serialization</span>, <span class="bu">Downloads</span>, <span class="bu">Interpolations</span>, <span class="bu">Optim</span>, <span class="bu">Turing</span>, <span class="bu">LinearAlgebra</span>, <span class="bu">CategoricalArrays</span>, <span class="bu">ReverseDiff</span>, <span class="bu">Memoization</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Printf</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># @everywhere include(...) rewrites the path assuming it's the same as on the originating machine, this gets around that</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">Distributed</span>.<span class="fu">remotecall_eval</span>(<span class="bu">Main</span>, <span class="fu">workers</span>(), <span class="op">:</span>(<span class="fu">include</span>(<span class="st">"./utilities.jl"</span>)))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">include</span>(<span class="st">"./utilities.jl"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>FrAPI <span class="op">=</span> <span class="st">"8827e587e9702525c583c914277cdd2e"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="fu">Fred</span>(FrAPI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="a-core-theory-is-related-to-fed-policy-and-money-supply-inflation" class="level1">
+<h1>A core theory is related to Fed policy and money supply inflation</h1>
+<p>Since the 1970’s and especially since 1995, the Federal reserve has been inflating the money supply at 5-6%/year every year, an amount that far exceeds the measured consumer price inflation in the CPI. However, this money has been mostly used to pump up investment assets and prop up companies in the business-to-business or technology or real estate sectors. In turn this growth has enabled the finance industry to capture more and more wealth, and extract rent from everyday people.</p>
+<p>In the mid 90’s under Clinton, the government began issuing student loans, which began to affect the money supply.</p>
+<p>Initially, the finance industry benefited from the Dot-Com boom, as IPOs sold off stock to retail investors, ETFs, and Index funds. Later, after the dot-com crash, under George W Bush, the federal government incentivized home buying using the Fed open market operations to reduce mortgage interest rates and increase the price of mortgage backed securities. Later after the housing crash in 2008, the Fed bought enormous quantities of</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"WM2NS"</span>) <span class="co"># the m2 money supply</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>m2data <span class="op">=</span> m2.data</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>m219952019 <span class="op">=</span> <span class="pp">@subset</span>(m2data,<span class="op">:</span>date <span class="op">.&gt;</span> <span class="fu">Date</span>(<span class="st">"1995-01-01"</span>) <span class="op">.&amp;&amp;</span> <span class="op">:</span>date <span class="op">.&lt;</span> <span class="fu">Date</span>(<span class="st">"2019-01-01"</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>m219952019.logm2 <span class="op">=</span> <span class="fu">log</span>.(m219952019.value)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>m219952019.years <span class="op">=</span> <span class="fu">datetime2unix</span>.(<span class="fu">DateTime</span>.(m219952019.date))<span class="op">/</span>(<span class="fl">365</span> <span class="op">*</span> <span class="fl">3600</span><span class="op">*</span><span class="fl">24</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(logm2 <span class="op">~</span> years),m219952019)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>rate <span class="op">=</span> <span class="fu">coef</span>(mod)[<span class="fl">2</span>]<span class="op">*</span><span class="fl">100</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="pp">@df</span> m2data <span class="fu">plot</span>(<span class="op">:</span>date,<span class="fu">log</span>.(<span class="op">:</span>value); title<span class="op">=</span><span class="st">"Money Supply Growth"</span>,ylab<span class="op">=</span><span class="st">"log(M2)"</span>,legend<span class="op">=:</span>bottomright,label<span class="op">=</span><span class="st">"Log(M2 money supply)"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fu">plot!</span>(<span class="fu">Date</span>.([<span class="st">"1995-01-01"</span>,<span class="st">"1995-01-01"</span>]),[<span class="fl">6</span>,<span class="fl">10</span>],label<span class="op">=</span><span class="st">"1995-01-01"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate!</span>(<span class="fu">Date</span>(<span class="st">"2010-01-01"</span>),<span class="fl">8.5</span>,<span class="fu">text</span>(<span class="pp">@sprintf</span>(<span class="st">"M2 growth rate: %.2f%%"</span>,rate),rotation<span class="op">=</span><span class="fl">20</span>))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>mbase <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"BOGMBASE"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="pp">@df</span> mbase.data <span class="fu">plot</span>(<span class="op">:</span>date,<span class="fu">log</span>.(<span class="op">:</span>value),legend<span class="op">=</span><span class="cn">false</span>,title<span class="op">=</span><span class="st">"Money Base</span><span class="sc">\n</span><span class="st">= currency + bank deposits at Fed"</span>,ylab<span class="op">=</span><span class="st">"log(Money Base)"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>eff <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"DFF"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>effdat <span class="op">=</span> eff.data</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>effdat.expsum <span class="op">=</span> <span class="fu">exp</span>.(<span class="fu">cumsum</span>(effdat.value<span class="op">/</span><span class="fl">100.0</span><span class="op">/</span><span class="fl">365</span>))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(effdat.date,effdat.value; title<span class="op">=</span><span class="st">"Effective Funds Rate"</span>, legend<span class="op">=</span><span class="cn">false</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(effdat.date,effdat.expsum,legend<span class="op">=:</span>topleft,label<span class="op">=</span><span class="st">"exp(int(overnight_rate))"</span>,title<span class="op">=</span><span class="st">"Integrated Overnight Rate and M2"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(m2data.date,m2data.value<span class="op">./</span><span class="fl">1000</span>,label<span class="op">=</span><span class="st">"M2 money/1000"</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cpidat <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"CPIAUCSL"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cpidatdf <span class="op">=</span> cpidat.data</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cpidatdf.delyr  <span class="op">=</span> <span class="fu">map</span>(cpidatdf.date <span class="op">.-</span> <span class="fu">Date</span>(<span class="st">"2000-01-01"</span>)) <span class="cf">do</span> x </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    x.value <span class="op">./</span> <span class="fl">365.0</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>cpidatdf.logval <span class="op">=</span> <span class="fu">log</span>.(cpidatdf.value)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>cpimod <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(logval <span class="op">~</span> delyr),<span class="pp">@subset</span>(cpidatdf,<span class="op">:</span>date <span class="op">.&gt;</span> <span class="fu">Date</span>(<span class="st">"1999-01-01"</span>) <span class="op">.&amp;&amp;</span> <span class="op">:</span>date <span class="op">.&lt;</span> <span class="fu">Date</span>(<span class="st">"2018-01-01"</span>)))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="exploring-the-pums-data-for-state-by-state-per-capita-income-distribution" class="level1">
+<h1>Exploring the PUMS data for state by state per-capita income distribution</h1>
+<div class="sourceCode" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@everywhere</span> <span class="kw">function</span> <span class="fu">housecost</span>(mrg,smp,rent)<span class="op">::</span><span class="dt">Union{Float64,Missing}</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> [mrg smp rent]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">all</span>(ismissing,v) ? <span class="cn">missing</span> <span class="op">:</span> <span class="fu">sum</span>(<span class="fu">map</span>(<span class="fu">x-&gt;ismissing</span>(x) ? <span class="fl">0.0</span> <span class="op">:</span> x,v))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@everywhere</span> recalc <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>incsamps <span class="op">=</span> <span class="pp">@spawnat</span> censproc[<span class="fl">1</span>] <span class="cf">begin</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> recalc</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rm</span>(<span class="st">"saved/incdist.dat"</span>) </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">catch</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="cn">nothing</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">finally</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@warn</span> <span class="st">"saved/incdist.dat removed"</span> </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">isfile</span>(<span class="st">"saved/incdist.dat"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        incsamps <span class="op">=</span> <span class="bu">Serialization</span>.<span class="fu">deserialize</span>(<span class="st">"saved/incdist.dat"</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        incsamps <span class="op">=</span> <span class="kw">let</span> ss <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> year <span class="kw">in</span> <span class="fl">2001</span><span class="op">:</span><span class="fl">2019</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> file <span class="kw">in</span> <span class="fu">filter</span>(<span class="fu">readdir</span>(<span class="st">"data/pums/</span><span class="sc">$</span>year<span class="st">"</span>)) <span class="cf">do</span> x </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">occursin</span>(<span class="st">r"hus</span><span class="sc">.?\.</span><span class="st">csv"</span>,x)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">end</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@show</span> file</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                    rmfield <span class="op">=</span> year <span class="op">&lt;</span> <span class="fl">2008</span> ? <span class="op">:</span>RMS <span class="op">:</span> <span class="op">:</span>RMSP</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                    fields <span class="op">=</span> [<span class="op">:</span>RT,<span class="op">:</span>ST,<span class="op">:</span>WGTP,<span class="op">:</span>NP,<span class="op">:</span>HINCP,<span class="op">:</span>MRGP,<span class="op">:</span>RNTP,<span class="op">:</span>SMP, rmfield]</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                    df <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/pums/</span><span class="sc">$</span>year<span class="st">/</span><span class="sc">$</span>file<span class="st">"</span>,DataFrame; select<span class="op">=</span>fields)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> r <span class="kw">in</span> <span class="fu">eachrow</span>(df)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> <span class="fu">typeof</span>(r.HINCP) <span class="op">==</span> <span class="dt">Int64</span> <span class="op">&amp;&amp;</span> <span class="fu">typeof</span>(r.NP) <span class="op">==</span> <span class="dt">Int64</span> <span class="op">&amp;&amp;</span> r.NP <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="fu">typeof</span>(r.WGTP) <span class="op">==</span> <span class="dt">Int64</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">if</span> <span class="fu">haskey</span>(ss,(year,r.ST))</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>r.NP</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">push!</span>(ss[(year,r.ST)],(np <span class="op">=</span> r.NP, inc<span class="op">=</span>r.HINCP<span class="op">/</span>r.NP,wght<span class="op">=</span>r.WGTP,housing<span class="op">=</span><span class="fu">housecost</span>(r.MRGP , r.SMP, r.RNTP)<span class="op">/</span>r.NP, nr <span class="op">=</span> <span class="fu">getproperty</span>(r,rmfield)))</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">end</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">else</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                                ss[(year,r.ST)] <span class="op">=</span> <span class="dt">Any</span>[(np<span class="op">=</span> r.NP, inc<span class="op">=</span>r.HINCP<span class="op">/</span>r.NP,wght<span class="op">=</span>r.WGTP,housing<span class="op">=</span><span class="fu">housecost</span>(r.MRGP , r.SMP, r.RNTP)<span class="op">/</span>r.NP,nr <span class="op">=</span> <span class="fu">getproperty</span>(r,rmfield)) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>r.NP]</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">end</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">end</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">end</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                <span class="cf">end</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            ss</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Serialization</span>.<span class="fu">serialize</span>(<span class="st">"saved/incdist.dat"</span>,incsamps)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    incsamps</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>incsamps <span class="op">=</span> <span class="fu">fetch</span>(incsamps)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>fips <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/fipscodes.csv"</span>,DataFrame)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> <span class="fu">eachrow</span>(fips)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    stnum <span class="op">=</span> r.STATE</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    stcode <span class="op">=</span> r.STUSAB</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fu">plot</span>(; title <span class="op">=</span> <span class="st">"</span><span class="sc">$</span>stcode<span class="st"> (Income/ Median Housing) Distribution"</span>,xlim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">15</span>),xlab<span class="op">=</span><span class="st">"Income/Housing Ratio"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">.2</span>))</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">2001</span><span class="op">:</span><span class="fl">4</span><span class="op">:</span><span class="fl">2019</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">haskey</span>(incsamps,(i,stnum))</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>            incs <span class="op">=</span> incsamps[(i,stnum)]</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">sample</span>(incs,<span class="fu">FrequencyWeights</span>(<span class="fu">map</span>(x <span class="op">-&gt;</span> x.wght,incs)),<span class="fl">2000</span>)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>            hsamp <span class="op">=</span> <span class="fu">filter</span>(x <span class="op">-&gt;</span> ! <span class="fu">ismissing</span>(x) <span class="op">&amp;&amp;</span> !<span class="fu">isnan</span>(x),<span class="fu">getproperty</span>.(sam,<span class="op">:</span>housing))</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>            <span class="co">#@show hsamp</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@assert</span> ! <span class="fu">any</span>(isnan,hsamp)</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@assert</span> ! <span class="fu">any</span>(ismissing,hsamp)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>            qh50 <span class="op">=</span> <span class="fl">12.0</span> <span class="op">*</span> <span class="fu">quantile</span>(hsamp, <span class="fl">0.5</span>)</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> <span class="fu">density!</span>(<span class="fu">map</span>(x<span class="op">-&gt;</span>x.inc<span class="op">/</span>qh50,sam),label<span class="op">=</span>i)</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(h)</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fu">plot</span>(; title <span class="op">=</span> <span class="st">"</span><span class="sc">$</span>stcode<span class="st"> (Income/ 20% Housing) Distribution"</span>,xlim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">15</span>),xlab<span class="op">=</span><span class="st">"Income/Housing Ratio"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">.2</span>))    </span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">2001</span><span class="op">:</span><span class="fl">4</span><span class="op">:</span><span class="fl">2019</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">haskey</span>(incsamps,(i,stnum))</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>            incs <span class="op">=</span> incsamps[(i,stnum)]</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">sample</span>(incs,<span class="fu">FrequencyWeights</span>(<span class="fu">map</span>(x <span class="op">-&gt;</span> x.wght,incs)),<span class="fl">2000</span>)</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>            hsamp <span class="op">=</span> <span class="fu">filter</span>(x <span class="op">-&gt;</span> ! <span class="fu">ismissing</span>(x) <span class="op">&amp;&amp;</span> !<span class="fu">isnan</span>(x),<span class="fu">getproperty</span>.(sam,<span class="op">:</span>housing))</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>            <span class="co">#@show hsamp</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@assert</span> ! <span class="fu">any</span>(isnan,hsamp)</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@assert</span> ! <span class="fu">any</span>(ismissing,hsamp)</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>            qh20 <span class="op">=</span> <span class="fl">12.0</span> <span class="op">*</span> <span class="fu">quantile</span>(hsamp, <span class="fl">0.20</span>)</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> <span class="fu">density!</span>(<span class="fu">map</span>(x<span class="op">-&gt;</span>x.inc<span class="op">/</span>qh20,sam),label<span class="op">=</span>i)</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(h)</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fu">plot</span>(;title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>stcode<span class="st"> (Income / Actual Housing) Distribution"</span>, xlim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">15</span>),xlab<span class="op">=</span><span class="st">"Income/Housing Ratio"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">.2</span>))</span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">2001</span><span class="op">:</span><span class="fl">4</span><span class="op">:</span><span class="fl">2019</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">haskey</span>(incsamps,(i,stnum))</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>            incs <span class="op">=</span> incsamps[(i,stnum)]</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">sample</span>(incs,<span class="fu">FrequencyWeights</span>(<span class="fu">map</span>(x <span class="op">-&gt;</span> x.wght,incs)),<span class="fl">2000</span>)</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">filter</span>(x <span class="op">-&gt;</span> ! <span class="fu">ismissing</span>(x.housing),sam)</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> <span class="fu">density!</span>(<span class="fu">map</span>(x<span class="op">-&gt;</span>x.inc<span class="op">/</span>(<span class="fl">12.0</span><span class="fu">*</span>(<span class="fu">max</span>(<span class="fl">100.0</span>,x.housing))),sam); npoints <span class="op">=</span> <span class="fl">2048</span>, label<span class="op">=</span><span class="st">"</span><span class="sc">$</span>i<span class="st"> n=</span><span class="sc">$</span>(<span class="fu">length</span>(sam))<span class="st">"</span>)</span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(h)</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fu">plot</span>(;title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>stcode<span class="st"> (Rooms / Person) Distribution"</span>, xlim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">5</span>),xlab<span class="op">=</span><span class="st">"Rooms/Person Ratio"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">.75</span>))</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">2001</span><span class="op">:</span><span class="fl">4</span><span class="op">:</span><span class="fl">2019</span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">haskey</span>(incsamps,(i,stnum))</span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            incs <span class="op">=</span> incsamps[(i,stnum)]</span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">sample</span>(incs,<span class="fu">FrequencyWeights</span>(<span class="fu">map</span>(x <span class="op">-&gt;</span> x.wght,incs)),<span class="fl">2000</span>)</span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">filter</span>(x <span class="op">-&gt;</span> ! <span class="fu">ismissing</span>(x.np) <span class="op">&amp;&amp;</span> !<span class="fu">ismissing</span>(x.nr),sam)</span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> <span class="fu">density!</span>(<span class="fu">map</span>(x<span class="op">-&gt;</span>x.nr<span class="op">/</span>x.np,sam); npoints <span class="op">=</span> <span class="fl">2048</span>, label<span class="op">=</span><span class="st">"</span><span class="sc">$</span>i<span class="st"> n=</span><span class="sc">$</span>(<span class="fu">length</span>(sam))<span class="st">"</span>)</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">haskey</span>(incsamps,(i,stnum))</span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>            incs <span class="op">=</span> incsamps[(i,stnum)]</span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">sample</span>(incs,<span class="fu">FrequencyWeights</span>(<span class="fu">map</span>(x <span class="op">-&gt;</span> x.wght,incs)),<span class="fl">2000</span>)</span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>            sam <span class="op">=</span> <span class="fu">filter</span>(x <span class="op">-&gt;</span> ! <span class="fu">ismissing</span>(x.np) <span class="op">&amp;&amp;</span> !<span class="fu">ismissing</span>(x.nr),sam)</span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>            h <span class="op">=</span> <span class="fu">histogram!</span>(<span class="fu">map</span>(x<span class="op">-&gt;</span>x.np,sam); bins<span class="op">=</span><span class="fu">collect</span>(<span class="fl">0.5</span><span class="op">:</span><span class="fl">1</span><span class="op">:</span><span class="fl">10.5</span>) , normalize<span class="op">=</span><span class="cn">true</span> , alpha <span class="op">=</span> <span class="fl">0.25</span>, label<span class="op">=</span><span class="st">"</span><span class="sc">$</span>i<span class="st"> n=</span><span class="sc">$</span>(<span class="fu">length</span>(sam))<span class="st">"</span>)</span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(h)</span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lets-take-a-look-at-how-cost-of-living-changed-through-time." class="level1">
+<h1>Let’s take a look at how cost of living changed through time.</h1>
+<div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> <span class="pp">@spawnat</span> censproc[<span class="fl">1</span>] <span class="kw">let</span> files<span class="op">=</span>[<span class="st">"data/bls/ap.data.3.Food"</span>, <span class="st">"data/bls/ap.area"</span>,<span class="st">"data/bls/ap.item"</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    urls<span class="op">=</span>[<span class="st">"https://download.bls.gov/pub/time.series/ap/ap.data.3.Food"</span>,<span class="st">"https://download.bls.gov/pub/time.series/ap/ap.area"</span>,<span class="st">"https://download.bls.gov/pub/time.series/ap/ap.item"</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkpath</span>(<span class="st">"data/bls"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (u,f) <span class="op">=</span> <span class="bu">Iterators</span>.<span class="fu">zip</span>(urls,files)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Downloads</span>.<span class="fu">download</span>(u,f)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> <span class="fu">fetch</span>(res)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> <span class="pp">@spawnat</span> censproc[<span class="fl">1</span>] CSV.<span class="fu">read</span>(<span class="st">"data/bls/ap.area"</span>,DataFrame)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> <span class="fu">fetch</span>(area)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> <span class="pp">@spawnat</span> censproc[<span class="fl">1</span>] CSV.<span class="fu">read</span>(<span class="st">"data/bls/ap.item"</span>,DataFrame)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> <span class="fu">fetch</span>(items)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> <span class="pp">@spawnat</span> censproc[<span class="fl">1</span>] CSV.<span class="fu">read</span>(<span class="st">"data/bls/ap.data.3.Food"</span>,DataFrame)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> <span class="fu">fetch</span>(prices)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rename!</span>(prices,<span class="fu">strip</span>.(<span class="fu">names</span>(prices)))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>prices.value <span class="op">=</span> <span class="fu">tryparse</span>.(<span class="dt">Float64</span>,prices.value)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>prices.region <span class="op">=</span> <span class="fu">SubString</span>.(prices.series_id,<span class="fl">4</span>,<span class="fl">7</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>prices.season <span class="op">=</span> <span class="fu">SubString</span>.(prices.series_id,<span class="fl">3</span>,<span class="fl">3</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>prices.item_code <span class="op">=</span> <span class="fu">SubString</span>.(prices.series_id,<span class="fl">8</span>,<span class="fl">13</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>prices.date <span class="op">=</span> prices.year <span class="op">+</span> <span class="fu">map</span>(x <span class="op">-&gt;</span> (<span class="fu">tryparse</span>(<span class="dt">Int64</span>,x[<span class="fl">2</span><span class="op">:</span><span class="fl">3</span>])<span class="op">-</span><span class="fl">1</span>)<span class="op">/</span><span class="fl">12.0</span>,prices.period )</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>mypricelist <span class="op">=</span> <span class="fu">DataFrame</span>(item_code <span class="op">=</span> [<span class="st">"706111"</span>,<span class="st">"702212"</span>,<span class="st">"712311"</span>,<span class="st">"703511"</span>,<span class="st">"712211"</span>,<span class="st">"711111"</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"708111"</span>,<span class="st">"701322"</span>,<span class="st">"711311"</span>,<span class="st">"710212"</span>,<span class="st">"707111"</span>,<span class="st">"701312"</span>,<span class="st">"714233"</span>],</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    shortname <span class="op">=</span> [<span class="st">"chicken"</span>,<span class="st">"bread"</span>,<span class="st">"tomatoes"</span>,<span class="st">"steak"</span>,<span class="st">"lettuce"</span>,<span class="st">"apples"</span>,<span class="st">"eggs"</span>,<span class="st">"spaghetti"</span>,<span class="st">"oranges"</span>,<span class="st">"cheese"</span>,<span class="st">"tuna"</span>,<span class="st">"rice"</span>,<span class="st">"beans"</span>],</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    quantg <span class="op">=</span> [<span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">120.0</span><span class="op">*</span><span class="fl">6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>,<span class="fl">453.6</span>, <span class="fl">453.6</span>, <span class="fl">453.6</span>,<span class="fl">453.6</span>]) <span class="co"># grams purchased for the given price</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># to calculate egg weight, I weighed 2 eggs and multiplied by 6 for a dozen</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>chix <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Chick"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>bread <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Bread"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>spagh <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Spag"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>tomat <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Tomato"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>lett <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Lett"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>orang <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Orange"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>pean <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Peanut"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>appl <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Apples"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>beef <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"eef"</span>,<span class="op">:</span>item_name) <span class="op">.||</span> <span class="fu">occursin</span>.(<span class="st">"roast"</span>,<span class="op">:</span>item_name) <span class="op">.||</span> <span class="fu">occursin</span>.(<span class="st">"Steak"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>tuna <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"una"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>rice <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Rice"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>beans <span class="op">=</span> <span class="pp">@subset</span>(items,<span class="fu">occursin</span>.(<span class="st">"Beans"</span>,<span class="op">:</span>item_name))</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># hand picked matches for the items in the fdc_id usda foods</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>mypricelist.fdc_id <span class="op">=</span> [<span class="fl">171450</span>,<span class="fl">172686</span>,<span class="fl">170457</span>,<span class="fl">168694</span>,<span class="fl">169248</span>,<span class="fl">168201</span>,<span class="fl">172183</span>,<span class="fl">168937</span>,<span class="fl">169918</span>,<span class="fl">173414</span>,<span class="fl">173709</span>,<span class="fl">168877</span>,<span class="fl">175199</span>]</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>pricecounts <span class="op">=</span> <span class="pp">@by</span>(<span class="fu">leftjoin</span>(items,prices,on<span class="op">=</span> <span class="op">:</span>item_code),<span class="op">:</span>item_code,<span class="op">:</span>N <span class="op">=</span> <span class="fu">length</span>(<span class="op">:</span>value),<span class="op">:</span>dmin <span class="op">=</span> <span class="fu">minimum</span>(<span class="op">:</span>year),<span class="op">:</span>dmax<span class="op">=</span><span class="fu">maximum</span>(<span class="op">:</span>year))</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>gooditems <span class="op">=</span> <span class="fu">leftjoin</span>(<span class="pp">@subset</span>(pricecounts, <span class="op">:</span>N <span class="op">.&gt;</span> <span class="fl">1000</span> <span class="op">.&amp;&amp;</span> <span class="op">:</span>dmin <span class="op">.&lt;</span> <span class="fl">1999</span>),items,on<span class="op">=:</span>item_code)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>myindex <span class="op">=</span> <span class="fu">leftjoin</span>(mypricelist,gooditems,on<span class="op">=:</span>item_code)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>myprices <span class="op">=</span> <span class="fu">leftjoin</span>(myindex,prices;on <span class="op">=</span> <span class="op">:</span>item_code)</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co"># grab food nutrition data from USDA</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="cn">false</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getifnotthere</span>(<span class="st">"data/FoodData_Central_foundation_food_csv_2022-04-28.zip"</span>,<span class="st">"https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_csv_2022-04-28.zip"</span>)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getifnotthere</span>(<span class="st">"data/FoodData_Central_sr_legacy_food_csv_2019-04-02.zip"</span>,<span class="st">"https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_%202019-04-02.zip"</span>)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getifnotthere</span>(<span class="st">"data/FoodData_Central_Supporting_Data_csv_2022-04-28.zip"</span>,<span class="st">"https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_Supporting_Data_csv_2022-04-28.zip"</span>)</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    cwd <span class="op">=</span> <span class="fu">pwd</span>()</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> </span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cd</span>(<span class="st">"./data"</span>)</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> !<span class="fu">ispath</span>(<span class="st">"FoodData_Central_foundation_food_csv_2022-04-28"</span>)</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>            <span class="fu">run</span>(<span class="ss">`unzip -u FoodData_Central_foundation_food_csv_2022-04-28.zip`</span>)</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mkpath</span>(<span class="st">"FoodData_Central_legacy"</span>; mode<span class="op">=</span><span class="bn">0o755</span>)</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cd</span>(<span class="st">"FoodData_Central_legacy"</span>)</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>        <span class="fu">run</span>(<span class="ss">`unzip -u ../FoodData_Central_sr_legacy_food_csv_2019-04-02.zip`</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cd</span>(<span class="st">".."</span>)</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>        <span class="fu">run</span>(<span class="ss">`unzip -u FoodData_Central_Supporting_Data_csv_2022-04-28.zip`</span>)</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">finally</span> </span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cd</span>(cwd)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="co"># legacy foods is by far the more complete dataset even if it's less detailed, we match </span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="co"># the price data to the nearest food items in the USDA database, then get calories, protein, fat, carbs</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="co"># for each food. measured in per 100g</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>usdafoods <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/FoodData_Central_legacy/food.csv"</span>,DataFrame)</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>usdanutrient <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/FoodData_Central_legacy/food_nutrient.csv"</span>,DataFrame)</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>pricelistnutr <span class="op">=</span> <span class="fu">leftjoin</span>(mypricelist,usdafoods; on<span class="op">=:</span>fdc_id)</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>pricelistnutdetails <span class="op">=</span> <span class="fu">leftjoin</span>(pricelistnutr,usdanutrient; on <span class="op">=</span> <span class="op">:</span>fdc_id)</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>pricelistsum <span class="op">=</span> <span class="pp">@by</span> pricelistnutdetails <span class="op">:</span>fdc_id <span class="cf">begin</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>calories <span class="op">=</span> <span class="fu">sum</span>(<span class="op">:</span>amount[<span class="op">:</span>nutrient_id <span class="op">.==</span> <span class="fl">1008</span>])</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>protein <span class="op">=</span> <span class="fu">sum</span>(<span class="op">:</span>amount[<span class="op">:</span>nutrient_id <span class="op">.==</span> <span class="fl">1003</span>])</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>fat <span class="op">=</span> <span class="fu">sum</span>(<span class="op">:</span>amount[<span class="op">:</span>nutrient_id <span class="op">.==</span> <span class="fl">1004</span>])</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>carbs <span class="op">=</span> <span class="fu">sum</span>(<span class="op">:</span>amount[<span class="op">:</span>nutrient_id <span class="op">.==</span> <span class="fl">1005</span>])</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>pricelistnutr <span class="op">=</span> <span class="fu">leftjoin</span>(pricelistnutr,pricelistsum;on<span class="op">=:</span>fdc_id)</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">bumprbf</span>(x)</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>    (x <span class="op">&lt;</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">||</span> x <span class="op">&gt;</span> <span class="fl">1.0</span>) <span class="op">&amp;&amp;</span> <span class="cf">return</span> <span class="fu">zero</span>(x)</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">exp</span>(<span class="fl">1.0</span><span class="op">-</span><span class="fl">1.0</span><span class="op">/</span>(<span class="fl">1.0</span><span class="op">-</span>x<span class="op">^</span><span class="fl">2</span>))</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">rbfeval</span>(x,c,sc,coeff,offs)</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(co <span class="op">*</span> <span class="fu">bumprbf</span>((x<span class="op">-</span>cent)<span class="op">/</span>sc) <span class="cf">for</span> (cent,co) <span class="kw">in</span> <span class="fu">zip</span>(c,coeff))<span class="op">+</span>offs</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="co"># example plot to make sure it's working</span></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(x-&gt;rbfeval(x,collect(-10.0:10.0),3.0,collect(1.0/(x^2+1.0) for x in -10:10),1.0),xlim=(-10.0,10.0))</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="pp">@model</span> <span class="kw">function</span> <span class="fu">cpifood</span>(date,item,nitem,region,nregion,centers,rbfsc,price,cals,prot,fat,carb)</span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a model of a food price index for 2000 calories a day of food </span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>    <span class="co"># chosen in a moderately healthy balance, interpolating missing prices</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and with regional variations. input prices should be in $/100g and </span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cals is calories/100g for each item</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prot is grams protein/100g item</span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fat and carb similar to prot</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>    ncenters <span class="op">=</span> <span class="fu">length</span>(centers)</span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>    icoefs <span class="op">~</span> <span class="fu">MvNormal</span>([<span class="fl">0.0</span> for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>nitem<span class="op">*</span>ncenters],<span class="fu">log</span>(<span class="fl">2.0</span>))</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">~</span> <span class="fu">MvNormal</span>([<span class="fl">0.0</span> for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>nitem<span class="op">*</span>nregion<span class="op">*</span>ncenters],<span class="fu">log</span>(<span class="fl">1.1</span>))</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>    offsetlog <span class="op">~</span> <span class="fu">MvNormal</span>([<span class="fu">log</span>(<span class="fl">.7</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>nitem],<span class="fu">log</span>(<span class="fl">2.0</span>)<span class="op">/</span><span class="fl">2.0</span>)</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>    icoefsm <span class="op">=</span> <span class="fu">reshape</span>(icoefs,(ncenters,nitem))</span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>    coefsm <span class="op">=</span> <span class="fu">reshape</span>(coefs,(ncenters,nitem,nregion))</span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>    measerr <span class="op">~</span> <span class="fu">Gamma</span>(<span class="fl">20.0</span>,<span class="fl">.5</span><span class="op">/</span><span class="fl">19</span>)</span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>    quantlogs <span class="op">~</span> <span class="fu">MvNormal</span>([<span class="fu">log</span>(<span class="fl">20.0</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>nitem],<span class="fu">log</span>(<span class="fl">2.0</span>)) <span class="co"># quantity of item in basket in 100g increments, 20 = 2kg, 2kg * 4 = 20kg upper end ish for each quantity</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>    quants <span class="op">=</span> <span class="fu">exp</span>.(quantlogs)</span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>    alldates <span class="op">=</span> <span class="fu">round</span>(<span class="fu">minimum</span>(date))<span class="op">:</span><span class="fl">1.0</span><span class="op">/</span><span class="fl">4</span><span class="op">:</span><span class="fu">round</span>(<span class="fu">maximum</span>(date))</span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> <span class="fu">zeros</span>(<span class="fu">typeof</span>(quants[<span class="fl">1</span>]),<span class="fu">length</span>(alldates),nitem,nregion)</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> <span class="fu">zeros</span>(<span class="fu">typeof</span>(quants[<span class="fl">1</span>]),<span class="fu">length</span>(alldates),nitem,nregion)</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>    <span class="co">## predict price with the RBF model for every date, every region, every item..</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>    <span class="co">## utilize those prices which are known to inform the model through a likelihood</span></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>    <span class="co">## include the measured data on prices through a likelihood</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (d,i,r,p) <span class="kw">in</span> <span class="fu">zip</span>(date,item,region,price)</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> <span class="fu">exp</span>(<span class="fu">rbfeval</span>(d,centers,rbfsc,<span class="fu">view</span>(coefsm,<span class="op">:</span>,i,r) <span class="op">+</span> <span class="fu">view</span>(icoefsm,<span class="op">:</span>,i),offsetlog[i]))</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>        Turing.<span class="pp">@addlogprob</span>!(<span class="fu">logpdf</span>(<span class="fu">Normal</span>(<span class="fl">0.0</span>,measerr<span class="op">*</span>p),pred<span class="op">-</span>p))</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># using the coefficients, estimate all the prices quarterly...</span></span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (d,i,r) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">product</span>(<span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(alldates),<span class="fl">1</span><span class="op">:</span>nitem,<span class="fl">1</span><span class="op">:</span>nregion)</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>        prices[d,i,r] <span class="op">=</span> <span class="fu">exp</span>(<span class="fu">rbfeval</span>(alldates[d],centers,rbfsc,<span class="fu">view</span>(coefsm,<span class="op">:</span>,i,r)<span class="fu">+view</span>(icoefsm,<span class="op">:</span>,i),offsetlog[i]))</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>    <span class="co">## establish prior on quantities such that quantities which result in 2000 cal/day +- 50 cal are much more probable</span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>    Turing.<span class="pp">@addlogprob</span>!(<span class="fu">logpdf</span>(<span class="fu">Normal</span>(<span class="fl">2000.0</span>,<span class="fl">25.0</span>),<span class="fu">dot</span>(quants, cals) <span class="op">/</span>(<span class="fl">365.0</span><span class="op">/</span><span class="fl">12.0</span>)))</span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>    <span class="co">## establish balanced diet... around 30%,30%,40% protein, fat, carbs</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>    macronuts <span class="op">=</span> [<span class="fu">dot</span>(quants,prot) <span class="op">*</span> <span class="fl">4.0</span> ,<span class="fu">dot</span>(quants,fat) <span class="op">*</span> <span class="fl">9.0</span> ,<span class="fu">dot</span>(quants,carb) <span class="op">*</span> <span class="fl">4.0</span> ] <span class="co"># calculate quantities in grams, multiply by calories / gram</span></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>    macronuts <span class="op">=</span> macronuts<span class="op">/</span><span class="fu">sum</span>(macronuts) <span class="co"># normalize to get fraction of calories</span></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>    Turing.<span class="pp">@addlogprob</span>!(<span class="fu">logpdf</span>(<span class="fu">Dirichlet</span>([<span class="fl">30</span>,<span class="fl">30</span>,<span class="fl">40</span>]<span class="op">.*</span><span class="fl">4</span>),macronuts)) <span class="co"># prior is near 30,30,40 ratio of calories from each source</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>    <span class="co">## calculate the index.</span></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>    priceindex <span class="op">=</span> <span class="fu">zeros</span>(<span class="fu">typeof</span>(price[<span class="fl">1</span>]<span class="op">*</span>quants[<span class="fl">1</span>]),(<span class="fu">length</span>(alldates),nregion))</span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (d,r) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">product</span>(<span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(alldates),<span class="fl">1</span><span class="op">:</span>nregion)</span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>        priceindex[d,r] <span class="op">=</span> <span class="fu">dot</span>(<span class="fu">view</span>(prices,d,<span class="op">:</span>,r), quants) <span class="co"># dot product</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> priceindex,quants</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>myprices.itemcat <span class="op">=</span> <span class="fu">categorical</span>(myprices.item_code)</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>myprices.regioncat <span class="op">=</span> <span class="fu">categorical</span>(myprices.region)</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>myprices.price <span class="op">=</span> myprices.value <span class="op">.*</span> <span class="fl">100.0</span> <span class="op">./</span> myprices.quantg <span class="co"># price per 100g</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="pp">@subset</span>!(myprices,<span class="op">:</span>year <span class="op">.&gt;=</span> <span class="fl">1999</span> )</span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>ouritems <span class="op">=</span> pricelistnutr[<span class="op">:</span>,[<span class="op">:</span>item_code, <span class="op">:</span>calories, <span class="op">:</span>protein,<span class="op">:</span>fat,<span class="op">:</span>carbs]]</span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>ouritems.item_code <span class="op">=</span> <span class="fu">categorical</span>(ouritems.item_code)</span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>ouritems <span class="op">=</span> <span class="pp">@orderby</span>(ouritems,<span class="op">:</span>item_code)</span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a>foodmodel <span class="op">=</span> <span class="fu">cpifood</span>(myprices.date,<span class="fu">levelcode</span>.(myprices.itemcat),<span class="fu">length</span>(<span class="fu">levels</span>(myprices.itemcat)),</span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">levelcode</span>.(myprices.regioncat),<span class="fu">length</span>(<span class="fu">levels</span>(myprices.regioncat)),<span class="fu">collect</span>(<span class="fl">1997</span><span class="op">:</span><span class="fl">3</span><span class="op">:</span><span class="fl">2024</span>),<span class="fl">9.0</span>,myprices.price,ouritems.calories,ouritems.protein,ouritems.fat,ouritems.carbs)</span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="fu">setadbackend</span>(<span class="op">:</span>forwarddiff)</span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>mapest <span class="op">=</span> Optim.<span class="fu">optimize</span>(foodmodel,<span class="fu">MAP</span>(),<span class="fu">ParticleSwarm</span>(;n_particles<span class="op">=</span><span class="fl">50</span>),Optim.<span class="fu">Options</span>(x_reltol<span class="op">=</span><span class="fl">1e-4</span>,f_reltol<span class="op">=</span><span class="fl">1e-4</span>,allow_f_increases<span class="op">=</span><span class="cn">true</span>,f_calls_limit<span class="op">=</span><span class="fl">1_000_000</span>,show_trace<span class="op">=</span><span class="cn">true</span>,</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>    iterations<span class="op">=</span><span class="fl">100_000</span>,show_every<span class="op">=</span><span class="fl">100</span>,time_limit<span class="op">=</span><span class="fl">240</span>))</span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>ouritems.mapquants <span class="op">=</span> <span class="fu">exp</span>.(<span class="fu">coef</span>(mapest)[<span class="kw">end</span><span class="op">-</span><span class="fl">12</span><span class="op">:</span><span class="kw">end</span>])</span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a>basket <span class="op">=</span> <span class="fu">leftjoin</span>(ouritems,items; on<span class="op">=:</span>item_code)</span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="fu">dot</span>(basket.mapquants,basket.calories) <span class="op">/</span> (<span class="fl">365</span><span class="op">/</span><span class="fl">12.0</span>)</span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>fracs <span class="op">=</span> [<span class="fu">dot</span>(basket.mapquants,basket.protein) <span class="op">*</span> <span class="fl">4.0</span> ,<span class="fu">dot</span>(basket.mapquants,basket.fat) <span class="op">*</span> <span class="fl">9.0</span> ,<span class="fu">dot</span>(basket.mapquants,basket.carbs) <span class="op">*</span> <span class="fl">4.0</span>]<span class="op">/</span>(<span class="fl">365</span><span class="op">/</span><span class="fl">12.0</span>)</span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>fracs <span class="op">./</span><span class="fu">sum</span>(fracs)</span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="fu">setadbackend</span>(<span class="op">:</span>reversediff)</span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>Turing.<span class="fu">setrdcache</span>(<span class="cn">true</span>)</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="co">#@profview  testsamps = sample(foodmodel,NUTS(15,.7),15; init_params = mapest.values.array)</span></span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="co">#@allocated  testsamps = sample(foodmodel,NUTS(15,.7),15; init_params = mapest.values.array)</span></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="cn">true</span> <span class="op">&amp;&amp;</span> <span class="fu">ispath</span>(<span class="st">"saved/foodmodel.dat"</span>)</span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> <span class="fu">deserialize</span>(<span class="st">"saved/foodmodel.dat"</span>)</span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> <span class="fu">sample</span>(foodmodel,<span class="fu">NUTS</span>(<span class="fl">200</span>,<span class="fl">.85</span>),<span class="fl">200</span>)</span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>    <span class="fu">serialize</span>(<span class="st">"saved/foodmodel.dat"</span>,samps)</span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(samps[<span class="op">:</span>,<span class="op">:</span>lp,<span class="fl">1</span>])</span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>genq <span class="op">=</span> <span class="fu">generated_quantities</span>(foodmodel,samps)</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>examps <span class="op">=</span> <span class="fu">collect</span>(<span class="fl">1</span><span class="op">:</span><span class="fu">round</span>(<span class="dt">Int</span>,<span class="fu">length</span>(genq)<span class="op">/</span><span class="fl">20</span>)<span class="op">:</span><span class="fu">length</span>(genq))</span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>modeldates <span class="op">=</span> <span class="fl">1999</span><span class="op">:</span><span class="fl">1.0</span><span class="op">/</span><span class="fl">4</span><span class="op">:</span><span class="fl">2023</span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>([<span class="fu">plot</span>(modeldates,genq[i][<span class="fl">1</span>]; legend<span class="op">=</span><span class="cn">false</span>) for i <span class="kw">in</span> examps]<span class="op">...</span>; size <span class="op">=</span> (<span class="fl">1000</span>,<span class="fl">1000</span>), ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">300</span>)))</span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>([<span class="fu">bar</span>(genq[i][<span class="fl">2</span>]; legend<span class="op">=</span><span class="cn">false</span>) for i <span class="kw">in</span> examps] <span class="op">...</span>)</span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a>myindexmed <span class="op">=</span> [<span class="fu">median</span>(<span class="fu">collect</span>(genq[i][<span class="fl">1</span>][j,<span class="fl">1</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(genq))) for j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">size</span>(genq[<span class="fl">1</span>][<span class="fl">1</span>],<span class="fl">1</span>)]</span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>myindex <span class="op">=</span> <span class="fu">DataFrame</span>(date <span class="op">=</span> modeldates,index <span class="op">=</span> myindexmed)</span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>myindexscale <span class="op">=</span> <span class="fu">mean</span>(myindex[myindex.date <span class="op">.&gt;</span> <span class="fl">2000</span> <span class="op">.&amp;&amp;</span> myindex.date <span class="op">.&lt;</span> <span class="fl">2005</span>,<span class="op">:</span>index])</span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>m2monsupp <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"WM2NS"</span>)</span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>cpifooddat <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"CPIUFDSL"</span>)</span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>cpihouse <span class="op">=</span> <span class="fu">get_data</span>(f,<span class="st">"CPIHOSNS"</span>)</span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>m2scale <span class="op">=</span> <span class="fu">mean</span>(<span class="pp">@subset</span>(m2monsupp.data,<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.==</span> <span class="fl">2002</span>)[!,<span class="op">:</span>value])</span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>cpifscale <span class="op">=</span> <span class="fu">mean</span>(<span class="pp">@subset</span>(cpifooddat.data,<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.==</span> <span class="fl">2002</span>)[!,<span class="op">:</span>value])</span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>cpihscale <span class="op">=</span> <span class="fu">mean</span>(<span class="pp">@subset</span>(cpihouse.data,<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.==</span> <span class="fl">2002</span>)[!,<span class="op">:</span>value])</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span>(<span class="op">:</span>linewidth,<span class="fl">2</span>)</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a><span class="pp">@df</span> m2monsupp.data <span class="fu">plot</span>(<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.+</span> <span class="fu">month</span>.(<span class="op">:</span>date) <span class="op">./</span> <span class="fl">12.0</span>,<span class="op">:</span>value <span class="op">.*</span> myindexscale <span class="op">/</span> m2scale,label<span class="op">=</span><span class="st">"M2 money rescaled"</span>,legend<span class="op">=:</span>topleft,</span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">"Food Cost for 1 Person</span><span class="sc">\n</span><span class="st">compared to rescaled M2 and CPI Food"</span>,ylab<span class="op">=</span><span class="st">"Nominal Dollars"</span>)</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a><span class="pp">@df</span> cpifooddat.data <span class="fu">plot!</span>(<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.+</span> <span class="fu">month</span>.(<span class="op">:</span>date) <span class="op">./</span> <span class="fl">12.0</span>, <span class="op">:</span>value <span class="op">.*</span> myindexscale <span class="op">/</span> cpifscale, label<span class="op">=</span><span class="st">"CPI Food"</span>)</span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a><span class="pp">@df</span> cpihouse.data <span class="fu">plot!</span>(<span class="fu">year</span>.(<span class="op">:</span>date) <span class="op">.+</span> <span class="fu">month</span>.(<span class="op">:</span>date) <span class="op">./</span> <span class="fl">12.0</span>, <span class="op">:</span>value <span class="op">.*</span> myindexscale <span class="op">/</span> cpihscale,label <span class="op">=</span> <span class="st">"CPI housing"</span>)</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fu">plot!</span>(modeldates,myindexmed,label<span class="op">=</span><span class="st">"Dan's Food Index"</span>)</span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p)</span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p; xlim<span class="op">=</span>(<span class="fl">2000</span>,<span class="fl">2022</span>))</span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fu">plot</span>(modeldates,myindexmed; legend<span class="op">=</span><span class="cn">false</span>, title <span class="op">=</span> <span class="st">"Food for 1 person at home Index"</span>, ylab<span class="op">=</span><span class="st">"Nominal Dollars"</span>,xlab<span class="op">=</span><span class="st">"Date"</span>)</span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p)</span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a>myitemsprcs <span class="op">=</span> <span class="pp">@chain</span> <span class="pp">@transform</span>(<span class="fu">leftjoin</span>(myindex,interpprices; on<span class="op">=</span> <span class="op">:</span>item_code),<span class="op">:</span>monthcost <span class="op">=</span> <span class="op">:</span>value <span class="op">.*</span> <span class="op">:</span>quantpermo) <span class="cf">begin</span> </span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>date,<span class="op">:</span>region) <span class="cf">end</span></span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>foodcost <span class="op">=</span> <span class="pp">@chain</span> <span class="pp">@by</span>(myitemsprcs,[<span class="op">:</span>date,<span class="op">:</span>region],<span class="op">:</span>monthcost <span class="op">=</span> <span class="fu">sum</span>(<span class="op">:</span>monthcost),<span class="op">:</span>nitems <span class="op">=</span> <span class="fu">length</span>(<span class="op">:</span>monthcost)) <span class="cf">begin</span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>date,<span class="op">:</span>region)</span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a><span class="pp">@df</span> <span class="pp">@subset</span>(foodcost,<span class="op">:</span>nitems <span class="op">.==</span> <span class="fl">12</span>) <span class="fu">plot</span>(<span class="op">:</span>date,<span class="op">:</span>monthcost; group <span class="op">=</span> <span class="op">:</span>region,legend<span class="op">=:</span>topleft,title<span class="op">=</span><span class="st">"Nominal Dollars 1 mo Food 1 Person"</span>)</span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

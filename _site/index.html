@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Lakeland, Lakeland Applied Sciences LLC">
+
+<title>International Crime and Firearms Analysis - Crime and Firearms Research</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">International Crime and Firearms Analysis</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="dropdown-header">
+ <span class="menu-text">about.qmd</span></li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-me-and-this-project" id="toc-about-me-and-this-project" class="nav-link active" data-scroll-target="#about-me-and-this-project">About me and this project</a></li>
+  <li><a href="#some-basic-exploratory-analysis-of-firearms-ownership-and-crime-across-countries" id="toc-some-basic-exploratory-analysis-of-firearms-ownership-and-crime-across-countries" class="nav-link" data-scroll-target="#some-basic-exploratory-analysis-of-firearms-ownership-and-crime-across-countries">Some basic exploratory analysis of firearms ownership and crime across countries</a>
+  <ul class="collapse">
+  <li><a href="#united-states" id="toc-united-states" class="nav-link" data-scroll-target="#united-states">United States</a></li>
+  <li><a href="#international-violence" id="toc-international-violence" class="nav-link" data-scroll-target="#international-violence">International Violence</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Crime and Firearms Research</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Lakeland, Lakeland Applied Sciences LLC </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="about-me-and-this-project" class="level2">
+<h2 class="anchored" data-anchor-id="about-me-and-this-project">About me and this project</h2>
+<p>Firearms politics is a contentious issue. Politically I’m a relatively Liberal person who believes for example in equal rights for minorities, gay marriage, individual body autonomy, social safety nets implemented by Universal Basic Income, and the importance of a market based economy driven by fair and just regulations rather than crony capitalism, but who diverges strongly from the Democratic Party platform when it comes to firearms. I believe that each person bears some responsibility for protecting society, their family, and their fellow citizens from crime, from political violence, and from other risks to health such as pandemic viruses. To me firearms in the hands of responsible citizens are like vaccines against contagious pathogens, and are a responsibility we should all wield for mutual benefit, and that through training and proper usage, firearms are a net benefit to society, particularly in so far as they empower minorities, women, and other vulnerable groups to resist violence from physically more powerful people (primarily male criminals).</p>
+<p>I am however a data analyst at heart, with a strong belief that Bayesian causal and mechanistic/structural methods are the correct way to assess what we can learn from data. And I am a strong believer in Open Science. These analyses are based on data collected off the internet, archived into the data directories, and using code which is <strong>right here</strong> in the repository for you to read. You can and should use my repository to perform your own analysis, and feel free to discuss alternative analyses openly, and <strong>respectfully</strong>. I do not claim that my analyses are error-free nor are they definitively the correct analysis to perform, only that <strong>given the analysis choices I made, and whatever bugs there may be in the code, the results are what you see here</strong></p>
+</section>
+<section id="some-basic-exploratory-analysis-of-firearms-ownership-and-crime-across-countries" class="level1">
+<h1>Some basic exploratory analysis of firearms ownership and crime across countries</h1>
+<p>Gun ownership varies widely across countries, as does income inequality, health care, economic opportunity, racism, and other aspects of overall quality of life. All of these can influence crime and violence especially homicide, robbery, rape, and suicide. This website analyzes several aspects of these issues across cultures, and is a work in progress.</p>
+<section id="united-states" class="level2">
+<h2 class="anchored" data-anchor-id="united-states">United States</h2>
+<p>In the last 30 years or so, there have been some major changes in firearms laws across the US, including passage of the “Assault Weapon” ban in 1994 which expired in 2004, liberalization of the CCW laws throughout the country, and then recently elimination of the requirement for CCW license (so called “constitutional carry”) in about half of the states. In 2022 the <a href="https://www.supremecourt.gov/opinions/21pdf/20-843_7j80.pdf">US Supreme Court ruled</a> in <em>New York State Rifle and Pistol Association vs Bruen</em> (aka <em>Bruen</em> or <em>NYSRPA vs Bruen</em>) that US Citizens have a Second Amendment right that protects the use of firearms in public places for self defense, a ruling which also will affect through precedent the way that many lawsuits opposing firearms laws will be decided in the next few years.</p>
+<p>We have also seen a significant increase in the rate at which untargeted mass public shootings are committed.</p>
+<p>I have several analyses that try to tease out what happened around some of these changes.</p>
+<p>For example an analysis focusing on <a href="USCarry.html">Concealed Carry in the US</a></p>
+<p>In the US, the biggest category of deaths from firearms by far is <a href="ussuicide.html">US firearm deaths by suicide</a>. And while suicide attempt by firearm is usually more often fatal than other attempts, it’s not clear that reducing access to firearms overall is likely to reduce suicides. The experience in Australia certainly did not go that way (shown in the international section below).</p>
+<p>One of the least common but most often discussed categories in the US is <a href="usmassshootings.html">Mass Public Shootings</a>. Roughly this is where a person goes to a public place and begins shooting either due to a specific disgruntlement with the particular people there (usually workplace shootings or family shootings), or out of a general desire to commit suicide while killing as many random citizens as possible.</p>
+<p>Recently some activists have tried to recategorize a “mass shooting” as simply any shooting where multiple people were struck by bullets (with varying thresholds for how many qualify). But this captures a lot of “ordinary” organized crime, drug dealers, and liquor store holdups etc. The motivations are so different that it’s important criminologically to make a distinction between these different types of crime.</p>
+</section>
+<section id="international-violence" class="level2">
+<h2 class="anchored" data-anchor-id="international-violence">International Violence</h2>
+<p>The US is often discussed as a major outlier in the “developed world” in terms of violence and especially gun violence. Often it’s compared to Australia which had a major gun-banning event in 1996, but also compared to the UK, Germany, Switzerland, Austria, Canada, or Japan.</p>
+<p><a href="international.html">International outcomes</a> are heavily influenced by major differences between culture, education, and other government policy. In particular, we can see in the international analysis that <strong>income inequality</strong> is an extremely strong predictor of violence overall.</p>
+<p><a href="australia.html">Australias results</a> are often taken to mean that gun bans work to reduce homicide and other violence. However, this analysis using a Bayesian dynamic model taking into account both gun prevalence and economic conditions shows that violent crime actually increased shortly after the gun ban and buyback, and then decreased when the Australian economy took off like a rocket. Then through time, more guns were purchased, and today although crime is still low, guns per capita are at similar or even higher levels to what was the case before the buyback. Dynamic Bayesian models show that Economic improvements, not firearms bans seems to be the major driver of reduction in violence. To the extent that they had an effect, laws restricting guns appear more likely to have <strong>increased</strong> crime in Australia.</p>
+<p>Furthermore, Australian suicide data shows that Australians rapidly exchanged guns for hanging <strong>starting before and continuing after</strong> the buyback event. Looking at the sum of gun suicide and hanging suicide, the overall sum actually increased after the gun buyback, and the overall drop in all forms of suicide was clearly driven by a rapid reduction in “gas” suicides starting around 1998 or so.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
