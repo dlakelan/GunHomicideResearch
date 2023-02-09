@@ -269,219 +269,221 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> <span class="pp">@orderby</span>(<span class="fu">leftjoin</span>(joined,fipscodes,on <span class="op">=</span> <span class="op">:</span>state <span class="op">=&gt;</span> <span class="op">:</span>STATE_NAME),<span class="op">:</span>StateCode,<span class="op">:</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1057. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1058. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1059. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1060. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1061. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1062. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1063. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1064. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1065. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1066. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1067. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1068. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1069. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1070. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1071. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1072. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1073. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1074. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1075. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1076. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1077. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1078. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1079. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1080. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1081. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1082. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1083. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1084. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1085. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1086. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1087. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1088. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1089. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1090. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1091. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1092. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1093. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1094. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1095. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1096. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1097. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1098. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1099. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1100. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1101. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1102. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1103. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1104. Filling remaining columns with `missing`
-└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1105. Filling remaining columns with `missing`
+<pre><code>┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1106. Filling remaining columns with `missing`
+<pre><code>┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1107. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1108. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1109. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1057. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1110. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1058. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1111. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1059. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1112. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1060. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1113. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1061. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1114. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1062. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1115. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1063. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1116. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1064. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1117. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1065. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1118. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1066. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1119. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1067. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1068. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1069. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1070. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1071. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1072. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1073. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1074. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1075. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1076. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1077. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1078. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1079. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1080. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1081. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1082. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1083. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1084. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1085. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1086. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1087. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1088. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1089. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1090. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1091. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1092. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1093. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1094. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1095. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1096. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1097. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1098. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1099. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1100. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1101. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1102. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1103. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1104. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1105. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1106. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1034. Filling remaining columns with `missing`
+<pre><code>┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1107. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1034. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1108. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1035. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1109. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1035. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1110. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1036. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1111. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1037. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1112. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1038. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1113. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1039. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1114. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1040. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1115. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1041. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1116. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1042. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1117. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1043. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1118. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1044. Filling remaining columns with `missing`
+┌ Warning: thread = 4 warning: only found 1 / 8 columns around data row: 1119. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1034. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1045. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1034. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1046. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1035. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1047. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1035. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1048. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1036. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1049. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1037. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1050. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1038. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1051. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1039. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1052. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1040. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1053. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1041. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1054. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1042. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1043. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1044. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1057. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1045. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1058. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1046. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1059. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1047. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1060. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1048. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1061. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1049. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1062. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1050. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1063. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1051. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1064. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1052. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1065. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1053. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1066. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1054. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1067. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1055. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1068. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1056. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
-┌ Warning: thread = 3 warning: only found 1 / 8 columns around data row: 1069. Filling remaining columns with `missing`
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1057. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1058. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1059. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1060. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1061. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1062. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1063. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1064. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1065. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1066. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1067. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1068. Filling remaining columns with `missing`
+└ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578
+┌ Warning: thread = 5 warning: only found 1 / 8 columns around data row: 1069. Filling remaining columns with `missing`
 └ @ CSV /var/local/dlakelan/dotjulia/packages/CSV/jFiCn/src/file.jl:578</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -496,11 +498,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We then plot firearms homicides vs firearms per capita as a parametric curve with time not visible. If purchasing guns causes gun homicides, then as guns per capita increases through time so will firearms homicides. However there are also <strong>other</strong> models that could cause such trends.</p>
 <p>Nevertheless, if gun purchases do cause gun homicides, we should see these positive trending lines.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.cumgunrate,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Gun Rate (guns/capita)"</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Gun Prevalence"</span>, alpha<span class="op">=</span><span class="fl">.5</span>))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.cumgunrate,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Gun Rate (guns/capita)"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Gun Prevalence"</span>, alpha<span class="op">=</span><span class="fl">.5</span>, ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">12</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.cumgunrate,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Gun Rate (guns/capita)"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Gun Prevalence"</span>, alpha<span class="op">=</span><span class="fl">.5</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.cumgunrate,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Gun Rate (guns/capita)"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Gun Prevalence"</span>, alpha<span class="op">=</span><span class="fl">.5</span>, ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">12</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="USCarry_files/figure-html/cell-4-output-1.svg" class="img-fluid"></p>
 </div>
@@ -513,11 +515,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="firearms-data-as-a-time-series">Firearms data as a time series</h2>
 <p>In addition we plot how Homicides have changed through time, and how firearms per capita has changed through time</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.year,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Year"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Time"</span>, alpha<span class="op">=</span><span class="fl">.5</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.year, joined.cumgunrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Year"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearms Per Capita Estimate (guns/person)"</span>, title<span class="op">=</span><span class="st">"Gun Ownership vs Time"</span>, alpha<span class="op">=</span><span class="fl">.5</span>, ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">4</span>),xlim<span class="op">=</span>(<span class="fl">1999</span>,<span class="fl">2020</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.year,joined.crudedeathrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Year"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearm Homicide Rate (deaths/100kcapita/yr)"</span>, title<span class="op">=</span><span class="st">"Gun Homicide vs Time"</span>, alpha<span class="op">=</span><span class="fl">.5</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(<span class="fu">plot</span>(joined.year, joined.cumgunrate; group<span class="op">=</span>joined.state, legend<span class="op">=</span><span class="cn">false</span>, xlab<span class="op">=</span><span class="st">"Year"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ylab<span class="op">=</span><span class="st">"Firearms Per Capita Estimate (guns/person)"</span>, title<span class="op">=</span><span class="st">"Gun Ownership vs Time"</span>, alpha<span class="op">=</span><span class="fl">.5</span>, ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">4</span>),xlim<span class="op">=</span>(<span class="fl">1999</span>,<span class="fl">2020</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="USCarry_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
 </div>
@@ -536,26 +538,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Of all the systems for regulating firearms in public, this is the least restrictive. There are various models one might have of how this would affect gun homicides. Some might argue armed citizens deter crime, others might argue it makes it easier to commit crime, others might argue the effect if any would be minimal as criminals were already carrying guns and only relatively “model citizens” would start carrying, and they are generally not involved in crime in terms of committing them or as victims. It’s worthwhile to look at the data to see what hypotheses are comopatible with the observed trends.</p>
 <p>We plot firearms homicide rates through time for each state. We place a vertical red line at the point in time where the constitutional carry law was signed if any.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>concarry <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,CSV.<span class="fu">read</span>(<span class="st">"./data/ConstCarryDates.csv"</span>,DataFrame),on <span class="op">=</span> <span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>StateCode)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>concarry.date <span class="op">=</span> <span class="fu">map</span>(x <span class="op">-&gt;</span> <span class="fu">ismissing</span>(x) ? <span class="cn">missing</span> <span class="op">:</span> <span class="fu">Date</span>(<span class="fu">div</span>(x,<span class="fl">10000</span>),<span class="fu">div</span>(<span class="fu">mod</span>(x,<span class="fl">10000</span>),<span class="fl">100</span>),<span class="fl">1</span>),concarry.LawDate)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>concarry.year <span class="op">=</span> <span class="fu">map</span>(x <span class="op">-&gt;</span> <span class="fu">ismissing</span>(x) ? <span class="cn">missing</span> <span class="op">:</span> <span class="fu">year</span>(x),concarry.date)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>concarry <span class="op">=</span> <span class="pp">@subset</span>(concarry,<span class="op">:</span>STATE <span class="op">.&lt;=</span> <span class="fl">59</span>) <span class="co">#ignore minor territories</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p <span class="op">=</span> []</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (st,stusab,statename,statens,lawdate,stdate,year) <span class="kw">in</span> <span class="fu">eachrow</span>(concarry)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> year</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> <span class="pp">@subset</span>(joined,<span class="op">:</span>state <span class="op">.==</span> statename)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">nrow</span>(sub) <span class="op">&gt;</span> <span class="fl">0</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            pp <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.crudedeathrate,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">15</span>),size<span class="op">=</span>(<span class="fl">500</span>,<span class="fl">500</span>),</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>statename<span class="sc">\n</span><span class="st">homicides"</span>,xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Gun Homicide/100k/yr"</span>,legend<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(!<span class="fu">ismissing</span>(d))</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                pp <span class="op">=</span> <span class="fu">plot!</span>([(d,<span class="fl">0</span>),(d,<span class="fl">15</span>)])</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p,pp)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p<span class="op">...</span>; size <span class="op">=</span> (<span class="fl">2000</span>,<span class="fl">2000</span>)))</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>concarry <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,CSV.<span class="fu">read</span>(<span class="st">"./data/ConstCarryDates.csv"</span>,DataFrame),on <span class="op">=</span> <span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>StateCode)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>concarry.date <span class="op">=</span> <span class="fu">map</span>(x <span class="op">-&gt;</span> <span class="fu">ismissing</span>(x) ? <span class="cn">missing</span> <span class="op">:</span> <span class="fu">Date</span>(<span class="fu">div</span>(x,<span class="fl">10000</span>),<span class="fu">div</span>(<span class="fu">mod</span>(x,<span class="fl">10000</span>),<span class="fl">100</span>),<span class="fl">1</span>),concarry.LawDate)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>concarry.year <span class="op">=</span> <span class="fu">map</span>(x <span class="op">-&gt;</span> <span class="fu">ismissing</span>(x) ? <span class="cn">missing</span> <span class="op">:</span> <span class="fu">year</span>(x),concarry.date)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>concarry <span class="op">=</span> <span class="pp">@subset</span>(concarry,<span class="op">:</span>STATE <span class="op">.&lt;=</span> <span class="fl">59</span>) <span class="co">#ignore minor territories</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p <span class="op">=</span> []</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (st,stusab,statename,statens,lawdate,stdate,year) <span class="kw">in</span> <span class="fu">eachrow</span>(concarry)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> year</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> <span class="pp">@subset</span>(joined,<span class="op">:</span>state <span class="op">.==</span> statename)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">nrow</span>(sub) <span class="op">&gt;</span> <span class="fl">0</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            pp <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.crudedeathrate,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">15</span>),size<span class="op">=</span>(<span class="fl">500</span>,<span class="fl">500</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>statename<span class="sc">\n</span><span class="st">homicides"</span>,xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Gun Homicide/100k/yr"</span>,legend<span class="op">=</span><span class="cn">false</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(!<span class="fu">ismissing</span>(d))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                pp <span class="op">=</span> <span class="fu">plot!</span>([(d,<span class="fl">0</span>),(d,<span class="fl">15</span>)])</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p,pp)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p<span class="op">...</span>; size <span class="op">=</span> (<span class="fl">2000</span>,<span class="fl">2000</span>)))</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="USCarry_files/figure-html/cell-6-output-1.svg" class="img-fluid"></p>
 </div>
@@ -566,38 +568,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Looking at the raw data we can see that there are a number of states that have an “accelerating” trend of increased firearms homicide violence in the period from about mid 2014 to 2015 onward. Some of these have converted to Constitutional Carry near the beginning of that period or during that period, with the trend beginning before the carry provision for several of the states. Also many states have passed their laws in the last few years and have no data post-law.</p>
 <p>Let’s look at these states grouped into geographic regions, because trends in regions may be more obvious. We will start with the following groupings:</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stategroups <span class="op">=</span> [[<span class="st">"WA"</span>,<span class="st">"OR"</span>,<span class="st">"CA"</span>,<span class="st">"NV"</span>,<span class="st">"AZ"</span>],[<span class="st">"ID"</span>,<span class="st">"MT"</span>,<span class="st">"WY"</span>,<span class="st">"UT"</span>,<span class="st">"CO"</span>,<span class="st">"NM"</span>,<span class="st">"TX"</span>],[<span class="st">"ND"</span>,<span class="st">"SD"</span>,<span class="st">"NE"</span>,<span class="st">"KS"</span>,<span class="st">"OK"</span>,<span class="st">"IA"</span>,<span class="st">"MO"</span>],</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"MN"</span>,<span class="st">"WI"</span>,<span class="st">"IL"</span>,<span class="st">"IN"</span>,<span class="st">"MI"</span>,<span class="st">"OH"</span>],[<span class="st">"AR"</span>,<span class="st">"LA"</span>,<span class="st">"MS"</span>,<span class="st">"AL"</span>,<span class="st">"GA"</span>,<span class="st">"FL"</span>,<span class="st">"SC"</span>],[<span class="st">"TN"</span>,<span class="st">"NC"</span>,<span class="st">"KY"</span>,<span class="st">"WV"</span>,<span class="st">"VA"</span>,<span class="st">"MD"</span>,<span class="st">"DE"</span>],</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"PA"</span>,<span class="st">"NJ"</span>,<span class="st">"NY"</span>,<span class="st">"CT"</span>,<span class="st">"RI"</span>,<span class="st">"MA"</span>,<span class="st">"VT"</span>,<span class="st">"NH"</span>,<span class="st">"ME"</span>],[<span class="st">"AK"</span>,<span class="st">"HI"</span>,<span class="st">"DC"</span>]]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>stategroupdf <span class="op">=</span> <span class="fu">DataFrame</span>(STUSAB <span class="op">=</span> <span class="fu">reduce</span>(vcat,stategroups),stgroup <span class="op">=</span> <span class="fu">reduce</span>(vcat,[[k for j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(stategroups[k])] for k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(stategroups)]))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>stategroupdf <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,stategroupdf; on <span class="op">=</span> <span class="op">:</span>STUSAB)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">reduce</span>(vcat,stategroups))) <span class="op">==</span> <span class="fl">51</span>) <span class="co"># 50 states plus DC</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p1 <span class="op">=</span> [], p2<span class="op">=</span>[]</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> statelist <span class="kw">in</span> stategroups</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> joined[<span class="fu">in</span>.(joined.STUSAB, <span class="fu">Ref</span>(statelist)),<span class="op">:</span>]</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        ccdates <span class="op">=</span> <span class="pp">@chain</span> <span class="pp">@subset</span>(concarry, <span class="fu">in</span>.(concarry.STUSAB,<span class="fu">Ref</span>(statelist))) <span class="cf">begin</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>year))</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        ccdatesenact <span class="op">=</span> <span class="fu">leftjoin</span>(ccdates,sub, on <span class="op">=</span> [<span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>STUSAB, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="op">:</span>year], makeunique <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        ccdatesenact <span class="op">=</span> <span class="pp">@subset</span>(ccdatesenact, .! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">#display(ccdatesenact)</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#display(sub)</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.crudedeathrate,group<span class="op">=</span>sub.STUSAB,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">20</span>),legend<span class="op">=:</span>topleft,linewidth <span class="op">=</span> <span class="fl">3</span>, thickness_scaling<span class="op">=</span><span class="fl">1</span>,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            ylab<span class="op">=</span><span class="st">"Homicides/100k population/yr"</span>,xlab<span class="op">=</span><span class="st">"Year"</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">nrow</span>(ccdatesenact) <span class="op">&gt;</span> <span class="fl">0</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="fu">scatter!</span>(ccdatesenact.year,ccdatesenact.crudedeathrate,markersize<span class="op">=</span><span class="fl">6</span>,group <span class="op">=</span> ccdatesenact.STUSAB)</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p1,p)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.cumgunrate,sub.crudedeathrate,markersize<span class="op">=</span><span class="fl">6</span>,linewidth<span class="op">=</span><span class="fl">3</span>,thickness_scaling<span class="op">=</span><span class="fl">1</span>, xlab<span class="op">=</span><span class="st">"Gun Ownership (guns/person)"</span>, ylab<span class="op">=</span><span class="st">"Homicide rate (per 100k)"</span>, group<span class="op">=</span>sub.STUSAB)</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p2,p)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p1<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p2<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stategroups <span class="op">=</span> [[<span class="st">"WA"</span>,<span class="st">"OR"</span>,<span class="st">"CA"</span>,<span class="st">"NV"</span>,<span class="st">"AZ"</span>],[<span class="st">"ID"</span>,<span class="st">"MT"</span>,<span class="st">"WY"</span>,<span class="st">"UT"</span>,<span class="st">"CO"</span>,<span class="st">"NM"</span>,<span class="st">"TX"</span>],[<span class="st">"ND"</span>,<span class="st">"SD"</span>,<span class="st">"NE"</span>,<span class="st">"KS"</span>,<span class="st">"OK"</span>,<span class="st">"IA"</span>,<span class="st">"MO"</span>],</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"MN"</span>,<span class="st">"WI"</span>,<span class="st">"IL"</span>,<span class="st">"IN"</span>,<span class="st">"MI"</span>,<span class="st">"OH"</span>],[<span class="st">"AR"</span>,<span class="st">"LA"</span>,<span class="st">"MS"</span>,<span class="st">"AL"</span>,<span class="st">"GA"</span>,<span class="st">"FL"</span>,<span class="st">"SC"</span>],[<span class="st">"TN"</span>,<span class="st">"NC"</span>,<span class="st">"KY"</span>,<span class="st">"WV"</span>,<span class="st">"VA"</span>,<span class="st">"MD"</span>,<span class="st">"DE"</span>],</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"PA"</span>,<span class="st">"NJ"</span>,<span class="st">"NY"</span>,<span class="st">"CT"</span>,<span class="st">"RI"</span>,<span class="st">"MA"</span>,<span class="st">"VT"</span>,<span class="st">"NH"</span>,<span class="st">"ME"</span>],[<span class="st">"AK"</span>,<span class="st">"HI"</span>,<span class="st">"DC"</span>]]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>stategroupdf <span class="op">=</span> <span class="fu">DataFrame</span>(STUSAB <span class="op">=</span> <span class="fu">reduce</span>(vcat,stategroups),stgroup <span class="op">=</span> <span class="fu">reduce</span>(vcat,[[k for j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(stategroups[k])] for k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(stategroups)]))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>stategroupdf <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,stategroupdf; on <span class="op">=</span> <span class="op">:</span>STUSAB)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="pp">@assert</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">reduce</span>(vcat,stategroups))) <span class="op">==</span> <span class="fl">51</span>) <span class="co"># 50 states plus DC</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p1 <span class="op">=</span> [], p2<span class="op">=</span>[]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> statelist <span class="kw">in</span> stategroups</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> joined[<span class="fu">in</span>.(joined.STUSAB, <span class="fu">Ref</span>(statelist)),<span class="op">:</span>]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        ccdates <span class="op">=</span> <span class="pp">@chain</span> <span class="pp">@subset</span>(concarry, <span class="fu">in</span>.(concarry.STUSAB,<span class="fu">Ref</span>(statelist))) <span class="cf">begin</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>year))</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        ccdatesenact <span class="op">=</span> <span class="fu">leftjoin</span>(ccdates,sub, on <span class="op">=</span> [<span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>STUSAB, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="op">:</span>year], makeunique <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        ccdatesenact <span class="op">=</span> <span class="pp">@subset</span>(ccdatesenact, .! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">#display(ccdatesenact)</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#display(sub)</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.crudedeathrate,group<span class="op">=</span>sub.STUSAB,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">20</span>),legend<span class="op">=:</span>topleft,linewidth <span class="op">=</span> <span class="fl">3</span>, thickness_scaling<span class="op">=</span><span class="fl">1</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>            ylab<span class="op">=</span><span class="st">"Homicides/100k population/yr"</span>,xlab<span class="op">=</span><span class="st">"Year"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">nrow</span>(ccdatesenact) <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="fu">scatter!</span>(ccdatesenact.year,ccdatesenact.crudedeathrate,markersize<span class="op">=</span><span class="fl">6</span>,group <span class="op">=</span> ccdatesenact.STUSAB)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p1,p)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.cumgunrate,sub.crudedeathrate,markersize<span class="op">=</span><span class="fl">6</span>,linewidth<span class="op">=</span><span class="fl">3</span>,thickness_scaling<span class="op">=</span><span class="fl">1</span>, xlab<span class="op">=</span><span class="st">"Gun Ownership (guns/person)"</span>, ylab<span class="op">=</span><span class="st">"Homicide rate (per 100k)"</span>, group<span class="op">=</span>sub.STUSAB)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(p2,p)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p1<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p2<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="USCarry_files/figure-html/cell-7-output-1.svg" class="img-fluid"></p>
 </div>
@@ -610,33 +612,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>States by Relative Change</h1>
 <p>Each state has its own overall level of firearm violence, but often trends in the same direction relative to its region even if its overall level is higher or lower. This suggests a model in which we measure each state using a dimensionless number relative to some baseline level. For example the average rate in the years 1999,2000,2001</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>baselines <span class="op">=</span> <span class="pp">@chain</span> joined <span class="cf">begin</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="fu">in</span>.(<span class="op">:</span>year,<span class="fu">Ref</span>((<span class="fl">1999</span>,<span class="fl">2000</span>,<span class="fl">2001</span>))))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@by</span>(<span class="op">:</span>STUSAB, <span class="op">:</span>baseline <span class="op">=</span> <span class="fu">mean</span>(<span class="op">:</span>crudedeathrate))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>bljoined <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(stategroupdf,<span class="fu">leftjoin</span>(baselines,joined,on <span class="op">=</span> <span class="op">:</span>STUSAB, makeunique<span class="op">=</span><span class="cn">true</span>),on<span class="op">=:</span>STUSAB,makeunique<span class="op">=</span><span class="cn">true</span>) <span class="cf">begin</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>stgroup,<span class="op">:</span>STUSAB,<span class="op">:</span>year)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">getccd</span>(gr)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="fu">innerjoin</span>(gr,<span class="pp">@subset</span>(concarry,.! <span class="fu">ismissing</span>.(<span class="op">:</span>year)), on <span class="op">=</span> [<span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>STUSAB, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="op">:</span>year], makeunique <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="pp">@subset</span>(ccd, .! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    ccd</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">makerelplot</span>(gr)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="fu">getccd</span>(gr)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#    display(ccd)</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="fu">plot</span>(gr.year,gr.crudedeathrate <span class="op">./</span> gr.baseline,group<span class="op">=</span>gr.STUSAB,legend<span class="op">=:</span>topleft,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">2.5</span>),xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Relative Rate"</span>) </span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">nrow</span>(ccd) <span class="op">==</span> <span class="fl">1</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scatter!</span>(ccd.year,ccd.crudedeathrate <span class="op">./</span> ccd.baseline)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elseif</span> <span class="fu">nrow</span>(ccd) <span class="op">&gt;</span> <span class="fl">1</span> </span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scatter!</span>(ccd.year,ccd.crudedeathrate <span class="op">./</span> ccd.baseline,group <span class="op">=</span> ccd.STUSAB)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    p</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>baselines <span class="op">=</span> <span class="pp">@chain</span> joined <span class="cf">begin</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="fu">in</span>.(<span class="op">:</span>year,<span class="fu">Ref</span>((<span class="fl">1999</span>,<span class="fl">2000</span>,<span class="fl">2001</span>))))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@by</span>(<span class="op">:</span>STUSAB, <span class="op">:</span>baseline <span class="op">=</span> <span class="fu">mean</span>(<span class="op">:</span>crudedeathrate))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>bljoined <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(stategroupdf,<span class="fu">leftjoin</span>(baselines,joined,on <span class="op">=</span> <span class="op">:</span>STUSAB, makeunique<span class="op">=</span><span class="cn">true</span>),on<span class="op">=:</span>STUSAB,makeunique<span class="op">=</span><span class="cn">true</span>) <span class="cf">begin</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>stgroup,<span class="op">:</span>STUSAB,<span class="op">:</span>year)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">getccd</span>(gr)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="fu">innerjoin</span>(gr,<span class="pp">@subset</span>(concarry,.! <span class="fu">ismissing</span>.(<span class="op">:</span>year)), on <span class="op">=</span> [<span class="op">:</span>STUSAB <span class="op">=&gt;</span> <span class="op">:</span>STUSAB, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="op">:</span>year], makeunique <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="pp">@subset</span>(ccd, .! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    ccd</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">makerelplot</span>(gr)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    ccd <span class="op">=</span> <span class="fu">getccd</span>(gr)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#    display(ccd)</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="fu">plot</span>(gr.year,gr.crudedeathrate <span class="op">./</span> gr.baseline,group<span class="op">=</span>gr.STUSAB,legend<span class="op">=:</span>topleft,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">2.5</span>),xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Relative Rate"</span>) </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">nrow</span>(ccd) <span class="op">==</span> <span class="fl">1</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scatter!</span>(ccd.year,ccd.crudedeathrate <span class="op">./</span> ccd.baseline)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elseif</span> <span class="fu">nrow</span>(ccd) <span class="op">&gt;</span> <span class="fl">1</span> </span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scatter!</span>(ccd.year,ccd.crudedeathrate <span class="op">./</span> ccd.baseline,group <span class="op">=</span> ccd.STUSAB)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    p</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>makerelplot (generic function with 1 method)</code></pre>
 </div>
@@ -646,10 +648,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>What has been the relative change?</h1>
 <p>Each state plotted in a group with other geographically similar states. Firearm homicide rate relative to average recorded rate 1999-2001.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plots <span class="op">=</span> [<span class="fu">makerelplot</span>(gr)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    for gr <span class="kw">in</span> <span class="fu">groupby</span>(bljoined,<span class="op">:</span>stgroup)]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plots<span class="op">...</span> ; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>),linewidth<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Relative Rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plots <span class="op">=</span> [<span class="fu">makerelplot</span>(gr)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    for gr <span class="kw">in</span> <span class="fu">groupby</span>(bljoined,<span class="op">:</span>stgroup)]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plots<span class="op">...</span> ; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">1000</span>),linewidth<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"Year"</span>,ylab<span class="op">=</span><span class="st">"Relative Rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <p><img src="USCarry_files/figure-html/cell-9-output-1.svg" class="img-fluid"></p>
 </div>
@@ -663,64 +665,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The effect of constitutional carry law would then be estimated as the log firearm homicide rate which <strong>exceeds the state level counterfactual estimate</strong> in the years after the passage of the law, with a transient onset curve included in the model.</p>
 <p>We impose an informal smoothness requirement on the counterfactual estimates by using a compact radial basis function expansion with one center every 4 years, and a maximum radius of 7 years so that there is overlap between adjacent centers.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">bumpfun</span>(x,c,scale)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    stdx <span class="op">=</span> (x<span class="op">-</span>c)<span class="op">/</span>scale</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> stdx <span class="op">&lt;</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">||</span> stdx <span class="op">&gt;</span> <span class="fl">1.0</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.0</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">exp</span>(<span class="fl">1.0</span><span class="op">-</span><span class="fl">1.0</span><span class="op">/</span>(<span class="fl">1.0</span><span class="op">-</span>stdx<span class="op">^</span><span class="fl">2</span>)) <span class="co"># goes to zero at -1 and 1, and 1 at x=0</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">timeser</span>(x,coefs,centers,scale)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (a,c) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">zip</span>(coefs,centers)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        f <span class="op">+=</span> <span class="fu">a*bumpfun</span>(x,c,scale)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">laweffect</span>(yr,rate,start)</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> yr <span class="op">&gt;=</span> start</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.0</span><span class="fu">-exp</span>(<span class="fu">-rate*</span>(yr<span class="op">-</span>start))</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>   </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.0</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>statecoefpert <span class="op">=</span> <span class="fu">log</span>(<span class="fl">1.25</span>)<span class="op">/</span><span class="fl">2.0</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">include</span>(<span class="st">"model.jl"</span>) <span class="co">## load the model, this is a separate file so we can save the output unless it changes</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>modeljoined <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(joined,stategroupdf; on <span class="op">=</span> <span class="op">:</span>STUSAB, makeunique<span class="op">=</span><span class="cn">true</span>) <span class="cf">begin</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>lawdates <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(<span class="fu">DataFrame</span>(STATE<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">55</span>),concarry; on<span class="op">=:</span>STATE) <span class="cf">begin</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="op">:</span>STATE <span class="op">.&lt;</span> <span class="fl">60</span>)</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@rtransform</span>(<span class="op">:</span>year <span class="op">=</span> <span class="fu">ismissing</span>(<span class="op">:</span>year) ? <span class="fl">3000</span> <span class="op">:</span> <span class="op">:</span>year)</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>STATE)</span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>centers <span class="op">=</span> [i for i <span class="kw">in</span> (<span class="fu">minimum</span>(modeljoined.year)<span class="op">-</span><span class="fl">4</span>)<span class="op">:</span><span class="fl">4</span><span class="op">:</span>(<span class="fu">maximum</span>(modeljoined.year)<span class="op">+</span><span class="fl">4</span>)]</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">7.0</span></span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>modl <span class="op">=</span> <span class="fu">guns</span>(modeljoined.StateCode,<span class="fu">maximum</span>(modeljoined.StateCode),modeljoined.stgroup,<span class="fu">maximum</span>(modeljoined.stgroup),</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>        centers, width, modeljoined.year,<span class="fu">log</span>.(modeljoined.crudedeathrate),lawdates.year,statecoefpert)</span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="fu">setadbackend</span>(<span class="op">:</span>reversediff)</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>Turing.<span class="fu">setrdcache</span>(<span class="cn">true</span>)</span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>savedfile <span class="op">=</span> <span class="st">"./saved/samples.dat"</span></span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> s <span class="op">=</span> []</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">stat</span>(savedfile).mtime <span class="op">&gt;</span> <span class="fu">stat</span>(<span class="st">"./model.jl"</span>).mtime</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> s <span class="op">=</span> <span class="fu">deserialize</span>(savedfile)</span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> s <span class="op">=</span> <span class="fu">sample</span>(modl,<span class="fu">NUTS</span>(<span class="fl">500</span>,<span class="fl">0.8</span>),<span class="fu">MCMCThreads</span>(),<span class="fl">500</span>,<span class="fl">3</span>)</span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">serialize</span>(savedfile,s)</span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">bumpfun</span>(x,c,scale)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    stdx <span class="op">=</span> (x<span class="op">-</span>c)<span class="op">/</span>scale</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> stdx <span class="op">&lt;</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">||</span> stdx <span class="op">&gt;</span> <span class="fl">1.0</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.0</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">exp</span>(<span class="fl">1.0</span><span class="op">-</span><span class="fl">1.0</span><span class="op">/</span>(<span class="fl">1.0</span><span class="op">-</span>stdx<span class="op">^</span><span class="fl">2</span>)) <span class="co"># goes to zero at -1 and 1, and 1 at x=0</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">timeser</span>(x,coefs,centers,scale)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (a,c) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">zip</span>(coefs,centers)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        f <span class="op">+=</span> <span class="fu">a*bumpfun</span>(x,c,scale)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">laweffect</span>(yr,rate,start)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> yr <span class="op">&gt;=</span> start</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.0</span><span class="fu">-exp</span>(<span class="fu">-rate*</span>(yr<span class="op">-</span>start))</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>   </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.0</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>statecoefpert <span class="op">=</span> <span class="fu">log</span>(<span class="fl">1.25</span>)<span class="op">/</span><span class="fl">2.0</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">include</span>(<span class="st">"model.jl"</span>) <span class="co">## load the model, this is a separate file so we can save the output unless it changes</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>modeljoined <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(joined,stategroupdf; on <span class="op">=</span> <span class="op">:</span>STUSAB, makeunique<span class="op">=</span><span class="cn">true</span>) <span class="cf">begin</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(.! <span class="fu">ismissing</span>.(<span class="op">:</span>crudedeathrate))</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>lawdates <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(<span class="fu">DataFrame</span>(STATE<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">55</span>),concarry; on<span class="op">=:</span>STATE) <span class="cf">begin</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="op">:</span>STATE <span class="op">.&lt;</span> <span class="fl">60</span>)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@rtransform</span>(<span class="op">:</span>year <span class="op">=</span> <span class="fu">ismissing</span>(<span class="op">:</span>year) ? <span class="fl">3000</span> <span class="op">:</span> <span class="op">:</span>year)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>STATE)</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>centers <span class="op">=</span> [i for i <span class="kw">in</span> (<span class="fu">minimum</span>(modeljoined.year)<span class="op">-</span><span class="fl">4</span>)<span class="op">:</span><span class="fl">4</span><span class="op">:</span>(<span class="fu">maximum</span>(modeljoined.year)<span class="op">+</span><span class="fl">4</span>)]</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">7.0</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>modl <span class="op">=</span> <span class="fu">guns</span>(modeljoined.StateCode,<span class="fu">maximum</span>(modeljoined.StateCode),modeljoined.stgroup,<span class="fu">maximum</span>(modeljoined.stgroup),</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>        centers, width, modeljoined.year,<span class="fu">log</span>.(modeljoined.crudedeathrate),lawdates.year,statecoefpert)</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="fu">setadbackend</span>(<span class="op">:</span>reversediff)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>Turing.<span class="fu">setrdcache</span>(<span class="cn">true</span>)</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>savedfile <span class="op">=</span> <span class="st">"./saved/samples.dat"</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> s <span class="op">=</span> []</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">stat</span>(savedfile).mtime <span class="op">&gt;</span> <span class="fu">stat</span>(<span class="st">"./model.jl"</span>).mtime</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> s <span class="op">=</span> <span class="fu">deserialize</span>(savedfile)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> s <span class="op">=</span> <span class="fu">sample</span>(modl,<span class="fu">NUTS</span>(<span class="fl">500</span>,<span class="fl">0.8</span>),<span class="fu">MCMCThreads</span>(),<span class="fl">500</span>,<span class="fl">3</span>)</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">serialize</span>(savedfile,s)</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div class="ansi-escaped-output">
 <pre>Chains MCMC chain (500×957×3 Array{Float64, 3}):
@@ -792,71 +794,71 @@ Quantiles
 <p>Having sampled the model, we can then compute summary graphs of the results. We will show the posterior density for the coefficient of the magnitude of the law effect for each state separately.</p>
 <p>Also we will plot the actual log(homicide rate) together with the state specific counterfactual estimates.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lawco <span class="op">=</span> <span class="fu">group</span>(s,<span class="st">"statelawcoef"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>statenames <span class="op">=</span> <span class="fu">Dict</span>()</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (st,stusab) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">zip</span>(lawdates.STATE,lawdates.STUSAB)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    statenames[st] <span class="op">=</span> stusab</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plotlawts</span>(s,lawdates,modeljoined)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pl <span class="op">=</span> []</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    lawco <span class="op">=</span> <span class="fu">group</span>(s,<span class="st">"statelawcoef"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="pp">@select</span>(<span class="pp">@subset</span>(lawdates,<span class="op">:</span>year <span class="op">.&lt;</span> <span class="fl">2022</span>),<span class="op">:</span>STATE).STATE</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        den <span class="op">=</span> <span class="fu">density</span>(s[<span class="op">:</span>,<span class="fu">Symbol</span>(<span class="st">"meanlawcoef"</span>),<span class="op">:</span>] <span class="op">.+</span> lawco[<span class="op">:</span>,<span class="fu">Symbol</span>(<span class="st">"statelawcoef[</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="op">:</span>], title <span class="op">=</span> <span class="st">"State </span><span class="sc">$</span>i<span class="st"> = </span><span class="sc">$</span>(statenames[i])<span class="st">"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span><span class="cn">false</span>,xlim<span class="op">=</span>(<span class="fu">-log</span>(<span class="fl">2</span>),<span class="fu">log</span>(<span class="fl">2</span>)))</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot!</span>([(<span class="fl">0.0</span>,<span class="fl">0.0</span>),(<span class="fl">0.0</span>,<span class="fl">5.0</span>)], color<span class="op">=</span><span class="st">"red"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">5.0</span>))</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,den)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"State law coefficient values"</span>)</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size <span class="op">=</span> (<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">density</span>(s[<span class="op">:</span>,<span class="op">:</span>lawrate,<span class="op">:</span>], title<span class="op">=</span> <span class="st">"Law effect onset rate (1/yr)"</span>))</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    modeljoined.logdrate <span class="op">=</span> <span class="fu">log</span>.(modeljoined.crudedeathrate)</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    regions <span class="op">=</span> <span class="fu">Dict</span>()</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="fu">eachrow</span>(stategroupdf)</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        regions[r.STATE] <span class="op">=</span> (group<span class="op">=</span>r.stgroup,code<span class="op">=</span>r.STUSAB)</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    pl <span class="op">=</span> []</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> <span class="fu">sample</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">500</span>,<span class="fl">10</span>)</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(modeljoined.STATE)</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> <span class="pp">@subset</span>(modeljoined, <span class="op">:</span>STATE <span class="op">.==</span> st)</span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        region <span class="op">=</span> regions[st].group</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.logdrate,linewidth<span class="op">=</span><span class="fl">3</span>,title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>(st)<span class="st"> = </span><span class="sc">$</span>(regions[st].code)<span class="st">"</span>,ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">2.75</span>))</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,p)</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> samp <span class="kw">in</span> samps</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>            statelawcoef <span class="op">=</span> s[samp,<span class="fu">Symbol</span>(<span class="st">"statelawcoef[</span><span class="sc">$</span>st<span class="st">]"</span>),<span class="fl">1</span>]</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>            statecoefs <span class="op">=</span> [s[samp,<span class="fu">Symbol</span>(<span class="st">"statecoefs[</span><span class="sc">$</span>st<span class="st">][</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="fl">1</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(centers)]</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>            statebase <span class="op">=</span> s[samp,<span class="fu">Symbol</span>(<span class="st">"statebase[</span><span class="sc">$</span>st<span class="st">]"</span>),<span class="fl">1</span>]</span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>            regioncoefs <span class="op">=</span> [s[samp,<span class="fu">Symbol</span>(<span class="st">"regioncoefs[</span><span class="sc">$</span>region<span class="st">][</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="fl">1</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(centers)]        </span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>            lawrate <span class="op">=</span> s[samp,<span class="op">:</span>lawrate,<span class="fl">1</span>]</span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>            startlaw <span class="op">=</span> lawdates[lawdates.STATE <span class="op">.==</span> st,<span class="op">:</span>].year[<span class="fl">1</span>]</span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>            startlaw <span class="op">=</span> <span class="fu">ismissing</span>(startlaw) ? <span class="fl">3000</span> <span class="op">:</span> startlaw</span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>            years <span class="op">=</span> <span class="fl">1979</span><span class="op">:</span><span class="fl">2020</span></span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> [statebase <span class="op">+</span> </span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>                <span class="fu">timeser</span>(yr,regioncoefs <span class="op">.+</span> (statecoefpert <span class="op">.*</span> statecoefs),centers,width) for yr <span class="kw">in</span> years]</span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plot!</span>(years,pred; color<span class="op">=</span><span class="st">"orange"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> startlaw <span class="op">&lt;</span> <span class="fl">3000</span></span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>                <span class="fu">plot!</span>([(startlaw,<span class="op">-</span><span class="fl">10.0</span>),(startlaw,<span class="fl">10.0</span>)],color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>            regpred <span class="op">=</span> [statebase <span class="op">+</span> </span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>                <span class="fu">timeser</span>(yr,regioncoefs ,centers,width) for yr <span class="kw">in</span> years]</span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Each state shown with its locally estimated counterfactual (orange), actual (dark blue), and date of CC law if any (red vertical)"</span>)</span>
-<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size <span class="op">=</span>(<span class="fl">2000</span>,<span class="fl">3000</span>), legend<span class="op">=</span><span class="cn">false</span>))</span>
-<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="fu">density</span>(s[<span class="op">:</span>,<span class="op">:</span>meanlawcoef,<span class="op">:</span>],title<span class="op">=</span><span class="st">"Mean law coefficient"</span>)</span>
-<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlawts</span>(s,lawdates,modeljoined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lawco <span class="op">=</span> <span class="fu">group</span>(s,<span class="st">"statelawcoef"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>statenames <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (st,stusab) <span class="kw">in</span> <span class="bu">Iterators</span>.<span class="fu">zip</span>(lawdates.STATE,lawdates.STUSAB)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    statenames[st] <span class="op">=</span> stusab</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plotlawts</span>(s,lawdates,modeljoined)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pl <span class="op">=</span> []</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    lawco <span class="op">=</span> <span class="fu">group</span>(s,<span class="st">"statelawcoef"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="pp">@select</span>(<span class="pp">@subset</span>(lawdates,<span class="op">:</span>year <span class="op">.&lt;</span> <span class="fl">2022</span>),<span class="op">:</span>STATE).STATE</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        den <span class="op">=</span> <span class="fu">density</span>(s[<span class="op">:</span>,<span class="fu">Symbol</span>(<span class="st">"meanlawcoef"</span>),<span class="op">:</span>] <span class="op">.+</span> lawco[<span class="op">:</span>,<span class="fu">Symbol</span>(<span class="st">"statelawcoef[</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="op">:</span>], title <span class="op">=</span> <span class="st">"State </span><span class="sc">$</span>i<span class="st"> = </span><span class="sc">$</span>(statenames[i])<span class="st">"</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span><span class="cn">false</span>,xlim<span class="op">=</span>(<span class="fu">-log</span>(<span class="fl">2</span>),<span class="fu">log</span>(<span class="fl">2</span>)))</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot!</span>([(<span class="fl">0.0</span>,<span class="fl">0.0</span>),(<span class="fl">0.0</span>,<span class="fl">5.0</span>)], color<span class="op">=</span><span class="st">"red"</span>,ylim<span class="op">=</span>(<span class="fl">0.0</span>,<span class="fl">5.0</span>))</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,den)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"State law coefficient values"</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size <span class="op">=</span> (<span class="fl">1000</span>,<span class="fl">1000</span>)))</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">density</span>(s[<span class="op">:</span>,<span class="op">:</span>lawrate,<span class="op">:</span>], title<span class="op">=</span> <span class="st">"Law effect onset rate (1/yr)"</span>))</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    modeljoined.logdrate <span class="op">=</span> <span class="fu">log</span>.(modeljoined.crudedeathrate)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    regions <span class="op">=</span> <span class="fu">Dict</span>()</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="fu">eachrow</span>(stategroupdf)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        regions[r.STATE] <span class="op">=</span> (group<span class="op">=</span>r.stgroup,code<span class="op">=</span>r.STUSAB)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    pl <span class="op">=</span> []</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    samps <span class="op">=</span> <span class="fu">sample</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">500</span>,<span class="fl">10</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(modeljoined.STATE)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        sub <span class="op">=</span> <span class="pp">@subset</span>(modeljoined, <span class="op">:</span>STATE <span class="op">.==</span> st)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        region <span class="op">=</span> regions[st].group</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="fu">plot</span>(sub.year,sub.logdrate,linewidth<span class="op">=</span><span class="fl">3</span>,title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>(st)<span class="st"> = </span><span class="sc">$</span>(regions[st].code)<span class="st">"</span>,ylim<span class="op">=</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="fl">2.75</span>))</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,p)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> samp <span class="kw">in</span> samps</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>            statelawcoef <span class="op">=</span> s[samp,<span class="fu">Symbol</span>(<span class="st">"statelawcoef[</span><span class="sc">$</span>st<span class="st">]"</span>),<span class="fl">1</span>]</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>            statecoefs <span class="op">=</span> [s[samp,<span class="fu">Symbol</span>(<span class="st">"statecoefs[</span><span class="sc">$</span>st<span class="st">][</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="fl">1</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(centers)]</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>            statebase <span class="op">=</span> s[samp,<span class="fu">Symbol</span>(<span class="st">"statebase[</span><span class="sc">$</span>st<span class="st">]"</span>),<span class="fl">1</span>]</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>            regioncoefs <span class="op">=</span> [s[samp,<span class="fu">Symbol</span>(<span class="st">"regioncoefs[</span><span class="sc">$</span>region<span class="st">][</span><span class="sc">$</span>i<span class="st">]"</span>),<span class="fl">1</span>] for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu">length</span>(centers)]        </span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>            lawrate <span class="op">=</span> s[samp,<span class="op">:</span>lawrate,<span class="fl">1</span>]</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>            startlaw <span class="op">=</span> lawdates[lawdates.STATE <span class="op">.==</span> st,<span class="op">:</span>].year[<span class="fl">1</span>]</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>            startlaw <span class="op">=</span> <span class="fu">ismissing</span>(startlaw) ? <span class="fl">3000</span> <span class="op">:</span> startlaw</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>            years <span class="op">=</span> <span class="fl">1979</span><span class="op">:</span><span class="fl">2020</span></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> [statebase <span class="op">+</span> </span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>                <span class="fu">timeser</span>(yr,regioncoefs <span class="op">.+</span> (statecoefpert <span class="op">.*</span> statecoefs),centers,width) for yr <span class="kw">in</span> years]</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plot!</span>(years,pred; color<span class="op">=</span><span class="st">"orange"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> startlaw <span class="op">&lt;</span> <span class="fl">3000</span></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>                <span class="fu">plot!</span>([(startlaw,<span class="op">-</span><span class="fl">10.0</span>),(startlaw,<span class="fl">10.0</span>)],color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>            regpred <span class="op">=</span> [statebase <span class="op">+</span> </span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>                <span class="fu">timeser</span>(yr,regioncoefs ,centers,width) for yr <span class="kw">in</span> years]</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Each state shown with its locally estimated counterfactual (orange), actual (dark blue), and date of CC law if any (red vertical)"</span>)</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size <span class="op">=</span>(<span class="fl">2000</span>,<span class="fl">3000</span>), legend<span class="op">=</span><span class="cn">false</span>))</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="fu">density</span>(s[<span class="op">:</span>,<span class="op">:</span>meanlawcoef,<span class="op">:</span>],title<span class="op">=</span><span class="st">"Mean law coefficient"</span>)</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlawts</span>(s,lawdates,modeljoined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>State law coefficient values</code></pre>
 </div>
@@ -882,30 +884,30 @@ Quantiles
 <p>One plausible explanation for the relative lack of clear measurable effect from permitless carry laws is that permitless actually may have had very little effect on how many people carry firearms in public. Many of these states were shall-issue and many people who wanted to carry may have had CCW permits issued before the permitless law passed. Therefore the change in number of people carrying may have been minimal.</p>
 <p>Using the date on which states converted to shall-issue permits, with a similar analysis, we can determine whether more of an effect was visible after that legal change. Some states converted from no-issue to shall issue, while others converted from may-issue to shall-issue.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates collected from https://en.wikipedia.org/wiki/History_of_concealed_carry_in_the_United_States</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>shallissdates <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/ShallIssueDates.csv"</span>,DataFrame)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>shallissue <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,shallissdates; on <span class="op">=</span> <span class="op">:</span>STUSAB)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>silawdates <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(<span class="fu">DataFrame</span>(STATE<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">55</span>),shallissue; on<span class="op">=:</span>STATE) <span class="cf">begin</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="op">:</span>STATE <span class="op">.&lt;</span> <span class="fl">60</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@rtransform</span>(<span class="op">:</span>year <span class="op">=</span> <span class="fu">ismissing</span>(<span class="op">:</span>ShallIssueDate) ? <span class="fl">3000</span> <span class="op">:</span> <span class="op">:</span>ShallIssueDate)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>STATE)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>modl2 <span class="op">=</span> <span class="fu">guns</span>(modeljoined.StateCode,<span class="fu">maximum</span>(modeljoined.StateCode),modeljoined.stgroup,<span class="fu">maximum</span>(modeljoined.stgroup),</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        centers, width, modeljoined.year,<span class="fu">log</span>.(modeljoined.crudedeathrate),silawdates.year,statecoefpert)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>savedfile <span class="op">=</span> <span class="st">"./saved/shallisssamples.dat"</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> sisam <span class="op">=</span> []</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">stat</span>(savedfile).mtime <span class="op">&gt;</span> <span class="fu">stat</span>(<span class="st">"./model.jl"</span>).mtime</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> sisam <span class="op">=</span> <span class="fu">deserialize</span>(savedfile)</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> sisam <span class="op">=</span> <span class="fu">sample</span>(modl2,<span class="fu">NUTS</span>(<span class="fl">500</span>,<span class="fl">0.8</span>),<span class="fu">MCMCThreads</span>(),<span class="fl">500</span>,<span class="fl">3</span>)</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">serialize</span>(savedfile,sisam)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates collected from https://en.wikipedia.org/wiki/History_of_concealed_carry_in_the_United_States</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>shallissdates <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"data/ShallIssueDates.csv"</span>,DataFrame)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>shallissue <span class="op">=</span> <span class="fu">leftjoin</span>(fipscodes,shallissdates; on <span class="op">=</span> <span class="op">:</span>STUSAB)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>silawdates <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">leftjoin</span>(<span class="fu">DataFrame</span>(STATE<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">55</span>),shallissue; on<span class="op">=:</span>STATE) <span class="cf">begin</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span>(<span class="op">:</span>STATE <span class="op">.&lt;</span> <span class="fl">60</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@rtransform</span>(<span class="op">:</span>year <span class="op">=</span> <span class="fu">ismissing</span>(<span class="op">:</span>ShallIssueDate) ? <span class="fl">3000</span> <span class="op">:</span> <span class="op">:</span>ShallIssueDate)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@orderby</span>(<span class="op">:</span>STATE)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>modl2 <span class="op">=</span> <span class="fu">guns</span>(modeljoined.StateCode,<span class="fu">maximum</span>(modeljoined.StateCode),modeljoined.stgroup,<span class="fu">maximum</span>(modeljoined.stgroup),</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        centers, width, modeljoined.year,<span class="fu">log</span>.(modeljoined.crudedeathrate),silawdates.year,statecoefpert)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>savedfile <span class="op">=</span> <span class="st">"./saved/shallisssamples.dat"</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="kw">global</span> sisam <span class="op">=</span> []</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">stat</span>(savedfile).mtime <span class="op">&gt;</span> <span class="fu">stat</span>(<span class="st">"./model.jl"</span>).mtime</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> sisam <span class="op">=</span> <span class="fu">deserialize</span>(savedfile)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> sisam <span class="op">=</span> <span class="fu">sample</span>(modl2,<span class="fu">NUTS</span>(<span class="fl">500</span>,<span class="fl">0.8</span>),<span class="fu">MCMCThreads</span>(),<span class="fl">500</span>,<span class="fl">3</span>)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">serialize</span>(savedfile,sisam)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div class="ansi-escaped-output">
 <pre>Chains MCMC chain (500×957×3 Array{Float64, 3}):
@@ -978,7 +980,7 @@ Quantiles
 <section id="shall-issue-coefficients" class="level1">
 <h1>Shall Issue coefficients</h1>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlawts</span>(sisam, silawdates,modeljoined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotlawts</span>(sisam, silawdates,modeljoined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>State law coefficient values</code></pre>
 </div>
