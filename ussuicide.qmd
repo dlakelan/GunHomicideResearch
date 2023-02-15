@@ -1,8 +1,11 @@
 # If mass shootings are a kind of Suicide, what is driving changes in Suicide?
 
+**THIS ANALYSIS IS STILL VERY EARLY STAGES FOR NOW ITS JUST GRAPHS OF SUICIDE RATES**
+
+
 To answer this, let's look at CDC Wonder data for suicide, by year, age group, state, and sex. First we downloaded the data by manually requesting it on CDC Wonder:
 
-```julia
+```{julia}
 using Pkg
 Pkg.activate(".")
 
@@ -17,16 +20,36 @@ let pl = []
     for st in unique(suicdet.State)
         p = @df @subset(suicdet,:Gender_Code .== "M" .&& :State .== st) plot(:Year,:Deaths ./ :Population .* 100_000,group=:Ten_Year_Age_Groups_Code,title="$st",ylim=(0,100))
         push!(pl,p)
+        if length(pl) == 3
+            display(plot(pl...; size=(1000,250),layout=(1,3)))
+            empty!(pl)
+        end
     end
-    plot(pl...,size=(3000,3000))
+    if length(pl) > 0
+        display(plot(pl...; size=(1000,250),layout=(1,length(pl))))
+    end
 end
+```
 
+
+Relevant to the question of young disaffected youth following in the footsteps 
+of a script written by the perpetrators of the Columbine event, the suicide rate for people in the ranges 15-24 and 25-34 is of particular interest.
+
+
+
+```{julia}
 let pl = []
     for st in unique(suicdet.State)
         p = @df @subset(suicdet,:Gender_Code .== "M" .&& :State .== st .&& in.(:Ten_Year_Age_Groups_Code,Ref(["15-24","25-34"]))) plot(:Year,:Deaths ./ :Population .* 100_000,group=:Ten_Year_Age_Groups_Code,title="$st",ylim=(0,100))
         push!(pl,p)
+        if length(pl) == 3
+            display(plot(pl...; size=(1000,250),layout=(1,3)))
+            empty!(pl)
+        end
     end
-    plot(pl...,size=(3000,3000))
+    if length(pl) > 0
+        display(plot(pl...; size=(1000,250),layout=(1,length(pl))))
+    end
 end
 
 

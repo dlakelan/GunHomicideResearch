@@ -173,8 +173,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="if-mass-shootings-are-a-kind-of-suicide-what-is-driving-changes-in-suicide" class="level1">
 <h1>If mass shootings are a kind of Suicide, what is driving changes in Suicide?</h1>
+<p><strong>THIS ANALYSIS IS STILL VERY EARLY STAGES FOR NOW ITS JUST GRAPHS OF SUICIDE RATES</strong></p>
 <p>To answer this, let’s look at CDC Wonder data for suicide, by year, age group, state, and sex. First we downloaded the data by manually requesting it on CDC Wonder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="st">"."</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">StatsPlots</span>, <span class="bu">GLM</span></span>
@@ -188,21 +190,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(suicdet.State)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="pp">@df</span> <span class="pp">@subset</span>(suicdet,<span class="op">:</span>Gender_Code <span class="op">.==</span> <span class="st">"M"</span> <span class="op">.&amp;&amp;</span> <span class="op">:</span>State <span class="op">.==</span> st) <span class="fu">plot</span>(<span class="op">:</span>Year,<span class="op">:</span>Deaths <span class="op">./</span> <span class="op">:</span>Population <span class="op">.*</span> <span class="fl">100_000</span>,group<span class="op">=:</span>Ten_Year_Age_Groups_Code,title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>st<span class="st">"</span>,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">100</span>))</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,p)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(pl<span class="op">...</span>,size<span class="op">=</span>(<span class="fl">3000</span>,<span class="fl">3000</span>))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pl <span class="op">=</span> []</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(suicdet.State)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="pp">@df</span> <span class="pp">@subset</span>(suicdet,<span class="op">:</span>Gender_Code <span class="op">.==</span> <span class="st">"M"</span> <span class="op">.&amp;&amp;</span> <span class="op">:</span>State <span class="op">.==</span> st <span class="op">.&amp;&amp;</span> <span class="fu">in</span>.(<span class="op">:</span>Ten_Year_Age_Groups_Code,<span class="fu">Ref</span>([<span class="st">"15-24"</span>,<span class="st">"25-34"</span>]))) <span class="fu">plot</span>(<span class="op">:</span>Year,<span class="op">:</span>Deaths <span class="op">./</span> <span class="op">:</span>Population <span class="op">.*</span> <span class="fl">100_000</span>,group<span class="op">=:</span>Ten_Year_Age_Groups_Code,title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>st<span class="st">"</span>,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">100</span>))</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,p)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(pl<span class="op">...</span>,size<span class="op">=</span>(<span class="fl">3000</span>,<span class="fl">3000</span>))</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">length</span>(pl) <span class="op">==</span> <span class="fl">3</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">250</span>),layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">3</span>)))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">empty!</span>(pl)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">length</span>(pl) <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">250</span>),layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fu">length</span>(pl))))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Activating project at `~/Consulting/LakelandAppliedSciLLC/CriminologyGuns`</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-2.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-3.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-4.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-5.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-6.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-7.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-8.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-9.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-10.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-11.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-12.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-13.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-14.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-15.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-16.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-17.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-2-output-18.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>Relevant to the question of young disaffected youth following in the footsteps of a script written by the perpetrators of the Columbine event, the suicide rate for people in the ranges 15-24 and 25-34 is of particular interest.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pl <span class="op">=</span> []</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(suicdet.State)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> <span class="pp">@df</span> <span class="pp">@subset</span>(suicdet,<span class="op">:</span>Gender_Code <span class="op">.==</span> <span class="st">"M"</span> <span class="op">.&amp;&amp;</span> <span class="op">:</span>State <span class="op">.==</span> st <span class="op">.&amp;&amp;</span> <span class="fu">in</span>.(<span class="op">:</span>Ten_Year_Age_Groups_Code,<span class="fu">Ref</span>([<span class="st">"15-24"</span>,<span class="st">"25-34"</span>]))) <span class="fu">plot</span>(<span class="op">:</span>Year,<span class="op">:</span>Deaths <span class="op">./</span> <span class="op">:</span>Population <span class="op">.*</span> <span class="fl">100_000</span>,group<span class="op">=:</span>Ten_Year_Age_Groups_Code,title<span class="op">=</span><span class="st">"</span><span class="sc">$</span>st<span class="st">"</span>,ylim<span class="op">=</span>(<span class="fl">0</span>,<span class="fl">100</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(pl,p)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">length</span>(pl) <span class="op">==</span> <span class="fl">3</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">250</span>),layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fl">3</span>)))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">empty!</span>(pl)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="fu">length</span>(pl) <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">display</span>(<span class="fu">plot</span>(pl<span class="op">...</span>; size<span class="op">=</span>(<span class="fl">1000</span>,<span class="fl">250</span>),layout<span class="op">=</span>(<span class="fl">1</span>,<span class="fu">length</span>(pl))))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-1.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-2.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-3.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-4.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-5.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-6.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-7.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-8.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-9.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-10.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-11.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-12.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-13.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-14.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-15.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-16.svg" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="ussuicide_files/figure-html/cell-3-output-17.svg" class="img-fluid"></p>
+</div>
+</div>
 
 
 </section>
