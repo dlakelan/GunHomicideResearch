@@ -175,6 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>If mass shootings are a kind of Suicide, what is driving changes in Suicide?</h1>
 <p><strong>THIS ANALYSIS IS STILL VERY EARLY STAGES FOR NOW ITS JUST GRAPHS OF SUICIDE RATES</strong></p>
 <p>To answer this, let’s look at CDC Wonder data for suicide, by year, age group, state, and sex. First we downloaded the data by manually requesting it on CDC Wonder:</p>
+<p>This is data on <strong>all</strong> suicides (not just guns) in the US by year, state, sex, and 10 year age group.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="st">"."</span>)</span>
@@ -254,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="ussuicide_files/figure-html/cell-2-output-18.svg" class="img-fluid"></p>
 </div>
 </div>
-<p>Relevant to the question of young disaffected youth following in the footsteps of a script written by the perpetrators of the Columbine event, the suicide rate for people in the ranges 15-24 and 25-34 is of particular interest.</p>
+<p>Relevant to the question of disaffected young males following in the footsteps of a script written by the perpetrators of the Columbine event, the suicide rate for males in the ranges 15-24 and 25-34 is of particular interest.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pl <span class="op">=</span> []</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> st <span class="kw">in</span> <span class="fu">unique</span>(suicdet.State)</span>
